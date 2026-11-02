@@ -1,0 +1,88 @@
+# EduPortal IELTS stack: own database + API + web + nginx.
+# EduPortal is NOT part of this stack. The API reads EduPortal's database
+# through EDUPORTAL_DATABASE_URL (SELECT-only role), on the same or another server.
+#
+#   cp .env.example .env   # fill in values
+#   docker compose up -d --build
+#
+# Same server as EduPortal: set EDUPORTAL_NETWORK to EduPortal's docker network
+# (e.g. eduportal_eduportal-net) and use host "db" in EDUPORTAL_DATABASE_URL.
+
+services:
+  ielts-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${IELTS_DB_USER:?IELTS_DB_USER is required}
+      POSTGRES_PASSWORD: ${IELTS_DB_PASSWORD:?IELTS_DB_PASSWORD is required}
+      POSTGRES_DB: ${IELTS_DB_NAME:-eduielts}
+    volumes:
+      - ielts_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${IELTS_DB_USER} -d ${IELTS_DB_NAME:-eduielts}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [ielts]
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: production
+      PORT: 4002
+      DATABASE_URL: postgresql://${IELTS_DB_USER}:${IELTS_DB_PASSWORD}@ielts-db:5432/${IELTS_DB_NAME:-eduielts}
+      EDUPORTAL_DATABASE_URL: ${EDUPORTAL_DATABASE_URL:?EDUPORTAL_DATABASE_URL is required}
+      IELTS_JWT_SECRET: ${IELTS_JWT_SECRET:?IELTS_JWT_SECRET is required}
+      PUBLIC_URL: ${PUBLIC_URL:?PUBLIC_URL is required}
+      # EduPortal SSO, the only way to sign in (docs/EDUPORTAL_SSO.md)
+      EDUPORTAL_SSO_AUTHORIZE_URL: ${EDUPORTAL_SSO_AUTHORIZE_URL:?EDUPORTAL_SSO_AUTHORIZE_URL is required}
+      EDUPORTAL_SSO_PUBLIC_KEY: ${EDUPORTAL_SSO_PUBLIC_KEY:?EDUPORTAL_SSO_PUBLIC_KEY is required}
+      EDUPORTAL_SSO_CLIENT_ID: ${EDUPORTAL_SSO_CLIENT_ID:-eduielts}
+      CORS_ORIGIN: ${PUBLIC_URL:?PUBLIC_URL is required}
+      PUBLIC_API_PREFIX: /api
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      UPLOAD_DIR: /app/uploads
+      MAX_PACKAGE_MB: ${MAX_PACKAGE_MB:-120}
+      ASSET_FETCH_ALLOWED_HOSTS: ${ASSET_FETCH_ALLOWED_HOSTS:-}
+    volumes:
+      # test audio/images and Speaking recordings: back this volume up
+      - ielts_uploads:/app/uploads
+    depends_on:
+      ielts-db:
+        condition: service_healthy
+    networks: [ielts, eduportal]
+
+  web:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    init: true
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [ielts]
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - '${HTTP_BIND:-127.0.0.1:8091}:80'
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on: [api, web]
+    networks: [ielts]
+
+networks:
+  ielts:
+    driver: bridge
+  # EduPortal's network when both stacks run on one host; otherwise a private
+  # placeholder network and EDUPORTAL_DATABASE_URL points to a remote host.
+  eduportal:
+    name: ${EDUPORTAL_NETWORK:-eduielts_eduportal_placeholder}
+    external: ${EDUPORTAL_NETWORK_EXTERNAL:-false}
+
+volumes:
+  ielts_db_data:
+  ielts_uploads:

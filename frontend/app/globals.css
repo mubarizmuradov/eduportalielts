@@ -1,0 +1,300 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --color-navy: #14284b;
+  --color-navy-light: #e8edf6;
+  --color-accent: #b4233a;
+  --color-ok: #15803d;
+  --color-bad: #b91c1c;
+}
+
+:root {
+  color-scheme: light;
+  --page-bg: #f4f6fa;
+  --card: #ffffff;
+  --card-border: #dfe4ee;
+  --muted: #5d6b82;
+  --text: #13203a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --page-bg: #0d1422;
+    --card: #151f33;
+    --card-border: #26334d;
+    --muted: #9aa8c2;
+    --text: #eef2fa;
+  }
+}
+
+html,
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 0.9rem;
+}
+.text-muted {
+  color: var(--muted);
+}
+.input {
+  width: 100%;
+  border-radius: 0.6rem;
+  border: 1.5px solid var(--card-border);
+  background: var(--card);
+  color: var(--text);
+  padding: 0.55rem 0.8rem;
+  outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.input:focus {
+  border-color: #3b5b9a;
+  box-shadow: 0 0 0 3px rgb(59 91 154 / 0.18);
+}
+.band-pill {
+  display: inline-flex;
+  min-width: 2.6rem;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: var(--color-navy-light);
+  color: var(--color-navy);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .band-pill {
+    background: #22355a;
+    color: #dbe5ff;
+  }
+}
+
+/* ======================================================================
+   Exam screen: looks like the computer-delivered IELTS test.
+   Plain, high-contrast, always light (or one of the IELTS contrast modes).
+   ====================================================================== */
+.ielts {
+  --ex-bg: #ffffff;
+  --ex-fg: #000000;
+  --ex-muted: #4b5563;
+  --ex-bar: #f2f2f2;
+  --ex-border: #c8c8c8;
+  --ex-strong-border: #7a7a7a;
+  --ex-accent: #1d4ed8;
+  --ex-input-bg: #ffffff;
+  --ex-hl: #fff176;
+  --ex-selected: #dbeafe;
+  --ex-scale: 1;
+  color-scheme: light;
+  background: var(--ex-bg);
+  color: var(--ex-fg);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: calc(15px * var(--ex-scale));
+  line-height: 1.55;
+}
+.ielts[data-contrast='wb'] {
+  --ex-bg: #000000;
+  --ex-fg: #ffffff;
+  --ex-muted: #d1d5db;
+  --ex-bar: #1a1a1a;
+  --ex-border: #6b6b6b;
+  --ex-strong-border: #bdbdbd;
+  --ex-accent: #93c5fd;
+  --ex-input-bg: #000000;
+  --ex-hl: #806c00;
+  --ex-selected: #1e3a8a;
+  color-scheme: dark;
+}
+.ielts[data-contrast='yb'] {
+  --ex-bg: #000000;
+  --ex-fg: #ffeb3b;
+  --ex-muted: #fff59d;
+  --ex-bar: #141414;
+  --ex-border: #8a7d00;
+  --ex-strong-border: #ffeb3b;
+  --ex-accent: #ffeb3b;
+  --ex-input-bg: #000000;
+  --ex-hl: #5c5300;
+  --ex-selected: #3f3a00;
+  color-scheme: dark;
+}
+.ielts[data-size='large'] {
+  --ex-scale: 1.15;
+}
+.ielts[data-size='xlarge'] {
+  --ex-scale: 1.32;
+}
+.ielts .ex-bar {
+  background: var(--ex-bar);
+  border-color: var(--ex-border);
+}
+.ielts .ex-border {
+  border-color: var(--ex-border);
+}
+.ielts .ex-muted {
+  color: var(--ex-muted);
+}
+.ielts .ex-part-banner {
+  background: var(--ex-bar);
+  border: 1px solid var(--ex-border);
+  border-radius: 4px;
+  padding: 0.6rem 0.9rem;
+}
+.ielts .ex-gap {
+  display: inline-block;
+  min-width: 9.5em;
+  width: 9.5em;
+  height: 1.75em;
+  padding: 0 0.4em;
+  margin: 0 0.15em;
+  border: 1px solid var(--ex-strong-border);
+  border-radius: 3px;
+  background: var(--ex-input-bg);
+  color: var(--ex-fg);
+  font: inherit;
+  text-align: center;
+  vertical-align: baseline;
+}
+.ielts .ex-gap::placeholder {
+  color: var(--ex-fg);
+  font-weight: 700;
+  opacity: 1;
+}
+.ielts .ex-gap:focus,
+.ielts .ex-drop:focus {
+  outline: 2px solid var(--ex-accent);
+  outline-offset: 1px;
+}
+.ielts .ex-drop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9.5em;
+  min-height: 1.85em;
+  padding: 0 0.5em;
+  margin: 0 0.15em;
+  border: 1px dashed var(--ex-strong-border);
+  border-radius: 3px;
+  background: var(--ex-input-bg);
+  vertical-align: middle;
+  cursor: pointer;
+}
+.ielts .ex-drop[data-filled='true'] {
+  border-style: solid;
+  background: var(--ex-selected);
+}
+.ielts .ex-drop[data-over='true'] {
+  outline: 2px solid var(--ex-accent);
+}
+.ielts .ex-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.25em 0.6em;
+  border: 1px solid var(--ex-strong-border);
+  border-radius: 3px;
+  background: var(--ex-input-bg);
+  cursor: grab;
+  user-select: none;
+}
+.ielts .ex-chip[aria-pressed='true'] {
+  outline: 2px solid var(--ex-accent);
+  background: var(--ex-selected);
+}
+.ielts .ex-chip[data-used='true'] {
+  opacity: 0.35;
+}
+.ielts .ex-select {
+  border: 1px solid var(--ex-strong-border);
+  border-radius: 3px;
+  background: var(--ex-input-bg);
+  color: var(--ex-fg);
+  padding: 0.15em 0.4em;
+  font: inherit;
+}
+.ielts .ex-q[data-active='true'] {
+  background: color-mix(in srgb, var(--ex-selected) 55%, transparent);
+  border-radius: 4px;
+}
+.ielts mark.ex-hl {
+  background: var(--ex-hl);
+  color: inherit;
+}
+.ielts mark.ex-hl[data-note='true'] {
+  text-decoration: underline dotted 2px;
+  cursor: help;
+}
+.ielts input[type='radio'],
+.ielts input[type='checkbox'] {
+  width: 1.05em;
+  height: 1.05em;
+  accent-color: var(--ex-accent);
+}
+.ielts textarea.ex-writing {
+  background: var(--ex-input-bg);
+  color: var(--ex-fg);
+  border: 1px solid var(--ex-strong-border);
+  font: inherit;
+  line-height: 1.6;
+}
+.ielts .ex-navbtn {
+  min-width: 1.9em;
+  height: 1.9em;
+  border: 1px solid var(--ex-border);
+  border-radius: 2px;
+  background: var(--ex-bg);
+  font-size: 0.85em;
+  font-weight: 700;
+  position: relative;
+}
+.ielts .ex-navbtn[data-answered='true'] {
+  border-bottom: 3px solid var(--ex-fg);
+}
+.ielts .ex-navbtn[data-current='true'] {
+  background: var(--ex-accent);
+  color: var(--ex-bg);
+  border-color: var(--ex-accent);
+}
+.ielts .ex-navbtn[data-review='true'] {
+  border-radius: 999px;
+}
+.ielts .ex-table td,
+.ielts .ex-table th {
+  border: 1px solid var(--ex-strong-border);
+  padding: 0.45em 0.6em;
+  vertical-align: top;
+}
+.ielts .ex-table th {
+  background: var(--ex-bar);
+  text-align: left;
+}
+.ielts .ex-flow-step {
+  border: 1px solid var(--ex-strong-border);
+  padding: 0.5em 0.8em;
+  border-radius: 3px;
+  text-align: center;
+}
+.ielts .ex-resize {
+  cursor: col-resize;
+  background: var(--ex-border);
+}
+.ielts .ex-resize:hover {
+  background: var(--ex-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
