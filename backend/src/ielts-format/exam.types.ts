@@ -3,7 +3,8 @@
  * or transcripts; the answer key and the staff review stay on the server.
  * frontend/lib/exam-types.ts mirrors the candidate types.
  */
-import type { IeltsPackage, QuestionType, WordLimit } from './package.schema';
+import type { WordLimitLike } from './answer-text';
+import type { IeltsPackage, QuestionType } from './package.schema';
 
 export type Module = 'listening' | 'reading' | 'writing' | 'speaking';
 export const MODULE_ORDER: Module[] = ['listening', 'reading', 'writing', 'speaking'];
@@ -31,11 +32,13 @@ export interface CandidateListeningPart {
 }
 
 export interface CandidateReadingText {
+  label?: string;
   title: string;
   subtitle?: string;
   paragraphs: Array<{ label?: string; text: string }>;
   image?: string;
   imageCaption?: string;
+  glossary?: Array<{ term: string; definition: string }>;
 }
 
 export interface CandidateReadingSection {
@@ -52,7 +55,10 @@ export interface CandidateWritingTask {
   minWords: number;
   /** Full task text, paragraphs separated by blank lines (standard IELTS wording included). */
   body: string;
+  /** First visual (kept for tests built before 1.1) … */
   image?: string;
+  /** … all visuals of Academic Task 1, shown together. */
+  images?: string[];
   /** GT letter bullet points (shown as a list inside the body area). */
   bulletPoints?: string[];
 }
@@ -89,8 +95,10 @@ export interface CandidateExam {
 /** Marking data for one question number (Listening / Reading). */
 export type KeyEntry =
   | { kind: 'choice'; answer: string }
-  | { kind: 'text'; answers: string[]; wordLimit: WordLimit }
-  | { kind: 'multi'; numbers: number[]; answers: string[] };
+  | { kind: 'text'; answers: string[]; wordLimit: WordLimitLike }
+  | { kind: 'multi'; numbers: number[]; answers: string[] }
+  /** Several typed answers in any order ("Which TWO …?"); each unit scores once. */
+  | { kind: 'textset'; numbers: number[]; units: string[][]; wordLimit: WordLimitLike };
 
 export type AnswerKey = Record<number, KeyEntry>;
 
@@ -104,6 +112,10 @@ export interface StaffReview {
   listening: Array<{ partNumber: number; context?: string; transcript: string }>;
   /** Human readable answer per question, e.g. "B", "TRUE", "library / the library". */
   answers: { listening: Record<number, string>; reading: Record<number, string> };
+  /** Evidence for the answer, per question number (when the package gives it). */
+  explanations?: { listening: Record<number, string>; reading: Record<number, string> };
+  /** Marking notes from the package. */
+  notes?: { writingTask1?: string; writingTask2?: string; speaking?: string };
   meta?: Record<string, unknown>;
 }
 

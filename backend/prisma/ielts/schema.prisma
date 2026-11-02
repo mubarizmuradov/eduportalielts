@@ -72,6 +72,7 @@ model IeltsTest {
   assignments Assignment[]
 
   @@index([academyId, archivedAt])
+  @@index([academyId, packageSha256])
   @@map("ielts_tests")
 }
 
@@ -96,22 +97,31 @@ model TestAsset {
 
 // ---------------------------------------------------------------- assignments
 
+/// How the Speaking test is taken.
+enum SpeakingMode {
+  /// Online simulation: recorded questions, the candidate's answers are recorded
+  RECORDED
+  /// Face to face with the teacher (like the real test); the online sitting ends after Writing
+  FACE_TO_FACE
+}
+
 /// A test given to one EduPortal class for a time window.
 model Assignment {
-  id                String    @id @default(uuid())
-  testId            String    @map("test_id")
-  academyId         String    @map("academy_id") @db.Uuid
-  campusId          String    @map("campus_id") @db.Uuid
-  classId           String    @map("class_id") @db.Uuid
+  id                String       @id @default(uuid())
+  testId            String       @map("test_id")
+  academyId         String       @map("academy_id") @db.Uuid
+  campusId          String       @map("campus_id") @db.Uuid
+  classId           String       @map("class_id") @db.Uuid
   /// Class title when assigned (EduPortal is the source of truth)
-  classTitle        String    @map("class_title") @db.VarChar(200)
-  createdById       String    @map("created_by_id") @db.Uuid
-  title             String    @db.VarChar(200)
-  opensAt           DateTime  @map("opens_at")
-  closesAt          DateTime  @map("closes_at")
+  classTitle        String       @map("class_title") @db.VarChar(200)
+  createdById       String       @map("created_by_id") @db.Uuid
+  title             String       @db.VarChar(200)
+  opensAt           DateTime     @map("opens_at")
+  closesAt          DateTime     @map("closes_at")
+  speakingMode      SpeakingMode @default(RECORDED) @map("speaking_mode")
   /// Students see their bands only after this is set
-  resultsReleasedAt DateTime? @map("results_released_at")
-  createdAt         DateTime  @default(now()) @map("created_at")
+  resultsReleasedAt DateTime?    @map("results_released_at")
+  createdAt         DateTime     @default(now()) @map("created_at")
 
   test     IeltsTest @relation(fields: [testId], references: [id])
   attempts Attempt[]
@@ -138,21 +148,21 @@ enum ExamModule {
 
 /// One candidate sitting one assignment (L → R → W → S, like the real test).
 model Attempt {
-  id               String         @id @default(uuid())
-  assignmentId     String         @map("assignment_id")
-  userId           String         @map("user_id") @db.Uuid
-  status           AttemptStatus  @default(IN_PROGRESS)
+  id               String        @id @default(uuid())
+  assignmentId     String        @map("assignment_id")
+  userId           String        @map("user_id") @db.Uuid
+  status           AttemptStatus @default(IN_PROGRESS)
   /// null when every module is finished
-  currentModule    ExamModule?    @map("current_module")
-  moduleStartedAt  DateTime?      @map("module_started_at")
+  currentModule    ExamModule?   @map("current_module")
+  moduleStartedAt  DateTime?     @map("module_started_at")
   /// server-side deadline of the current module
-  moduleDeadline   DateTime?      @map("module_deadline")
+  moduleDeadline   DateTime?     @map("module_deadline")
   /// { listening: {start, end}, … }
-  moduleTimes      Json           @default("{}") @map("module_times")
-  listeningAnswers Json           @default("{}") @map("listening_answers")
-  readingAnswers   Json           @default("{}") @map("reading_answers")
-  writingTask1     String         @default("") @map("writing_task1")
-  writingTask2     String         @default("") @map("writing_task2")
+  moduleTimes      Json          @default("{}") @map("module_times")
+  listeningAnswers Json          @default("{}") @map("listening_answers")
+  readingAnswers   Json          @default("{}") @map("reading_answers")
+  writingTask1     String        @default("") @map("writing_task1")
+  writingTask2     String        @default("") @map("writing_task2")
 
   listeningRaw   Int?   @map("listening_raw")
   listeningBand  Float? @map("listening_band")

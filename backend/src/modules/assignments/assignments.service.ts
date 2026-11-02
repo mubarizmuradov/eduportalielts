@@ -12,7 +12,9 @@ export interface CreateAssignment {
   classId: string;
   title?: string;
   opensAt: Date;
+  /** Last moment a student can start the test. */
   closesAt: Date;
+  speakingMode?: 'RECORDED' | 'FACE_TO_FACE';
 }
 
 /** Giving a test to an EduPortal class, and the class report. */
@@ -62,6 +64,7 @@ export class AssignmentsService {
         title: input.title?.trim() || test.title,
         opensAt: input.opensAt,
         closesAt: input.closesAt,
+        speakingMode: input.speakingMode ?? 'RECORDED',
       },
     });
   }
@@ -195,6 +198,7 @@ export class AssignmentsService {
         classTitle: a.classTitle,
         opensAt: a.opensAt,
         closesAt: a.closesAt,
+        speakingMode: a.speakingMode,
         resultsReleasedAt: a.resultsReleasedAt,
         testId: a.testId,
         testTitle: a.test.title,

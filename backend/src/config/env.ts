@@ -29,6 +29,16 @@ export const envSchema = z.object({
     .string()
     .default('')
     .transform((v) => v.split(',').map((h) => h.trim().toLowerCase()).filter(Boolean)),
+  /**
+   * Packages in the "ielts-content 1.0.0" format name their media by
+   * `storageKey`; files are downloaded from this https base URL + storageKey.
+   * Its host must also be in ASSET_FETCH_ALLOWED_HOSTS. Empty = such packages
+   * can be checked but not imported.
+   */
+  ASSET_STORAGE_BASE_URL: z
+    .string()
+    .default('')
+    .refine((v) => v === '' || /^https:\/\/[^/]+/.test(v), 'ASSET_STORAGE_BASE_URL must be an https URL'),
   COOKIE_SECURE: boolFlag(false),
   /** Public URL prefix of this API as seen by browsers (nginx: /api). */
   PUBLIC_API_PREFIX: z.string().default('/api'),

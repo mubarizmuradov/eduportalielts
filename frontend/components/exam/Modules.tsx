@@ -246,10 +246,15 @@ export function WritingModule({
         left={
           <div className="space-y-3">
             <RichText text={task.body.replace(/^You should spend about \d+ minutes on this task\.\n\n/, '')} />
-            {task.image && (
+            {(task.images ?? (task.image ? [task.image] : [])).map((img, i, all) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={assetUrl(testId, task.image)} alt="Task 1 visual" className="ex-border max-w-full border" />
-            )}
+              <img
+                key={img}
+                src={assetUrl(testId, img)}
+                alt={all.length > 1 ? `Task 1 visual ${i + 1}` : 'Task 1 visual'}
+                className="ex-border max-w-full border"
+              />
+            ))}
           </div>
         }
         right={

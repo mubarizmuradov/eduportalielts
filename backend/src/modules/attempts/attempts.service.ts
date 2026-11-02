@@ -111,7 +111,7 @@ export class AttemptsService {
     const exam = test.candidate as unknown as CandidateExam;
     const key = test.answerKey as unknown as ExamAnswerKey;
     const now = new Date();
-    const next = nextModule(from);
+    const next = nextModule(from, attempt.assignment.speakingMode);
     // A module auto-submitted late starts the next one from the old deadline,
     // so an abandoned sitting runs out instead of restarting the clock.
     const startNext = attempt.moduleDeadline && attempt.moduleDeadline < now ? attempt.moduleDeadline : now;
@@ -157,7 +157,12 @@ export class AttemptsService {
       },
       candidate: { name: `${user.firstName} ${user.lastName}`, number: candidateNumber(a.id) },
       test: { id: a.assignment.test.id, title: exam.title, testType: exam.testType },
-      assignment: { id: a.assignmentId, title: a.assignment.title, resultsReleased: !!a.assignment.resultsReleasedAt },
+      assignment: {
+        id: a.assignmentId,
+        title: a.assignment.title,
+        resultsReleased: !!a.assignment.resultsReleasedAt,
+        speakingMode: a.assignment.speakingMode,
+      },
       content:
         m === 'LISTENING'
           ? exam.listening
@@ -263,12 +268,13 @@ export class AttemptsService {
       select: { id: true, part: true, index: true, durationMs: true },
       orderBy: [{ part: 'asc' }, { index: 'asc' }],
     });
-    const sheet = (answers: unknown, marks: unknown, key: Record<number, string>) =>
+    const sheet = (answers: unknown, marks: unknown, key: Record<number, string>, why: Record<number, string> = {}) =>
       Array.from({ length: 40 }, (_, i) => i + 1).map((n) => ({
         number: n,
         answer: (answers as Record<string, string>)[n] ?? '',
         correct: marks ? !!(marks as Record<string, boolean>)[n] : null,
         key: key[n],
+        ...(why[n] ? { explanation: why[n] } : {}),
       }));
     return {
       staff,
@@ -278,7 +284,13 @@ export class AttemptsService {
         number: candidateNumber(a.id),
       },
       test: { id: test.id, title: test.title, testType: exam.testType },
-      assignment: { id: a.assignmentId, title: a.assignment.title, classTitle: a.assignment.classTitle, resultsReleasedAt: a.assignment.resultsReleasedAt },
+      assignment: {
+        id: a.assignmentId,
+        title: a.assignment.title,
+        classTitle: a.assignment.classTitle,
+        resultsReleasedAt: a.assignment.resultsReleasedAt,
+        speakingMode: a.assignment.speakingMode,
+      },
       attempt: {
         id: a.id,
         status: a.status,
@@ -295,15 +307,15 @@ export class AttemptsService {
         overall: a.overallBand,
       },
       raw: { listening: a.listeningRaw, reading: a.readingRaw },
-      listening: sheet(a.listeningAnswers, a.listeningMarks, review.answers.listening),
-      reading: sheet(a.readingAnswers, a.readingMarks, review.answers.reading),
+      listening: sheet(a.listeningAnswers, a.listeningMarks, review.answers.listening, review.explanations?.listening),
+      reading: sheet(a.readingAnswers, a.readingMarks, review.answers.reading, review.explanations?.reading),
       writing: {
         tasks: exam.writing.tasks,
         texts: [a.writingTask1, a.writingTask2],
         scores: a.writingScores,
       },
       speaking: { content: exam.speaking, recordings, scores: a.speakingScores },
-      ...(staff ? { transcripts: review.listening } : {}),
+      ...(staff ? { transcripts: review.listening, notes: review.notes ?? {} } : {}),
     };
   }
 

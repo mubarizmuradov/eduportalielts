@@ -1,0 +1,352 @@
+{
+  "version": "1.0.0",
+  "status": "proposed_engine_capabilities",
+  "note": "These are software variants, not this many official IELTS question families. Variant combinations require content review. See docs/02_SORU_TIPLERI.md.",
+  "variants": [
+    {
+      "id": "listening.multiple_choice.single",
+      "skill": "listening",
+      "taskType": "multiple_choice",
+      "responseKind": "choice_one",
+      "layoutKind": "list"
+    },
+    {
+      "id": "listening.multiple_choice.multi",
+      "skill": "listening",
+      "taskType": "multiple_choice",
+      "responseKind": "choice_many",
+      "layoutKind": "list"
+    },
+    {
+      "id": "reading.multiple_choice.single",
+      "skill": "reading",
+      "taskType": "multiple_choice",
+      "responseKind": "choice_one",
+      "layoutKind": "list"
+    },
+    {
+      "id": "reading.multiple_choice.multi",
+      "skill": "reading",
+      "taskType": "multiple_choice",
+      "responseKind": "choice_many",
+      "layoutKind": "list"
+    },
+    {
+      "id": "listening.matching",
+      "skill": "listening",
+      "taskType": "matching",
+      "responseKind": "choice_one",
+      "layoutKind": "matching"
+    },
+    {
+      "id": "listening.label.map.text.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "text",
+      "layoutKind": "visual",
+      "visualKind": "map",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.map.choice_one.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "map",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.map.location",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "map",
+      "arrangement": "location_options"
+    },
+    {
+      "id": "listening.label.plan.text.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "text",
+      "layoutKind": "visual",
+      "visualKind": "plan",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.plan.choice_one.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "plan",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.plan.location",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "plan",
+      "arrangement": "location_options"
+    },
+    {
+      "id": "listening.label.diagram.text.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "text",
+      "layoutKind": "visual",
+      "visualKind": "diagram",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.diagram.choice_one.blank",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "diagram",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.label.diagram.location",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "diagram",
+      "arrangement": "location_options"
+    },
+    {
+      "id": "listening.label.pictures.choice",
+      "skill": "listening",
+      "taskType": "visual_labelling",
+      "responseKind": "choice_one",
+      "layoutKind": "visual",
+      "visualKind": "pictures",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "listening.completion.form.text",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "form"
+    },
+    {
+      "id": "listening.completion.form.choice_one",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "form"
+    },
+    {
+      "id": "listening.completion.note.text",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "note"
+    },
+    {
+      "id": "listening.completion.note.choice_one",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "note"
+    },
+    {
+      "id": "listening.completion.table.text",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "table"
+    },
+    {
+      "id": "listening.completion.table.choice_one",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "table"
+    },
+    {
+      "id": "listening.completion.flow_chart.text",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "flow_chart"
+    },
+    {
+      "id": "listening.completion.flow_chart.choice_one",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "flow_chart"
+    },
+    {
+      "id": "listening.completion.summary.text",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "summary"
+    },
+    {
+      "id": "listening.completion.summary.choice_one",
+      "skill": "listening",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "summary"
+    },
+    {
+      "id": "listening.sentence_completion",
+      "skill": "listening",
+      "taskType": "sentence_completion",
+      "responseKind": "text",
+      "layoutKind": "sentence"
+    },
+    {
+      "id": "listening.short_answer",
+      "skill": "listening",
+      "taskType": "short_answer",
+      "responseKind": "text",
+      "layoutKind": "list"
+    },
+    {
+      "id": "listening.short_answer.set",
+      "skill": "listening",
+      "taskType": "short_answer",
+      "responseKind": "text_set",
+      "layoutKind": "list"
+    },
+    {
+      "id": "reading.multiple_choice.title",
+      "skill": "reading",
+      "taskType": "multiple_choice",
+      "responseKind": "choice_one",
+      "layoutKind": "list",
+      "focus": "whole_passage_title"
+    },
+    {
+      "id": "reading.information_tfng",
+      "skill": "reading",
+      "taskType": "information_tfng",
+      "responseKind": "judgement",
+      "layoutKind": "list"
+    },
+    {
+      "id": "reading.writer_ynng",
+      "skill": "reading",
+      "taskType": "writer_ynng",
+      "responseKind": "judgement",
+      "layoutKind": "list"
+    },
+    {
+      "id": "reading.matching_information",
+      "skill": "reading",
+      "taskType": "matching_information",
+      "responseKind": "choice_one",
+      "layoutKind": "matching"
+    },
+    {
+      "id": "reading.matching_headings",
+      "skill": "reading",
+      "taskType": "matching_headings",
+      "responseKind": "choice_one",
+      "layoutKind": "matching"
+    },
+    {
+      "id": "reading.matching_features",
+      "skill": "reading",
+      "taskType": "matching_features",
+      "responseKind": "choice_one",
+      "layoutKind": "matching"
+    },
+    {
+      "id": "reading.matching_endings",
+      "skill": "reading",
+      "taskType": "matching_endings",
+      "responseKind": "choice_one",
+      "layoutKind": "matching"
+    },
+    {
+      "id": "reading.sentence_completion",
+      "skill": "reading",
+      "taskType": "sentence_completion",
+      "responseKind": "text",
+      "layoutKind": "sentence"
+    },
+    {
+      "id": "reading.completion.summary.text",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "summary"
+    },
+    {
+      "id": "reading.completion.summary.choice_one",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "summary"
+    },
+    {
+      "id": "reading.completion.note.text",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "note"
+    },
+    {
+      "id": "reading.completion.note.choice_one",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "note"
+    },
+    {
+      "id": "reading.completion.table.text",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "table"
+    },
+    {
+      "id": "reading.completion.table.choice_one",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "table"
+    },
+    {
+      "id": "reading.completion.flow_chart.text",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "text",
+      "layoutKind": "flow_chart"
+    },
+    {
+      "id": "reading.completion.flow_chart.choice_one",
+      "skill": "reading",
+      "taskType": "completion",
+      "responseKind": "choice_one",
+      "layoutKind": "flow_chart"
+    },
+    {
+      "id": "reading.label.diagram",
+      "skill": "reading",
+      "taskType": "visual_labelling",
+      "responseKind": "text",
+      "layoutKind": "visual",
+      "visualKind": "diagram",
+      "arrangement": "blank_targets"
+    },
+    {
+      "id": "reading.short_answer",
+      "skill": "reading",
+      "taskType": "short_answer",
+      "responseKind": "text",
+      "layoutKind": "list"
+    }
+  ]
+}

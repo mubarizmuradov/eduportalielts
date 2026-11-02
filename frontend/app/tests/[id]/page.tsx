@@ -20,7 +20,7 @@ function groupLabel(g: Group) {
   return `${range} · ${kind}`;
 }
 
-function AnswerTable({ groups, answers }: { groups: Group[]; answers: Record<string, string> }) {
+function AnswerTable({ groups, answers, explanations = {} }: { groups: Group[]; answers: Record<string, string>; explanations?: Record<string, string> }) {
   return (
     <div className="space-y-2">
       {groups.map((g) => (
@@ -28,15 +28,36 @@ function AnswerTable({ groups, answers }: { groups: Group[]; answers: Record<str
           <p className="text-sm font-semibold">{groupLabel(g)}</p>
           <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm">
             {g.numbers.map((n) => (
-              <span key={n}>
+              <span key={n} title={explanations[n]}>
                 <strong>{n}</strong> {answers[n]}
+                {explanations[n] && <span className="text-muted"> ⓘ</span>}
               </span>
             ))}
           </div>
+          {g.numbers.some((n) => explanations[n]) && (
+            <details className="text-sm">
+              <summary className="text-muted cursor-pointer">ⓘ</summary>
+              <ul className="text-muted mt-1 space-y-0.5">
+                {g.numbers
+                  .filter((n, i) => explanations[n] && explanations[n] !== explanations[g.numbers[i - 1]])
+                  .map((n) => (
+                    <li key={n}>
+                      <strong>{n}</strong> {explanations[n]}
+                    </li>
+                  ))}
+              </ul>
+            </details>
+          )}
         </div>
       ))}
     </div>
   );
+}
+
+/** Rough length of the online sitting in minutes (for the closing time hint). */
+function sittingMinutes(test: TestDetail, faceToFace: boolean) {
+  const listening = (test.summary.listening.audioSeconds + test.candidate.listening.reviewSeconds) / 60;
+  return Math.round(listening + test.candidate.reading.minutes + test.candidate.writing.minutes + (faceToFace ? 0 : 20));
 }
 
 function AssignForm({ test }: { test: TestDetail }) {
@@ -47,6 +68,7 @@ function AssignForm({ test }: { test: TestDetail }) {
   const [title, setTitle] = useState(test.title);
   const [opensAt, setOpensAt] = useState(() => toLocalInput(new Date()));
   const [closesAt, setClosesAt] = useState(() => toLocalInput(new Date(Date.now() + 7 * 86_400_000)));
+  const [speakingMode, setSpeakingMode] = useState<'RECORDED' | 'FACE_TO_FACE'>('RECORDED');
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ id: string; classTitle: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -63,7 +85,14 @@ function AssignForm({ test }: { test: TestDetail }) {
     try {
       const cls = classes?.find((c) => c.id === (classId || classes?.[0]?.id));
       const r = await api<{ id: string; classTitle: string }>('/assignments', {
-        body: { testId: test.id, classId: cls?.id, title, opensAt: new Date(opensAt).toISOString(), closesAt: new Date(closesAt).toISOString() },
+        body: {
+          testId: test.id,
+          classId: cls?.id,
+          title,
+          opensAt: new Date(opensAt).toISOString(),
+          closesAt: new Date(closesAt).toISOString(),
+          speakingMode,
+        },
       });
       setDone(r);
     } catch (e) {
@@ -93,8 +122,14 @@ function AssignForm({ test }: { test: TestDetail }) {
         <Field label={t('testPage.opensAt')}>
           <input type="datetime-local" className="input" value={opensAt} onChange={(e) => setOpensAt(e.target.value)} />
         </Field>
-        <Field label={t('testPage.closesAt')}>
+        <Field label={t('testPage.closesAt')} hint={t('testPage.closesAtHint', { min: sittingMinutes(test, speakingMode === 'FACE_TO_FACE') })}>
           <input type="datetime-local" className="input" value={closesAt} onChange={(e) => setClosesAt(e.target.value)} />
+        </Field>
+        <Field label={t('testPage.speakingMode')} hint={speakingMode === 'FACE_TO_FACE' ? t('testPage.speakingHint') : undefined}>
+          <select className="input" value={speakingMode} onChange={(e) => setSpeakingMode(e.target.value as 'RECORDED' | 'FACE_TO_FACE')}>
+            <option value="RECORDED">{t('testPage.speakingRecorded')}</option>
+            <option value="FACE_TO_FACE">{t('testPage.speakingFaceToFace')}</option>
+          </select>
         </Field>
       </div>
       <ErrorBanner message={error} />
@@ -194,7 +229,7 @@ export default function TestPage() {
                   <summary className="cursor-pointer text-sm font-semibold">{t('testPage.transcript')}</summary>
                   <p className="mt-1 text-sm whitespace-pre-wrap">{test.staff.listening[i]?.transcript}</p>
                 </details>
-                <AnswerTable groups={p.questionGroups} answers={test.staff.answers.listening} />
+                <AnswerTable groups={p.questionGroups} answers={test.staff.answers.listening} explanations={test.staff.explanations?.listening} />
               </div>
             ))}
           </div>
@@ -207,7 +242,7 @@ export default function TestPage() {
                 <p className="font-semibold">
                   {t('testPage.section', { n: s.sectionNumber })} · {s.texts.map((x) => x.title).join(' / ')}
                 </p>
-                <AnswerTable groups={s.questionGroups} answers={test.staff.answers.reading} />
+                <AnswerTable groups={s.questionGroups} answers={test.staff.answers.reading} explanations={test.staff.explanations?.reading} />
               </div>
             ))}
           </div>
@@ -219,9 +254,14 @@ export default function TestPage() {
               <div key={task.taskNumber} className="space-y-2">
                 <p className="font-semibold">{t('testPage.task', { n: task.taskNumber })}</p>
                 <RichText text={task.body} className="text-sm" />
-                {task.image && (
+                {(task.images ?? (task.image ? [task.image] : [])).map((img) => (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={assetUrl(test.id, task.image)} alt="" className="max-w-md rounded border" />
+                  <img key={img} src={assetUrl(test.id, img)} alt="" className="max-w-md rounded border" />
+                ))}
+                {test.staff.notes?.[task.taskNumber === 1 ? 'writingTask1' : 'writingTask2'] && (
+                  <p className="text-muted text-sm whitespace-pre-wrap">
+                    <strong>{t('grade.examinerNotes')}:</strong> {test.staff.notes[task.taskNumber === 1 ? 'writingTask1' : 'writingTask2']}
+                  </p>
                 )}
               </div>
             ))}

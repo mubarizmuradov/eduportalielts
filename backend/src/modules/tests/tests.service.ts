@@ -6,7 +6,8 @@ import { AppError, forbidden, notFound } from '../../common/errors';
 import { StorageService } from '../../common/storage.service';
 import type { Env } from '../../config/env';
 import { buildIeltsExam } from '../../ielts-format/build-exam';
-import type { CandidateExam } from '../../ielts-format/exam.types';
+import { adaptContentV1, isContentV1, PLACEHOLDER_ASSET_HOST } from '../../ielts-format/content-v1';
+import type { BuildIssue, BuiltExam, CandidateExam } from '../../ielts-format/exam.types';
 import { IeltsPrisma } from '../../prisma/ielts-prisma.service';
 import { canAuthorInAcademy, staffAcademyIds } from '../identity/access.policy';
 import { EduportalIdentityReader } from '../identity/eduportal-identity.reader';
@@ -34,12 +35,51 @@ export class TestsService {
     return user.isSystemAdmin ? tree.academies.map((a) => a.academyId) : staffAcademyIds(tree);
   }
 
+  /**
+   * Reads either format: IELTS Test Package 1.x (main) or ielts-content 1.0.0
+   * (hand-off), which is converted first. Errors of a converted package that
+   * only the builder finds point into the converted package ("converted: …").
+   */
+  private prepare(input: unknown):
+    | { ok: true; exam: BuiltExam; warnings: BuildIssue[]; format: string; fixtureOnly: boolean; unresolvedAssets: boolean }
+    | { ok: false; errors: BuildIssue[]; warnings: BuildIssue[]; format: string } {
+    if (!isContentV1(input)) {
+      const r = buildIeltsExam(input);
+      return r.ok
+        ? { ok: true, exam: r.exam, warnings: r.exam.warnings, format: 'ielts-package', fixtureOnly: false, unresolvedAssets: false }
+        : { ok: false, errors: r.errors, warnings: r.warnings, format: 'ielts-package' };
+    }
+    const format = 'ielts-content 1.0.0';
+    const base = this.config.get('ASSET_STORAGE_BASE_URL', { infer: true });
+    const a = adaptContentV1(input, { assetBaseUrl: base || undefined });
+    if (!a.ok) return { ok: false, errors: a.errors, warnings: a.warnings, format };
+    const converted = (xs: BuildIssue[]) => xs.map((x) => ({ ...x, path: `converted: ${x.path}` }));
+    const r = buildIeltsExam(a.pkg);
+    if (!r.ok) return { ok: false, errors: converted(r.errors), warnings: [...a.warnings, ...converted(r.warnings)], format };
+    return {
+      ok: true,
+      exam: r.exam,
+      warnings: [...a.warnings, ...converted(r.exam.warnings)],
+      format,
+      fixtureOnly: a.fixtureOnly,
+      unresolvedAssets: r.exam.assets.some((x) => x.url?.includes(PLACEHOLDER_ASSET_HOST)),
+    };
+  }
+
   /** Dry run: what the builder thinks of a package. Nothing is stored. */
   validate(pkg: unknown) {
-    const r = buildIeltsExam(pkg);
+    const r = this.prepare(pkg);
     return r.ok
-      ? { ok: true as const, errors: [], warnings: r.exam.warnings, summary: r.exam.summary }
-      : { ok: false as const, errors: r.errors, warnings: r.warnings };
+      ? {
+          ok: true as const,
+          errors: [],
+          warnings: r.warnings,
+          summary: r.exam.summary,
+          format: r.format,
+          /** Valid, but can not be imported as it is (test data / media not reachable). */
+          importable: !r.fixtureOnly && !r.unresolvedAssets,
+        }
+      : { ok: false as const, errors: r.errors, warnings: r.warnings, format: r.format };
   }
 
   /** Builds the exam, stores its media and saves it in the academy's test library. */
@@ -47,13 +87,31 @@ export class TestsService {
     const tree = await this.members.tree(user.id);
     if (!canAuthorInAcademy(tree, academyId, user.isSystemAdmin))
       throw forbidden('Only owners, managers, teachers and mentors of this academy can add IELTS tests');
-    const result = buildIeltsExam(pkg);
+    const result = this.prepare(pkg);
     if (!result.ok)
       throw new AppError(HttpStatus.UNPROCESSABLE_ENTITY, 'INVALID_PACKAGE', 'The package is not a valid IELTS test', {
         errors: result.errors,
         warnings: result.warnings,
       });
+    if (result.fixtureOnly)
+      throw new AppError(HttpStatus.UNPROCESSABLE_ENTITY, 'FIXTURE_ONLY', 'This package is test data only (fixtureOnly) and can not be given to students');
+    if (result.unresolvedAssets)
+      throw new AppError(
+        HttpStatus.UNPROCESSABLE_ENTITY,
+        'ASSETS_NOT_RESOLVABLE',
+        'The media of this package can not be downloaded: set ASSET_STORAGE_BASE_URL on the server',
+      );
     const exam = result.exam;
+    const packageSha256 = createHash('sha256').update(JSON.stringify(pkg)).digest('hex');
+    // The same package twice in one academy is almost always a double click.
+    const same = await this.db.ieltsTest.findFirst({
+      where: { academyId, packageSha256, archivedAt: null },
+      select: { id: true, title: true },
+    });
+    if (same)
+      throw new AppError(HttpStatus.CONFLICT, 'DUPLICATE_PACKAGE', `This package is already in the library: "${same.title}"`, {
+        testId: same.id,
+      });
     const testId = randomUUID();
     const allowedHosts = this.config.get('ASSET_FETCH_ALLOWED_HOSTS', { infer: true });
 
@@ -78,7 +136,7 @@ export class TestsService {
           staff: exam.staff as object,
           summary: exam.summary as object,
           warnings: exam.warnings as object,
-          packageSha256: createHash('sha256').update(JSON.stringify(pkg)).digest('hex'),
+          packageSha256,
           assets: {
             create: exam.assets.map((a) => {
               const s = stored.find((x) => x.key === a.id)!;
@@ -103,7 +161,7 @@ export class TestsService {
       throw e;
     }
     this.log.log(`Imported IELTS test ${testId} "${exam.candidate.title}" into academy ${academyId}`);
-    return { id: testId, summary: exam.summary, warnings: exam.warnings };
+    return { id: testId, summary: exam.summary, warnings: result.warnings };
   }
 
   async list(user: EduUser, academyId?: string) {

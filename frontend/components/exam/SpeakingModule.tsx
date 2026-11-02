@@ -215,6 +215,10 @@ export function SpeakingModule({
     return (
       <div className="mx-auto max-w-2xl space-y-4 p-6">
         <h1 className="text-[1.4em] font-bold">IELTS Speaking</h1>
+        <p className="ex-part-banner">
+          <strong>Speaking simulation.</strong> In the real IELTS test, Speaking is a face-to-face interview with an examiner. In this
+          practice version the questions are pre-recorded and your answers are recorded for your teacher to mark.
+        </p>
         <p>
           This is a recorded Speaking test in three parts. You will hear or read each question, and your answer is recorded straight away. Speak clearly and answer as fully as you can.
         </p>

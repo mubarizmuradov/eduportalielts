@@ -1,0 +1,33 @@
+{
+  "status": "reference_anchors_only_not_full_conversion_table",
+  "sourceId": "S19",
+  "sourceUrl": "https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail",
+  "averageRawAnchors": {
+    "listening": {
+      "5": 16,
+      "6": 23,
+      "7": 30,
+      "8": 35
+    },
+    "academic_reading": {
+      "5": 15,
+      "6": 23,
+      "7": 30,
+      "8": 35
+    },
+    "general_training_reading": {
+      "4": 15,
+      "5": 23,
+      "6": 30,
+      "7": 35
+    }
+  },
+  "conversionTables": null,
+  "interpolationAllowed": false,
+  "notes": [
+    "Raw thresholds vary somewhat by test version.",
+    "Do not return a band from anchors alone.",
+    "A full approved practice mapping must define all 41 raw scores and be versioned.",
+    "Only four final component bands can produce an overall band."
+  ]
+}

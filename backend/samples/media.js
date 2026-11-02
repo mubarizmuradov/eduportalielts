@@ -98,4 +98,50 @@ ${grid}<line x1="70" x2="70" y1="30" y2="330" stroke="#333"/><line x1="70" x2="5
   );
 }
 
-module.exports = { toneWav, parkMap, furnaceDiagram, barChart };
+/**
+ * General Training sample, Listening part 2: map of a community centre with
+ * NO letters in the picture — the package gives letterPositions and the exam
+ * draws the letters (generated images rarely contain readable letters).
+ */
+function centreMap() {
+  const room = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#eef3fb" stroke="#333"/>`;
+  return svg(
+    600,
+    400,
+    `<text x="300" y="28" font-size="20" text-anchor="middle" font-weight="bold">Riverside Community Centre</text>
+<rect x="20" y="40" width="560" height="320" fill="none" stroke="#333" stroke-width="2"/>
+${room(40, 60, 140, 110)}${room(200, 60, 120, 110)}${room(340, 60, 110, 110)}${room(470, 60, 90, 110)}
+${room(40, 230, 140, 110)}${room(200, 230, 120, 110)}${room(340, 230, 110, 110)}${room(470, 230, 90, 110)}
+<rect x="20" y="180" width="560" height="40" fill="#f3f3f3" stroke="none"/><text x="300" y="205" font-size="13" text-anchor="middle">corridor</text>
+<path d="M290 360 v28 m20 -28 v28" stroke="#333" stroke-width="2"/><text x="300" y="396" font-size="13" text-anchor="middle">Main entrance</text>
+<text x="575" y="205" font-size="12" text-anchor="end">lift →</text>`,
+  );
+}
+
+/** General Training sample, Listening part 2: floor plan of the first floor, gaps numbered by the exam. */
+function floorPlan() {
+  const room = (x, y, w, h, label) =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#f6f1e7" stroke="#333"/>${label ? `<text x="${x + w / 2}" y="${y + 18}" font-size="12" text-anchor="middle">${label}</text>` : ''}`;
+  return svg(
+    560,
+    320,
+    `<text x="280" y="24" font-size="18" text-anchor="middle" font-weight="bold">First floor</text>
+${room(20, 40, 170, 120, 'stairs')}${room(200, 40, 160, 120, '')}${room(370, 40, 170, 120, '')}
+${room(20, 180, 250, 120, '')}${room(290, 180, 250, 120, 'reception desk')}`,
+  );
+}
+
+/** General Training sample, Listening part 1: three bags A, B and C. */
+function threeBags() {
+  const bag = (x, label, body) =>
+    `<g transform="translate(${x},40)">${body}<text x="70" y="190" font-size="20" text-anchor="middle" font-weight="bold">${label}</text></g>`;
+  return svg(
+    480,
+    250,
+    bag(10, 'A', '<rect x="20" y="40" width="100" height="120" rx="12" fill="#c9d9ef" stroke="#333" stroke-width="2"/><path d="M45 40 q25 -40 50 0" fill="none" stroke="#333" stroke-width="4"/>') +
+      bag(170, 'B', '<rect x="10" y="70" width="120" height="80" rx="8" fill="#f1d6b8" stroke="#333" stroke-width="2"/><path d="M30 70 q40 -55 80 0" fill="none" stroke="#333" stroke-width="4"/><rect x="55" y="95" width="30" height="20" fill="#fff" stroke="#333"/>') +
+      bag(330, 'C', '<path d="M30 40 h80 l15 120 h-110 z" fill="#d4ecd0" stroke="#333" stroke-width="2"/><path d="M45 40 v-20 m50 20 v-20" stroke="#333" stroke-width="4"/>'),
+  );
+}
+
+module.exports = { toneWav, parkMap, furnaceDiagram, barChart, centreMap, floorPlan, threeBags };

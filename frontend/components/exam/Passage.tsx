@@ -152,7 +152,10 @@ export function Passage({ texts, groups, storageKey }: { texts: ReadingText[]; g
     <div ref={box} className="relative" onMouseUp={onMouseUp}>
       {texts.map((t, ti) => (
         <article key={ti} className={ti > 0 ? 'ex-border mt-8 border-t pt-6' : ''}>
-          <h2 className="mb-1 text-center text-[1.25em] font-bold">{t.title}</h2>
+          <h2 className="mb-1 text-center text-[1.25em] font-bold">
+            {t.label && <span className="mr-2">{t.label}</span>}
+            {t.title}
+          </h2>
           {t.subtitle && <p className="ex-muted mb-3 text-center italic">{t.subtitle}</p>}
           {t.image && (
             <figure className="my-3">
@@ -182,6 +185,16 @@ export function Passage({ texts, groups, storageKey }: { texts: ReadingText[]; g
               );
             })}
           </div>
+          {t.glossary && t.glossary.length > 0 && (
+            <dl className="ex-border mt-4 border-t pt-2 text-[0.9em]">
+              {t.glossary.map((g) => (
+                <div key={g.term} className="flex gap-1">
+                  <dt className="font-bold">*{g.term}:</dt>
+                  <dd>{g.definition}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </article>
       ))}
 

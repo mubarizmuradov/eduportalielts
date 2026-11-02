@@ -237,9 +237,10 @@ describe('buildIeltsExam — rejects packages that are not IELTS shaped', () => 
   it('enforces the General Training structure', () => {
     const errs = errorsOf((p) => {
       p.testType = 'general_training';
+      p.reading.sections[2].texts.push(p.reading.sections[2].texts[0]);
     });
     const all = errs.join('\n');
-    expect(all).toMatch(/General Training section 1 has 2-3 text/);
+    expect(all).toMatch(/General Training section 3 has 1 text/);
     expect(all).toMatch(/general_letter/);
   });
 
@@ -273,6 +274,7 @@ describe('marking', () => {
     for (const [n, e] of Object.entries(exam.answerKey.listening)) {
       if (e.kind === 'choice') perfect[n] = e.answer;
       else if (e.kind === 'text') perfect[n] = expandAccepted(e.answers[0])[0];
+      else if (e.kind === 'textset') perfect[n] = expandAccepted(e.units[e.numbers.indexOf(Number(n))][0])[0];
       else perfect[n] = e.answers[e.numbers.indexOf(Number(n))];
     }
     expect(markModule(exam.answerKey.listening, perfect).raw).toBe(40);
@@ -292,4 +294,127 @@ describe('marking', () => {
     expect(m.correct).toMatchObject({ 1: true, 4: true, 32: true, 39: true, 40: true, 2: false });
     expect(markModule(exam.answerKey.reading, { 4: 'NOT_GIVEN', 5: 'true', 14: 'vii' }).raw).toBe(3);
   });
+});
+
+// ---------------------------------------------------------------- format 1.1
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { makeGeneralSamplePackage } = require('../../samples/general-sample-package.js');
+
+describe('format 1.1 (General Training sample)', () => {
+  const gtBuild = (mutate?: (p: Json) => void) => {
+    const pkg = makeGeneralSamplePackage();
+    mutate?.(pkg);
+    return buildIeltsExam(pkg);
+  };
+  const gtErrors = (mutate: (p: Json) => void) => {
+    const r = gtBuild(mutate);
+    expect(r.ok).toBe(false);
+    return r.ok ? '' : r.errors.map((e) => `${e.path}: ${e.message}`).join('\n');
+  };
+  const r = gtBuild();
+  if (!r.ok) throw new Error(JSON.stringify(r.errors, null, 2));
+  const exam = r.exam;
+
+  it('builds, 1.0 packages still build', () => {
+    expect(exam.schemaVersion).toBe('1.1');
+    expect(exam.summary.reading.texts).toBe(7);
+    expect(built().schemaVersion).toBe('1.0');
+  });
+
+  it('keeps answers, explanations and examiner notes out of the candidate view', () => {
+    const view = JSON.stringify(exam.candidate);
+    expect(view).not.toMatch(/"answers?"|answerUnits|explanation|examinerNotes|K-O-W-A-L/);
+    expect(exam.staff.explanations?.listening[1]).toMatch(/K-O-W-A-L-S-K-I/);
+    expect(exam.staff.explanations?.listening[8]).toMatch(/Swimming/);
+    expect(exam.staff.notes?.writingTask2).toMatch(/outweighs/);
+  });
+
+  it('"ONE WORD OR A NUMBER": words alone or a number alone', () => {
+    const g = exam.candidate.listening.parts[0].questionGroups[0];
+    expect(g.instructions).toMatch(/ONE WORD OR A NUMBER/);
+    const key = exam.answerKey.listening;
+    expect(markModule(key, { 2: '4512', 4: '35' }).raw).toBe(2);
+    expect(withinWordLimit('35 pounds', { maxWords: 1, allowNumber: true, numberRule: 'or' })).toBe(false);
+    expect(withinWordLimit('35 pounds', { maxWords: 1, allowNumber: true })).toBe(true);
+    expect(wordLimitPhrase({ maxWords: 2, allowNumber: true, numberRule: 'or' })).toBe('NO MORE THAN TWO WORDS OR A NUMBER');
+  });
+
+  it('"Which TWO …?" short answers score in any order, a repeated answer once', () => {
+    const key = exam.answerKey.listening;
+    expect(markModule(key, { 7: 'tennis', 8: 'Swimming' }).raw).toBe(2);
+    expect(markModule(key, { 7: 'tennis', 8: 'tennis' }).raw).toBe(1);
+    expect(markModule(key, { 8: 'swimming' }).correct).toMatchObject({ 7: true, 8: false });
+    const g = exam.candidate.listening.parts[0].questionGroups[1];
+    expect(g.numbers).toEqual([7, 8]);
+  });
+
+  it('map letters drawn by the exam, plan labels from a box, a question picture', () => {
+    const [map, plan] = exam.candidate.listening.parts[1].questionGroups;
+    expect(map.letterPositions).toHaveLength(8);
+    expect(map.instructions).toMatch(/Label the map below/);
+    expect(plan.instructions).toMatch(/Label the plan below\.\nChoose \*\*THREE\*\* answers from the box/);
+    expect(exam.answerKey.listening[16]).toEqual({ kind: 'choice', answer: 'A' });
+    expect(exam.candidate.listening.parts[0].questionGroups[2].questions).toEqual(
+      expect.arrayContaining([expect.objectContaining({ number: 9, image: 'bags' })]),
+    );
+  });
+
+  it('matching information over labelled General Training texts', () => {
+    const g = exam.candidate.reading.sections[0].questionGroups[0];
+    expect(g.paragraphs).toEqual(['A', 'B', 'C', 'D']);
+    expect(g.instructions).toMatch(/Look at the 4 texts, \*\*A–D\*\*/);
+    expect(markModule(exam.answerKey.reading, { 1: 'C', 2: 'B', 3: 'D' }).raw).toBe(3);
+  });
+
+  it('refuses broken 1.1 content', () => {
+    expect(
+      gtErrors((p) => {
+        p.listening.parts[1].questionGroups[0].letterPositions.pop();
+      }),
+    ).toMatch(/give one position for each letter/);
+    expect(
+      gtErrors((p) => {
+        p.listening.parts[2].questionGroups[0].flow.edges.push({ from: 'site', to: 'nowhere' });
+      }),
+    ).toMatch(/points to an unknown box/);
+    expect(
+      gtErrors((p) => {
+        p.reading.sections[2].questionGroups[0].headings.splice(6);
+      }),
+    ).toMatch(/more headings than paragraphs/);
+    expect(
+      gtErrors((p) => {
+        p.reading.sections[0].texts[3].label = undefined;
+      }),
+    ).toMatch(/label every text of the section or none/);
+    expect(
+      gtErrors((p) => {
+        p.listening.parts[0].questionGroups[1].questions[0].answerUnits = [['swimming'], ['Swimming']];
+      }),
+    ).toMatch(/two answer units accept the same answer/);
+    expect(
+      gtErrors((p) => {
+        p.reading.sections[2].questionGroups.unshift({
+          type: 'diagram_label_completion',
+          visualKind: 'map',
+          image: 'centre-map',
+          wordLimit: { maxWords: 1, allowNumber: false },
+          labels: [{ number: 28, x: 10, y: 10, answers: ['x'] }],
+        });
+      }),
+    ).toMatch(/reading labelling is always a diagram/);
+  });
+});
+
+describe('band tables meet the official average raw-score anchors (ielts.org, scoring in detail)', () => {
+  it.each([
+    [16, 5], [23, 6], [30, 7], [35, 8],
+  ])('Listening %i → %f', (raw, band) => expect(listeningBand(raw)).toBe(band));
+  it.each([
+    [15, 5], [23, 6], [30, 7], [35, 8],
+  ])('Academic Reading %i → %f', (raw, band) => expect(readingBand(raw, 'academic')).toBe(band));
+  it.each([
+    [15, 4], [23, 5], [30, 6], [35, 7],
+  ])('General Training Reading %i → %f', (raw, band) => expect(readingBand(raw, 'general_training')).toBe(band));
 });

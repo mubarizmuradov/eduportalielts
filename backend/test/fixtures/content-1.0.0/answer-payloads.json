@@ -1,0 +1,70 @@
+{
+  "note": "API payload illustrations, not accepted by the content schema. Validate at the attempt endpoint and reject additional fields.",
+  "answers": [
+    {
+      "itemId": "example.single",
+      "value": {
+        "kind": "choice_one",
+        "optionId": "option.B"
+      }
+    },
+    {
+      "itemId": "example.multi",
+      "value": {
+        "kind": "choice_many",
+        "optionIds": [
+          "option.D",
+          "option.B"
+        ]
+      }
+    },
+    {
+      "itemId": "example.judgement",
+      "value": {
+        "kind": "judgement",
+        "value": "NOT_GIVEN"
+      }
+    },
+    {
+      "itemId": "example.text",
+      "value": {
+        "kind": "text",
+        "text": "blue room"
+      }
+    },
+    {
+      "itemId": "example.textset",
+      "value": {
+        "kind": "text_set",
+        "texts": [
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "taskId": "writing.t1",
+      "value": {
+        "kind": "essay",
+        "text": "Student response is stored as plain text."
+      }
+    }
+  ],
+  "saveEnvelope": {
+    "attemptId": "attempt_123",
+    "clientMutationId": "mutation_123",
+    "expectedRevision": 4,
+    "answer": {
+      "itemId": "example.text",
+      "value": {
+        "kind": "text",
+        "text": "blue room"
+      }
+    }
+  },
+  "acknowledgement": {
+    "acceptedRevision": 5,
+    "serverAcceptedAt": "2026-11-02T09:00:00Z",
+    "status": "saved"
+  }
+}

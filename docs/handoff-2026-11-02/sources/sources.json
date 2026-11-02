@@ -1,0 +1,346 @@
+{
+  "checkedAt": "2026-11-02",
+  "note": "Not a full site mirror. Access is granular: search-only entries are not claimed to have been fully opened. All summaries are original concise notes.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "IELTS Academic overview",
+      "url": "https://www.ielts.org/take-a-test/test-types/ielts-academic-test",
+      "publisherType": "official",
+      "access": "search_result",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Scope and components",
+      "offlineSummary": "Academic is one of the four-skill IELTS test profiles. This source establishes profile scope, not software implementation."
+    },
+    {
+      "id": "S02",
+      "title": "IELTS General Training overview",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-general-training-test",
+      "publisherType": "official",
+      "access": "search_result",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Shared vs different components",
+      "offlineSummary": "Listening and Speaking are shared with Academic; Reading and Writing differ. The practice system must retain the selected test profile."
+    },
+    {
+      "id": "S03",
+      "title": "Academic Listening format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-listening",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Listening structure, six families, limits",
+      "offlineSummary": "Four ten-question parts progress from social dialogue and monologue to educational discussion and academic monologue. Recordings are heard once. The page groups questions into six families and describes word limits. It is not a computer timing implementation specification."
+    },
+    {
+      "id": "S04",
+      "title": "Academic Reading format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-reading",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Academic structure and question families",
+      "offlineSummary": "Three sections and forty questions are completed in sixty minutes. Eleven task families cover selected answers, judgements, matching and completion. More headings than targets are supplied and headings cannot repeat. Completion formats may differ in answer ordering."
+    },
+    {
+      "id": "S05",
+      "title": "General Training Reading format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-general-training-test/ielts-general-training-format-reading",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "GT text grouping and length",
+      "offlineSummary": "GT progresses through daily-life texts, workplace texts and a longer general-interest text. The first two sections can contain several texts; three sections do not mean exactly three passages. Its numbered taxonomy differs from the common sample-page introduction."
+    },
+    {
+      "id": "S06",
+      "title": "Academic Writing format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-writing",
+      "publisherType": "official",
+      "access": "search_result",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Writing tasks, time, weighting",
+      "offlineSummary": "Two tasks share sixty minutes. Task 1 reports visual information; Task 2 develops an argument. Minimum lengths differ, and Task 2 receives twice the weight of Task 1. Criteria include task fulfilment, organisation, vocabulary and grammar."
+    },
+    {
+      "id": "S07",
+      "title": "General Training Writing format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-general-training-test/ielts-general-training-format-writing",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "GT letter and task requirements",
+      "offlineSummary": "Task 1 is a letter based on a situation, three content requirements and an appropriate relationship-dependent register. Task 2 is an essay. The two suggested time allocations fit within one common writing period."
+    },
+    {
+      "id": "S08",
+      "title": "Speaking format",
+      "url": "https://ielts.org/take-a-test/test-types/ielts-academic-test/ielts-academic-format-speaking",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Speaking timing and interaction",
+      "offlineSummary": "A recorded examiner interview has three parts: familiar questions, an individual long turn with preparation, and a deeper related discussion. The total is eleven to fourteen minutes. Fixed prerecorded prompts are a practice adaptation rather than equivalent interaction."
+    },
+    {
+      "id": "S09",
+      "title": "IDP computer Listening timing",
+      "url": "https://ielts.idp.com/bangladesh/about/which-test-do-i-take/ielts-on-computer/listening-preparation",
+      "publisherType": "official_partner",
+      "access": "search_result",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Computer-specific review",
+      "offlineSummary": "Computer Listening is answered directly on screen, with two minutes at the end to check answers. Each recording is heard once. Search retrieval supplied this explanation; full-page access was not established here."
+    },
+    {
+      "id": "S10",
+      "title": "British Council IELTS on computer",
+      "url": "https://takeielts.britishcouncil.org/what-is-ielts/how-it-works/test-modes/ielts-on-computer",
+      "publisherType": "official_partner",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Computer interaction features",
+      "offlineSummary": "Describes an on-screen timer, navigation, notes, highlighting and display or volume adjustments. Speaking remains a live examiner conversation. These public feature descriptions support the UI specification, not exact universal pixel values."
+    },
+    {
+      "id": "S11",
+      "title": "Official Academic sample tasks and practice",
+      "url": "https://ielts.org/take-a-test/preparation-resources/sample-test-questions/academic-test",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Variant coverage and demo links",
+      "offlineSummary": "Lists sample tasks, keys and transcripts and links to Inspera experiences. Completion variants include bank selection and typing. The practice experience is not timed and may differ from live testing in timer, highlights or notes. No official sample content is republished in this package."
+    },
+    {
+      "id": "S12",
+      "title": "Official GT sample tasks and practice",
+      "url": "https://ielts.org/take-a-test/preparation-resources/sample-test-questions/general-training-test",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "GT shared capability list",
+      "offlineSummary": "Its introductory Reading task list includes writer-view judgements, although the GT numbered format page does not enumerate them separately. The engine therefore retains the combined question capabilities instead of relying on a single count."
+    },
+    {
+      "id": "S13",
+      "title": "IELTS Liz Reading question types",
+      "url": "https://ieltsliz.com/ielts-reading-question-types/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "14 teaching labels crosswalk",
+      "offlineSummary": "Uses fourteen teaching headings, grouping TFNG and YNNG together while separating several completion layouts. List selection and choosing a title are teaching labels that map to existing response mechanisms. These do not define fourteen unique backend renderers."
+    },
+    {
+      "id": "S14",
+      "title": "IELTS Liz Listening",
+      "url": "https://ieltsliz.com/ielts-listening/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Listening cross-check",
+      "offlineSummary": "Distinguishes paper transfer time from computer review time and emphasises one-play listening. The paper-oriented total should not be copied into a computer mock timer."
+    },
+    {
+      "id": "S15",
+      "title": "IELTS Liz Writing Task 1",
+      "url": "https://ieltsliz.com/ielts-writing-task-1-lessons-and-tips/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Writing teaching scope",
+      "offlineSummary": "Provides separate Academic visual-report and GT letter preparation. The visual report and the essay are distinct writing tasks; an application may share the editor while retaining different prompt data."
+    },
+    {
+      "id": "S16",
+      "title": "IELTS Liz Writing Task 2",
+      "url": "https://ieltsliz.com/ielts-writing-task-2/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Essay labels",
+      "offlineSummary": "Teaching examples include opinion, discussion, advantages/disadvantages, direct questions, cause/solution and positive/negative development. They are useful metadata, not a guarantee that every future prompt fits one exclusive category."
+    },
+    {
+      "id": "S17",
+      "title": "IELTS Liz Speaking",
+      "url": "https://ieltsliz.com/ielts-speaking-free-lessons-essential-tips/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Speaking cross-check",
+      "offlineSummary": "Describes examiner-controlled pacing and the three speaking parts. Suggested typical numbers of questions are not fixed official constraints and are not hard-coded into this contract."
+    },
+    {
+      "id": "S18",
+      "title": "IELTS Liz Writing charts",
+      "url": "https://ieltsliz.com/ielts-sample-chart-for-writing-task-1/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Visual subtypes",
+      "offlineSummary": "Covers line, bar, pie and table displays, maps, processes and combinations. Its explanation makes clear that the twenty-minute Task 1 allocation is advice within the shared writing hour."
+    },
+    {
+      "id": "S19",
+      "title": "IELTS scoring in detail",
+      "url": "https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Bands, raw anchors and overall",
+      "offlineSummary": "Provides selected average raw-score reference points and says thresholds may vary by test version. It distinguishes Academic and GT Reading. Overall averages four component bands and rounds to the nearest half band, including upward quarter and three-quarter cases."
+    },
+    {
+      "id": "S20",
+      "title": "Understanding Writing Task 2 prompts",
+      "url": "https://ielts.org/news-and-insights/ielts-writing-task-2-how-to-understand-ielts-question-prompts",
+      "publisherType": "official",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Open-ended prompt taxonomy",
+      "offlineSummary": "Examples cover opinion, discussion, multipart and other argument structures. The governing requirement is to address the actual prompt, rather than force a memorised answer into an essay category."
+    },
+    {
+      "id": "S21",
+      "title": "Writing key assessment criteria",
+      "url": "https://ielts.org/cdn/Guides/ielts-writing-key-assessment-criteria.pdf",
+      "publisherType": "official",
+      "access": "pdf_text_read",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Writing rubric interpretation",
+      "offlineSummary": "Task 1 uses Task Achievement and Task 2 Task Response. Both also consider coherence/cohesion, lexical resource and grammatical range/accuracy. Academic visual reporting and GT letter fulfilment require different task evidence."
+    },
+    {
+      "id": "S22",
+      "title": "Writing band descriptors",
+      "url": "https://ielts.org/cdn/Guides/ielts-writing-band-descriptors.pdf",
+      "publisherType": "official",
+      "access": "pdf_text_read",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Detailed rubric reference",
+      "offlineSummary": "The retrieved document is marked updated May 2023 and describes bands for Writing Task 1 and Task 2. Its full tables are not copied into this package. Refer to the original for detailed assessor judgements."
+    },
+    {
+      "id": "S23",
+      "title": "Speaking key assessment criteria",
+      "url": "https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf",
+      "publisherType": "official",
+      "access": "pdf_text_read",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Speaking rubric interpretation",
+      "offlineSummary": "Assessment includes fluency/coherence, lexical resource, grammatical range/accuracy and pronunciation. Pronunciation concerns actual sounds, rhythm, stress and intelligibility, so transcript-only assessment cannot supply the full evidence."
+    },
+    {
+      "id": "S24",
+      "title": "Speaking band descriptors",
+      "url": "https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf",
+      "publisherType": "official",
+      "access": "pdf_text_read",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Detailed speaking rubric reference",
+      "offlineSummary": "The source provides detailed band descriptors for speaking. This package identifies and summarises the criterion framework without reproducing the full descriptor tables."
+    },
+    {
+      "id": "S25",
+      "title": "IDP Listening map labelling",
+      "url": "https://ielts.idp.com/prepare/article-master-ielts-listening-map-labelling",
+      "publisherType": "official_partner",
+      "access": "search_result_full_page_403",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Typed and bank map variants",
+      "offlineSummary": "Search retrieval explicitly describes blank map items answered with words from the recording and map tasks answered from options. Full page opening returned 403, so access is recorded as partial."
+    },
+    {
+      "id": "S26",
+      "title": "IDP Listening question types",
+      "url": "https://ielts.idp.com/prepare/article-question-types-listening",
+      "publisherType": "official_partner",
+      "access": "search_result_full_page_403",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Summary completion in family",
+      "offlineSummary": "Search retrieval includes form, note, table, flow-chart and summary completion in its taxonomy. Full-page opening returned 403; this serves as corroboration alongside the official sample-page list."
+    },
+    {
+      "id": "S27",
+      "title": "British Council computer fast facts",
+      "url": "https://www.ieltsasia.org/ph/preparation/ielts-computer-fast-facts",
+      "publisherType": "official_partner",
+      "access": "search_result_full_page_timeout",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Word counter and no spellchecker",
+      "offlineSummary": "Search retrieval states that word count is available and grammar/spell checking are not included. Full-page retrieval timed out. The UI recommendation disables browser native correction features, without claiming to block all browser extensions."
+    },
+    {
+      "id": "S28",
+      "title": "Ways to take IELTS",
+      "url": "https://www.ielts.org/take-a-test/why-choose-ielts/ways-to-take-ielts",
+      "publisherType": "official",
+      "access": "search_result",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Delivery naming and 2026 context",
+      "offlineSummary": "Current guidance discusses computer delivery, Writing on Paper where available and remote online arrangements. Those operational products are distinct from this project's browser-delivered practice exam."
+    },
+    {
+      "id": "S29",
+      "title": "IELTS Liz home and navigation",
+      "url": "https://ieltsliz.com/",
+      "publisherType": "independent_teacher",
+      "access": "page_opened",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Site scope and sections",
+      "offlineSummary": "The home page links Listening, Reading, Writing and Speaking preparation sections. It is a teaching website, not the authoritative specification for the provider's current computer software or country-specific delivery options."
+    },
+    {
+      "id": "S30A",
+      "title": "Inspera Academic Reading single choice",
+      "url": "https://ielts.inspera.com/player/?assessmentRunId=189731922&context=exam",
+      "publisherType": "official_linked_demo",
+      "access": "browser_dom_observed",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Direct sample UI observation",
+      "offlineSummary": "Observed a split passage/question layout, resizing divider, bottom question navigation and an Options menu with contrast and text size. No answer was submitted."
+    },
+    {
+      "id": "S30B",
+      "title": "Inspera Academic Reading multi choice",
+      "url": "https://ielts.inspera.com/player/?assessmentRunId=189731586&context=exam",
+      "publisherType": "official_linked_demo",
+      "access": "browser_dom_observed",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Direct sample UI observation",
+      "offlineSummary": "Observed checkbox blocks covering two question numbers and bottom navigation using number ranges. No answer was selected or submitted."
+    },
+    {
+      "id": "S30C",
+      "title": "Inspera Academic Writing Task 1",
+      "url": "https://ielts.inspera.com/player/?assessmentRunId=205993150&context=exam",
+      "publisherType": "official_linked_demo",
+      "access": "browser_dom_observed",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Direct sample UI observation",
+      "offlineSummary": "Observed the prompt and visual area beside a text editor whose accessible label mentions autosave, plus a visible word count. No essay was entered."
+    },
+    {
+      "id": "S30D",
+      "title": "Inspera Listening map",
+      "url": "https://ielts.inspera.com/player/?assessmentRunId=189695339&context=exam",
+      "publisherType": "official_linked_demo",
+      "access": "browser_dom_observed",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Direct sample UI observation",
+      "offlineSummary": "Observed an initial Play dialog warning against pause/rewind, plus a labelled-location answer matrix. The actual audio playback was not started."
+    },
+    {
+      "id": "S30E",
+      "title": "Inspera Listening flow chart",
+      "url": "https://ielts.inspera.com/player/?assessmentRunId=189697842&context=exam",
+      "publisherType": "official_linked_demo",
+      "access": "browser_dom_observed",
+      "checkedAt": "2026-11-02",
+      "usedFor": "Direct sample UI observation",
+      "offlineSummary": "Observed a flow-chart with inline numbered gaps, an option bank and a Help button. The audio-start dialog remained visible; actual dragging or playback was not tested."
+    }
+  ]
+}

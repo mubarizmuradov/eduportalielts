@@ -1,5 +1,5 @@
 import { buildIeltsExam } from '../../ielts-format/build-exam';
-import { candidateNumber, cleanResponses, deadlineFor, isPastGrace, moduleSeconds, nextModule, speakingSlots } from './exam-flow';
+import { candidateNumber, cleanResponses, deadlineFor, isPastGrace, moduleSeconds, nextModule, sittingSeconds, speakingSlots } from './exam-flow';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { makeSamplePackage } = require('../../../samples/sample-package.js');
@@ -10,6 +10,8 @@ describe('exam flow', () => {
   const exam = r.exam.candidate;
 
   it('runs the modules in IELTS order', () => {
+    expect(nextModule('WRITING', 'FACE_TO_FACE')).toBeNull();
+    expect(nextModule('READING', 'FACE_TO_FACE')).toBe('WRITING');
     expect(nextModule('LISTENING')).toBe('READING');
     expect(nextModule('READING')).toBe('WRITING');
     expect(nextModule('WRITING')).toBe('SPEAKING');
@@ -23,6 +25,10 @@ describe('exam flow', () => {
     expect(moduleSeconds(exam, 'SPEAKING')).toBeGreaterThan(14 * 60);
     const start = new Date('2026-01-01T10:00:00Z');
     expect(deadlineFor(exam, 'READING', start).toISOString()).toBe('2026-01-01T11:00:00.000Z');
+  });
+
+  it('a face-to-face Speaking sitting is shorter by the Speaking module', () => {
+    expect(sittingSeconds(exam, 'RECORDED') - sittingSeconds(exam, 'FACE_TO_FACE')).toBe(moduleSeconds(exam, 'SPEAKING'));
   });
 
   it('counts speaking recording slots', () => {

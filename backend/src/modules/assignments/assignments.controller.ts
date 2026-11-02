@@ -10,7 +10,9 @@ const createBody = z.object({
   classId: uuid,
   title: z.string().trim().max(200).optional(),
   opensAt: z.coerce.date(),
+  /** Last moment a student can START; a sitting started before it gets its full time. */
   closesAt: z.coerce.date(),
+  speakingMode: z.enum(['RECORDED', 'FACE_TO_FACE']).default('RECORDED'),
 });
 const patchBody = z.object({ resultsReleased: z.boolean().optional(), closesAt: z.coerce.date().optional() });
 

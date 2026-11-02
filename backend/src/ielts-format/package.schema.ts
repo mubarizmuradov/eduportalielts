@@ -12,7 +12,9 @@
  */
 import { z } from 'zod';
 
-export const PACKAGE_SCHEMA_VERSION = '1.0';
+export const PACKAGE_SCHEMA_VERSION = '1.1';
+/** Older versions this build still reads (1.1 only added optional fields and values). */
+export const SUPPORTED_SCHEMA_VERSIONS = ['1.0', '1.1'] as const;
 
 // ---------------------------------------------------------------- primitives
 
@@ -46,12 +48,17 @@ const headingOption = z.object({ key: romanKey, text: text(200) });
  * Word limit of a typed answer, exactly as IELTS words it:
  *   {maxWords:1, allowNumber:false} → "ONE WORD ONLY"
  *   {maxWords:2, allowNumber:true}  → "NO MORE THAN TWO WORDS AND/OR A NUMBER"
+ *   {maxWords:1, allowNumber:true, numberRule:"or"} → "ONE WORD OR A NUMBER"
  *   {maxWords:0, allowNumber:true}  → "A NUMBER"
+ *
+ * numberRule "and_or" (default): up to maxWords words plus at most one number.
+ * numberRule "or": either up to maxWords words, or one number on its own.
  */
 export const wordLimitSchema = z
   .object({
     maxWords: z.number().int().min(0).max(5),
     allowNumber: z.boolean(),
+    numberRule: z.enum(['and_or', 'or']).default('and_or'),
   })
   .refine((w) => w.maxWords > 0 || w.allowNumber, 'a word limit must allow at least one word or a number');
 
@@ -64,6 +71,15 @@ const acceptedAnswers = z.array(text(80)).min(1).max(10);
 
 /** Optional worked example printed above a question group (IELTS "Example"). */
 const example = text(500).optional();
+
+/**
+ * Why the answer is right (evidence in the passage / recording). Teachers see it
+ * in the answer key; candidates only after the results are released.
+ */
+const explanation = text(1000).optional();
+
+/** A point on an image in percent of its width / height (0 = left / top). */
+const percent = z.number().min(0).max(100);
 
 /** Common fields of every question group. */
 const groupBase = {
@@ -85,8 +101,11 @@ const multipleChoice = z.object({
       z.object({
         number: questionNumber,
         stem: text(600),
+        /** Optional picture for the question, e.g. three labelled drawings A–C ("Which picture shows …?"). */
+        image: localId.optional(),
         options: z.array(option).min(3).max(7),
         answer: letterKey,
+        explanation,
       }),
     )
     .min(1),
@@ -103,6 +122,7 @@ const multipleChoiceMulti = z.object({
         stem: text(600),
         options: z.array(option).min(4).max(8),
         answers: z.array(letterKey).min(2).max(3),
+        explanation,
       }),
     )
     .min(1),
@@ -113,7 +133,7 @@ const trueFalseNotGiven = z.object({
   type: z.literal('true_false_not_given'),
   ...groupBase,
   questions: z
-    .array(z.object({ number: questionNumber, statement: text(600), answer: z.enum(['TRUE', 'FALSE', 'NOT_GIVEN']) }))
+    .array(z.object({ number: questionNumber, statement: text(600), answer: z.enum(['TRUE', 'FALSE', 'NOT_GIVEN']), explanation }))
     .min(1),
 });
 
@@ -122,7 +142,7 @@ const yesNoNotGiven = z.object({
   type: z.literal('yes_no_not_given'),
   ...groupBase,
   questions: z
-    .array(z.object({ number: questionNumber, statement: text(600), answer: z.enum(['YES', 'NO', 'NOT_GIVEN']) }))
+    .array(z.object({ number: questionNumber, statement: text(600), answer: z.enum(['YES', 'NO', 'NOT_GIVEN']), explanation }))
     .min(1),
 });
 
@@ -131,19 +151,25 @@ const matchingHeadings = z.object({
   type: z.literal('matching_headings'),
   ...groupBase,
   /** Which text of the section the paragraphs belong to (default 0). */
-  textIndex: z.number().int().min(0).max(3).default(0),
+  textIndex: z.number().int().min(0).max(4).default(0),
   headings: z.array(headingOption).min(3).max(15),
-  questions: z.array(z.object({ number: questionNumber, paragraph: paragraphLabel, answer: romanKey })).min(1),
+  questions: z.array(z.object({ number: questionNumber, paragraph: paragraphLabel, answer: romanKey, explanation })).min(1),
 });
 
-/** "Which paragraph contains the following information?" Reading only. */
+/**
+ * "Which paragraph contains the following information?" Reading only.
+ * scope "texts" (General Training): "Which advertisement mentions …?" — the
+ * answers are the labels (A, B, C …) of the short texts of the section.
+ */
 const matchingInformation = z.object({
   type: z.literal('matching_information'),
   ...groupBase,
-  textIndex: z.number().int().min(0).max(3).default(0),
+  scope: z.enum(['paragraphs', 'texts']).default('paragraphs'),
+  /** scope "paragraphs": which text of the section (default 0). */
+  textIndex: z.number().int().min(0).max(4).default(0),
   /** IELTS prints "NB You may use any letter more than once." */
   allowReuse: z.boolean().default(true),
-  questions: z.array(z.object({ number: questionNumber, statement: text(600), answer: paragraphLabel })).min(1),
+  questions: z.array(z.object({ number: questionNumber, statement: text(600), answer: paragraphLabel, explanation })).min(1),
 });
 
 /**
@@ -157,7 +183,7 @@ const matchingFeatures = z.object({
   optionsTitle: text(120).optional(),
   options: z.array(option).min(3).max(12),
   allowReuse: z.boolean().default(false),
-  questions: z.array(z.object({ number: questionNumber, statement: text(600), answer: letterKey })).min(1),
+  questions: z.array(z.object({ number: questionNumber, statement: text(600), answer: letterKey, explanation })).min(1),
 });
 
 /** Complete each sentence with the correct ending. Reading only. */
@@ -165,23 +191,42 @@ const matchingSentenceEndings = z.object({
   type: z.literal('matching_sentence_endings'),
   ...groupBase,
   endings: z.array(option).min(3).max(12),
-  questions: z.array(z.object({ number: questionNumber, sentenceStart: text(400), answer: letterKey })).min(1),
+  questions: z.array(z.object({ number: questionNumber, sentenceStart: text(400), answer: letterKey, explanation })).min(1),
 });
 
-/** Plan / map / diagram labelling with letters printed on the picture. Listening only. */
+/**
+ * Plan / map / diagram labelling with letters on the picture: the candidate
+ * picks the letter of each place in a grid (computer IELTS). Listening only.
+ */
 const mapLabelling = z.object({
   type: z.literal('map_labelling'),
   ...groupBase,
+  visualKind: z.enum(['map', 'plan', 'diagram']).default('map'),
   image: localId,
-  /** Letters printed on the image, e.g. A–I. */
+  /** Letters on the image, e.g. A–I. */
   letters: z.array(letterKey).min(3).max(12),
-  questions: z.array(z.object({ number: questionNumber, label: text(200), answer: letterKey })).min(1),
+  /**
+   * Where each letter is, in percent. When given, the exam draws the letters
+   * on top of the image, so the generated picture does not need to contain
+   * readable letters. Without it the letters must be printed in the image.
+   */
+  letterPositions: z.array(z.object({ key: letterKey, x: percent, y: percent })).optional(),
+  questions: z.array(z.object({ number: questionNumber, label: text(200), answer: letterKey, explanation })).min(1),
 });
 
 /** A gap inside a completion task: typed answer (answerMode write) … */
-const writeGap = z.object({ number: questionNumber, answers: acceptedAnswers });
+const writeGap = z.object({ number: questionNumber, answers: acceptedAnswers, explanation });
 /** … or a letter from the word bank (answerMode select). */
-const selectGap = z.object({ number: questionNumber, answer: letterKey });
+const selectGap = z.object({ number: questionNumber, answer: letterKey, explanation });
+
+/**
+ * A flow-chart as boxes and arrows. Use it instead of `steps` when the chart
+ * branches or loops; `steps` is the shorthand for a straight top-to-bottom chart.
+ */
+const flowSchema = z.object({
+  nodes: z.array(z.object({ id: localId, text: text(500) })).min(2).max(20),
+  edges: z.array(z.object({ from: localId, to: localId })).min(1).max(40),
+});
 
 const line = z.object({
   text: text(600),
@@ -212,16 +257,21 @@ const completion = z
         rows: z.array(z.array(z.string().trim().max(400)).min(1).max(6)).min(1).max(15),
       })
       .optional(),
-    /** flow_chart: boxes from top to bottom */
+    /** flow_chart: boxes from top to bottom … */
     steps: z.array(text(500)).min(2).max(15).optional(),
+    /** … or boxes and arrows (branches, loops). */
+    flow: flowSchema.optional(),
     gaps: z.array(z.union([writeGap, selectGap])).min(1),
   })
   .superRefine((g, ctx) => {
-    const want = g.variant === 'table' ? 'table' : g.variant === 'flow_chart' ? 'steps' : 'lines';
-    for (const k of ['lines', 'table', 'steps'] as const) {
-      if (k === want && g[k] === undefined) ctx.addIssue({ code: 'custom', path: [k], message: `${g.variant} needs "${k}"` });
-      if (k !== want && g[k] !== undefined) ctx.addIssue({ code: 'custom', path: [k], message: `${g.variant} must not have "${k}"` });
-    }
+    const want: Array<'lines' | 'table' | 'steps' | 'flow'> =
+      g.variant === 'table' ? ['table'] : g.variant === 'flow_chart' ? ['steps', 'flow'] : ['lines'];
+    const present = (['lines', 'table', 'steps', 'flow'] as const).filter((k) => g[k] !== undefined);
+    for (const k of present)
+      if (!want.includes(k)) ctx.addIssue({ code: 'custom', path: [k], message: `${g.variant} must not have "${k}"` });
+    const given = present.filter((k) => want.includes(k));
+    if (given.length !== 1)
+      ctx.addIssue({ code: 'custom', path: [want[0]], message: `${g.variant} needs ${want.map((k) => `"${k}"`).join(' or ')}` });
     if (g.answerMode === 'write' && !g.wordLimit)
       ctx.addIssue({ code: 'custom', path: ['wordLimit'], message: 'answerMode "write" needs wordLimit' });
     if (g.answerMode === 'select' && !g.options)
@@ -243,34 +293,69 @@ const sentenceCompletion = z.object({
   ...groupBase,
   wordLimit: wordLimitSchema,
   /** `sentence` contains exactly one gap {{n}} with its own number. */
-  questions: z.array(z.object({ number: questionNumber, sentence: text(600), answers: acceptedAnswers })).min(1),
+  questions: z.array(z.object({ number: questionNumber, sentence: text(600), answers: acceptedAnswers, explanation })).min(1),
 });
 
-/** Label a diagram by typing words; gaps are positioned on the image (percent). */
-const diagramLabelCompletion = z.object({
-  type: z.literal('diagram_label_completion'),
-  ...groupBase,
-  image: localId,
-  wordLimit: wordLimitSchema,
-  labels: z
-    .array(
-      z.object({
-        number: questionNumber,
-        /** Gap position on the image, 0-100 % from the left / top. */
-        x: z.number().min(0).max(100),
-        y: z.number().min(0).max(100),
-        answers: acceptedAnswers,
-      }),
-    )
-    .min(1),
-});
+/**
+ * Label a diagram / map / plan / set of pictures: numbered gaps sit on the
+ * image (centre of the gap in percent). answerMode "write": the candidate types
+ * words; "select": the candidate drags a word from the box (`options`, A–L).
+ */
+const diagramLabelCompletion = z
+  .object({
+    type: z.literal('diagram_label_completion'),
+    ...groupBase,
+    visualKind: z.enum(['diagram', 'map', 'plan', 'pictures']).default('diagram'),
+    image: localId,
+    answerMode: z.enum(['write', 'select']).default('write'),
+    wordLimit: wordLimitSchema.optional(),
+    options: z.array(option).min(3).max(15).optional(),
+    labels: z
+      .array(
+        z.object({
+          number: questionNumber,
+          /** Centre of the gap on the image, 0-100 % from the left / top. */
+          x: percent,
+          y: percent,
+          answers: acceptedAnswers.optional(),
+          answer: letterKey.optional(),
+          explanation,
+        }),
+      )
+      .min(1),
+  })
+  .superRefine((g, ctx) => {
+    if (g.answerMode === 'write' && !g.wordLimit)
+      ctx.addIssue({ code: 'custom', path: ['wordLimit'], message: 'answerMode "write" needs wordLimit' });
+    if (g.answerMode === 'select' && !g.options)
+      ctx.addIssue({ code: 'custom', path: ['options'], message: 'answerMode "select" needs options (the box of answers)' });
+    g.labels.forEach((l, i) => {
+      if (g.answerMode === 'write' ? !l.answers || l.answer : !l.answer || l.answers)
+        ctx.addIssue({
+          code: 'custom',
+          path: ['labels', i],
+          message: g.answerMode === 'write' ? 'label needs "answers" (typed answers)' : 'label needs "answer" (a letter from the box)',
+        });
+    });
+  });
 
-/** Short-answer questions. */
+/**
+ * Short-answer questions. A question that asks for several things
+ * ("Which TWO problems …?") has one number per answer and `answerUnits`:
+ * the candidate may write them in any order, each unit scores once.
+ */
+const shortAnswerSingle = z.object({ number: questionNumber, question: text(600), answers: acceptedAnswers, explanation });
+const shortAnswerSet = z.object({
+  numbers: z.array(questionNumber).min(2).max(3),
+  question: text(600),
+  answerUnits: z.array(acceptedAnswers).min(2).max(3),
+  explanation,
+});
 const shortAnswer = z.object({
   type: z.literal('short_answer'),
   ...groupBase,
   wordLimit: wordLimitSchema,
-  questions: z.array(z.object({ number: questionNumber, question: text(600), answers: acceptedAnswers })).min(1),
+  questions: z.array(z.union([shortAnswerSingle, shortAnswerSet])).min(1),
 });
 
 export const questionGroupSchema = z.discriminatedUnion('type', [
@@ -337,12 +422,14 @@ const listeningPart = z.object({
   audio: localId,
   /** Full transcript; staff review only, never sent to candidates. */
   transcript: text(20000),
-  questionGroups: z.array(questionGroupSchema).min(1).max(6),
+  questionGroups: z.array(questionGroupSchema).min(1).max(8),
 });
 
 // ---------------------------------------------------------------- reading
 
 const readingText = z.object({
+  /** General Training short texts (adverts, notices …) are often labelled A, B, C … */
+  label: letterKey.optional(),
   title: text(200),
   subtitle: text(400).optional(),
   /** Paragraphs in order. `label` (A, B, C…) is required by matching headings / information. */
@@ -352,6 +439,8 @@ const readingText = z.object({
     .max(20),
   image: localId.optional(),
   imageCaption: text(300).optional(),
+  /** Words explained under the passage ("*glossary"). */
+  glossary: z.array(z.object({ term: text(80), definition: text(300) })).max(10).optional(),
 });
 
 const readingSection = z.object({
@@ -361,19 +450,40 @@ const readingSection = z.object({
    * General Training: section 1 two-three short texts, section 2 two texts,
    * section 3 one long text.
    */
-  texts: z.array(readingText).min(1).max(4),
-  questionGroups: z.array(questionGroupSchema).min(1).max(6),
+  texts: z.array(readingText).min(1).max(5),
+  questionGroups: z.array(questionGroupSchema).min(1).max(8),
 });
 
 // ---------------------------------------------------------------- writing
 
-const academicTask1 = z.object({
-  kind: z.literal('academic_report'),
-  visualType: z.enum(['line_graph', 'bar_chart', 'pie_chart', 'table', 'mixed_charts', 'map', 'process_diagram']),
-  /** "The chart below shows …" — the builder appends the standard instruction. */
-  prompt: text(1000),
-  image: localId,
-});
+/** Notes for the teacher who marks the task (model answer points…). Never shown to candidates. */
+const examinerNotes = text(4000).optional();
+
+const academicTask1 = z
+  .object({
+    kind: z.literal('academic_report'),
+    visualType: z.enum([
+      'line_graph',
+      'bar_chart',
+      'pie_chart',
+      'table',
+      'mixed_charts',
+      'map',
+      'process_diagram',
+      'object_diagram',
+    ]),
+    /** "The chart below shows …" — the builder appends the standard instruction. */
+    prompt: text(1000),
+    /** One visual … */
+    image: localId.optional(),
+    /** … or several shown together (e.g. a pie chart and a table, two maps). */
+    images: z.array(localId).min(1).max(3).optional(),
+    examinerNotes,
+  })
+  .refine((t) => (t.image === undefined) !== (t.images === undefined), {
+    path: ['image'],
+    message: 'give exactly one of "image" or "images"',
+  });
 
 const generalTask1 = z.object({
   kind: z.literal('general_letter'),
@@ -384,14 +494,33 @@ const generalTask1 = z.object({
   bulletPoints: z.array(text(300)).length(3),
   /** Opening the candidate must use, e.g. "Dear Sir or Madam," */
   salutation: text(100).optional(),
+  examinerNotes,
 });
 
+/**
+ * Task 2 question types. A label for teachers and statistics only: the
+ * candidate must answer the actual question, whatever its type.
+ */
+export const ESSAY_TYPES = [
+  'opinion',
+  'discussion',
+  'advantages_disadvantages',
+  'outweigh',
+  'positive_negative',
+  'problem_solution',
+  'cause_solution',
+  'cause_effect',
+  'two_part_question',
+  'mixed',
+] as const;
+
 const writingTask2 = z.object({
-  essayType: z.enum(['opinion', 'discussion', 'advantages_disadvantages', 'problem_solution', 'two_part_question']),
+  essayType: z.enum(ESSAY_TYPES),
   /** The topic statement. */
   prompt: text(1500),
   /** The task, e.g. "Discuss both these views and give your own opinion." */
   question: text(500),
+  examinerNotes,
 });
 
 // ---------------------------------------------------------------- speaking
@@ -405,9 +534,9 @@ const spokenQuestion = z.object({
 const speaking = z.object({
   part1: z.object({
     topics: z
-      .array(z.object({ topic: text(120), questions: z.array(spokenQuestion).min(2).max(6) }))
-      .min(2)
-      .max(4),
+      .array(z.object({ topic: text(120), questions: z.array(spokenQuestion).min(1).max(8) }))
+      .min(1)
+      .max(5),
   }),
   part2: z.object({
     /** "Describe a time when you helped someone." */
@@ -422,16 +551,18 @@ const speaking = z.object({
   }),
   part3: z.object({
     themes: z
-      .array(z.object({ theme: text(120), questions: z.array(spokenQuestion).min(2).max(6) }))
+      .array(z.object({ theme: text(120), questions: z.array(spokenQuestion).min(1).max(8) }))
       .min(1)
-      .max(3),
+      .max(4),
   }),
+  /** Notes for the teacher (follow-up questions, what to listen for). Never shown to candidates. */
+  examinerNotes,
 });
 
 // ---------------------------------------------------------------- package
 
 export const ieltsPackageSchema = z.object({
-  schemaVersion: z.literal(PACKAGE_SCHEMA_VERSION),
+  schemaVersion: z.enum(SUPPORTED_SCHEMA_VERSIONS),
   testType: z.enum(['academic', 'general_training']),
   title: text(200),
   /** Free information about the generation (model, prompt id, target band…). Stored, never shown to candidates. */

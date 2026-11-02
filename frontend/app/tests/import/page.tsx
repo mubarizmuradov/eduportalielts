@@ -14,6 +14,10 @@ interface Check {
   errors: BuildIssue[];
   warnings: BuildIssue[];
   summary?: ExamSummary;
+  /** "ielts-package" or "ielts-content 1.0.0" (hand-off format, converted on import). */
+  format?: string;
+  /** false: valid, but test data only or its media can not be downloaded. */
+  importable?: boolean;
 }
 
 const MAX_MB = 120;
@@ -122,7 +126,7 @@ export default function ImportPage() {
           <Button variant="secondary" onClick={() => void validate()} loading={busy === 'check'} disabled={!raw.trim()}>
             {t('importPage.validate')}
           </Button>
-          <Button onClick={() => void save()} loading={busy === 'import'} disabled={!raw.trim() || !academy || (check !== null && !check.ok)}>
+          <Button onClick={() => void save()} loading={busy === 'import'} disabled={!raw.trim() || !academy || (check !== null && (!check.ok || check.importable === false))}>
             {t('importPage.import')}
           </Button>
         </div>
@@ -132,6 +136,8 @@ export default function ImportPage() {
           <p className={`text-lg font-bold ${check.ok ? 'text-[#15803d]' : 'text-[#b91c1c]'}`}>
             {check.ok ? `✓ ${t('importPage.valid')}` : `✗ ${t('importPage.invalid')}`}
           </p>
+          {check.format && <p className="text-muted text-sm">{t('importPage.format', { format: check.format })}</p>}
+          {check.ok && check.importable === false && <p className="font-semibold text-[#b45309]">{t('importPage.notImportable')}</p>}
           {check.summary && <Summary s={check.summary} />}
           {check.errors.length > 0 && <p className="font-semibold">{t('importPage.errors', { n: check.errors.length })}</p>}
           <IssueList items={check.errors} tone="error" />

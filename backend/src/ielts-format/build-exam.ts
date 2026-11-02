@@ -32,7 +32,6 @@ import type {
 import { isSafeSvg, MAX_AUDIO_BYTES, MAX_IMAGE_BYTES, sniffMime } from './media-sniff';
 import {
   ieltsPackageSchema,
-  PACKAGE_SCHEMA_VERSION,
   type IeltsPackage,
   type QuestionGroup,
   type QuestionType,
@@ -85,8 +84,16 @@ export const READING_TYPES: ReadonlySet<QuestionType> = new Set([
   'short_answer',
 ]);
 
-/** General Training reading: texts per section (official format). */
-const GT_TEXTS_PER_SECTION: Record<number, [min: number, max: number]> = { 1: [2, 3], 2: [2, 2], 3: [1, 1] };
+/**
+ * General Training reading: texts per section. The official format is 2-3
+ * short texts, then 2 work-related texts, then 1 long text; a composite text
+ * (several adverts) may also be given as separate labelled texts.
+ */
+const GT_TEXTS_PER_SECTION: Record<number, { usual: [number, number]; allowed: [number, number] }> = {
+  1: { usual: [2, 3], allowed: [1, 5] },
+  2: { usual: [2, 2], allowed: [1, 3] },
+  3: { usual: [1, 1], allowed: [1, 1] },
+};
 
 const ROMAN = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x', 'xi', 'xii', 'xiii', 'xiv', 'xv'];
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -109,7 +116,8 @@ const listLetters = (keys: string[]) =>
   keys.length <= 4 ? `${keys.slice(0, -1).join(', ')} or ${keys[keys.length - 1]}` : `${keys[0]}–${keys[keys.length - 1]}`;
 const range = (keys: string[]) => `${keys[0]}–${keys[keys.length - 1]}`;
 const countWordsOf = (s: string) => s.split(/\s+/).filter(Boolean).length;
-const NUMBER_NAMES = ['', 'ONE', 'TWO', 'THREE'];
+const NUMBER_NAMES = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
+const countName = (n: number) => NUMBER_NAMES[n] ?? String(n);
 
 /** Every number in the order the candidate meets it. */
 export function groupNumbers(g: QuestionGroup): number[] {
@@ -120,17 +128,22 @@ export function groupNumbers(g: QuestionGroup): number[] {
       return g.gaps.map((x) => x.number);
     case 'diagram_label_completion':
       return g.labels.map((l) => l.number);
+    case 'short_answer':
+      return g.questions.flatMap((q) => ('numbers' in q ? q.numbers : [q.number]));
     default:
       return g.questions.map((q) => q.number);
   }
 }
 
-/** Copy without any `answer` / `answers` property (deep). */
+/** Fields that give an answer away; never part of the candidate view. */
+const SECRET_FIELDS = new Set(['answer', 'answers', 'answerUnits', 'explanation']);
+
+/** Copy without any answer / explanation property (deep). */
 function stripAnswers(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stripAnswers);
   if (value && typeof value === 'object') {
     const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(value)) if (k !== 'answer' && k !== 'answers') out[k] = stripAnswers(v);
+    for (const [k, v] of Object.entries(value)) if (!SECRET_FIELDS.has(k)) out[k] = stripAnswers(v);
     return out;
   }
   return value;
@@ -171,6 +184,8 @@ interface GroupContext {
   /** "Reading Passage 2" (Academic) / "the text" (General Training). */
   passageName: string;
   text?: ReadingText;
+  /** All texts of the reading section (matching information over texts). */
+  sectionTexts?: ReadingText[];
 }
 
 const COMPLETION_NOUN = { form: 'form', note: 'notes', table: 'table', flow_chart: 'flow-chart', summary: 'summary' };
@@ -215,6 +230,14 @@ function defaultInstructions(g: QuestionGroup, ctx: GroupContext): string {
       ].join('\n');
     }
     case 'matching_information': {
+      if (g.scope === 'texts') {
+        const labels = (ctx.sectionTexts ?? []).flatMap((t) => (t.label ? [t.label] : []));
+        return [
+          `Look at the ${labels.length} texts, **${range(labels)}**.`,
+          'Which text contains the following information?',
+          ...(g.allowReuse ? ['**NB** You may use any letter more than once.'] : []),
+        ].join('\n');
+      }
       const labels = (ctx.text?.paragraphs ?? []).flatMap((p) => (p.label ? [p.label] : []));
       return [
         `${ctx.passageName[0].toUpperCase()}${ctx.passageName.slice(1)} has ${labels.length} paragraphs, **${range(labels)}**.`,
@@ -232,7 +255,7 @@ function defaultInstructions(g: QuestionGroup, ctx: GroupContext): string {
     case 'matching_sentence_endings':
       return `Complete each sentence with the correct ending, **${range(g.endings.map((o) => o.key))}**, below.`;
     case 'map_labelling':
-      return `Label the ${g.title?.toLowerCase().includes('plan') ? 'plan' : 'map'} below.\nChoose the correct letter, **${range(g.letters)}**.`;
+      return `Label the ${g.visualKind} below.\nChoose the correct letter, **${range(g.letters)}**.`;
     case 'completion': {
       const noun = COMPLETION_NOUN[g.variant];
       if (g.answerMode === 'select')
@@ -241,8 +264,16 @@ function defaultInstructions(g: QuestionGroup, ctx: GroupContext): string {
     }
     case 'sentence_completion':
       return `Complete the sentences below.\n${writeRule(g.wordLimit, ctx)}`;
-    case 'diagram_label_completion':
-      return `Label the diagram below.\n${writeRule(g.wordLimit, ctx)}`;
+    case 'diagram_label_completion': {
+      const what = g.visualKind === 'pictures' ? 'pictures' : g.visualKind;
+      const first = g.visualKind === 'pictures' ? 'Look at the pictures below.' : `Label the ${what} below.`;
+      if (g.answerMode === 'select') {
+        const keys = (g.options ?? []).map((o) => o.key);
+        const [a, b] = [g.labels[0].number, g.labels[g.labels.length - 1].number];
+        return `${first}\nChoose **${countName(g.labels.length)}** answers from the box and write the correct letter, **${range(keys)}**, next to Questions ${a}–${b}.`;
+      }
+      return `${first}\n${writeRule(g.wordLimit!, ctx)}`;
+    }
     case 'short_answer':
       return `Answer the questions below.\n${writeRule(g.wordLimit, ctx)}`;
   }
@@ -255,12 +286,18 @@ interface GroupResult {
   numbers: number[];
 }
 
+/** Where processGroup writes the marking data of a module. */
+interface ModuleOut {
+  key: AnswerKey;
+  staff: Record<number, string>;
+  explain: Record<number, string>;
+}
+
 function processGroup(
   g: QuestionGroup,
   path: string,
   ctx: GroupContext,
-  key: AnswerKey,
-  staff: Record<number, string>,
+  out: ModuleOut,
   issues: Issues,
   useAsset: (id: string, kind: 'audio' | 'image', path: string) => void,
 ): GroupResult {
@@ -270,7 +307,11 @@ function processGroup(
   const numbers = groupNumbers(g);
   const labels = (ctx.text?.paragraphs ?? []).flatMap((p) => (p.label ? [p.label] : []));
   const extra: Record<string, unknown> = {};
+  const { key, staff } = out;
 
+  const explain = (ns: number[], e: string | undefined) => {
+    if (e) for (const n of ns) out.explain[n] = e;
+  };
   const choice = (n: number, answer: string, shown = answer) => {
     key[n] = { kind: 'choice', answer };
     staff[n] = shown;
@@ -279,14 +320,19 @@ function processGroup(
     key[n] = { kind: 'text', answers, wordLimit };
     staff[n] = answers.join(' / ');
   };
+  const bank = (keys: string[], p: string, what: string) => {
+    checkSequentialKeys(keys, LETTERS, p, what, issues);
+  };
 
   switch (g.type) {
     case 'multiple_choice':
       g.questions.forEach((q, i) => {
         const keys = q.options.map((o) => o.key);
-        checkSequentialKeys(keys, LETTERS, `${path}.questions.${i}.options`, 'options', issues);
+        bank(keys, `${path}.questions.${i}.options`, 'options');
         if (!keys.includes(q.answer)) issues.error(`${path}.questions.${i}.answer`, `answer ${q.answer} is not an option`);
+        if (q.image) useAsset(q.image, 'image', `${path}.questions.${i}.image`);
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       break;
 
@@ -294,7 +340,7 @@ function processGroup(
       g.items.forEach((item, i) => {
         const p = `${path}.items.${i}`;
         const keys = item.options.map((o) => o.key);
-        checkSequentialKeys(keys, LETTERS, `${p}.options`, 'options', issues);
+        bank(keys, `${p}.options`, 'options');
         if (item.answers.length !== item.numbers.length)
           issues.error(`${p}.answers`, `${item.numbers.length} question numbers need exactly ${item.numbers.length} answers`);
         if (new Set(item.answers).size !== item.answers.length) issues.error(`${p}.answers`, 'answers must be different letters');
@@ -306,6 +352,7 @@ function processGroup(
           key[n] = { kind: 'multi', numbers: item.numbers, answers: item.answers };
           staff[n] = `${item.answers.join(', ')} (in either order)`;
         }
+        explain(item.numbers, item.explanation);
       });
       extra.items = g.items.map((item) => ({ ...(stripAnswers(item) as object), choose: item.numbers.length }));
       break;
@@ -314,7 +361,10 @@ function processGroup(
     case 'yes_no_not_given': {
       const choices = g.type === 'true_false_not_given' ? ['TRUE', 'FALSE', 'NOT_GIVEN'] : ['YES', 'NO', 'NOT_GIVEN'];
       extra.choices = choices.map((value) => ({ value, label: value.replace('_', ' ') }));
-      g.questions.forEach((q) => choice(q.number, q.answer, q.answer.replace('_', ' ')));
+      g.questions.forEach((q) => {
+        choice(q.number, q.answer, q.answer.replace('_', ' '));
+        explain([q.number], q.explanation);
+      });
       break;
     }
 
@@ -322,9 +372,9 @@ function processGroup(
       const keys = g.headings.map((h) => h.key);
       checkSequentialKeys(keys, ROMAN, `${path}.headings`, 'heading numbers', issues);
       if (!ctx.text) issues.error(`${path}.textIndex`, 'no reading text at this index');
-      if (g.headings.length < g.questions.length) issues.error(`${path}.headings`, 'fewer headings than paragraphs');
-      else if (g.headings.length === g.questions.length)
-        issues.warn(`${path}.headings`, 'IELTS gives more headings than paragraphs (distractors)');
+      // Official format: more headings than paragraphs, each heading used once.
+      if (g.headings.length <= g.questions.length)
+        issues.error(`${path}.headings`, 'IELTS gives more headings than paragraphs (add distractors)');
       const usedParagraphs = new Set<string>();
       const usedHeadings = new Set<string>();
       g.questions.forEach((q, i) => {
@@ -336,29 +386,44 @@ function processGroup(
         usedParagraphs.add(q.paragraph);
         usedHeadings.add(q.answer);
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       break;
     }
 
-    case 'matching_information':
-      if (!ctx.text) issues.error(`${path}.textIndex`, 'no reading text at this index');
-      if (labels.length < 3) issues.error(`${path}.textIndex`, 'the text needs labelled paragraphs (A, B, C …)');
-      extra.paragraphs = labels;
+    case 'matching_information': {
+      let targets = labels;
+      if (g.scope === 'texts') {
+        const texts = ctx.sectionTexts ?? [];
+        targets = texts.flatMap((t) => (t.label ? [t.label] : []));
+        if (targets.length !== texts.length || targets.length < 2)
+          issues.error(`${path}.scope`, 'scope "texts" needs two or more texts in the section, each with a label (A, B, C …)');
+      } else {
+        if (!ctx.text) issues.error(`${path}.textIndex`, 'no reading text at this index');
+        if (labels.length < 3) issues.error(`${path}.textIndex`, 'the text needs labelled paragraphs (A, B, C …)');
+      }
+      extra.paragraphs = targets;
       g.questions.forEach((q, i) => {
-        if (!labels.includes(q.answer))
-          issues.error(`${path}.questions.${i}.answer`, `the text has no paragraph ${q.answer}`);
+        if (!targets.includes(q.answer))
+          issues.error(
+            `${path}.questions.${i}.answer`,
+            g.scope === 'texts' ? `the section has no text ${q.answer}` : `the text has no paragraph ${q.answer}`,
+          );
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       if (!g.allowReuse && new Set(g.questions.map((q) => q.answer)).size !== g.questions.length)
-        issues.error(`${path}.questions`, 'a paragraph is used twice but allowReuse is false');
+        issues.error(`${path}.questions`, 'a letter is used twice but allowReuse is false');
       break;
+    }
 
     case 'matching_features': {
       const keys = g.options.map((o) => o.key);
-      checkSequentialKeys(keys, LETTERS, `${path}.options`, 'options', issues);
+      bank(keys, `${path}.options`, 'options');
       g.questions.forEach((q, i) => {
         if (!keys.includes(q.answer)) issues.error(`${path}.questions.${i}.answer`, `answer ${q.answer} is not an option`);
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       if (!g.allowReuse && new Set(g.questions.map((q) => q.answer)).size !== g.questions.length)
         issues.error(`${path}.questions`, 'an option is used twice but allowReuse is false');
@@ -367,11 +432,13 @@ function processGroup(
 
     case 'matching_sentence_endings': {
       const keys = g.endings.map((o) => o.key);
-      checkSequentialKeys(keys, LETTERS, `${path}.endings`, 'endings', issues);
-      if (g.endings.length <= g.questions.length) issues.warn(`${path}.endings`, 'IELTS gives more endings than sentences');
+      bank(keys, `${path}.endings`, 'endings');
+      if (g.endings.length <= g.questions.length)
+        issues.error(`${path}.endings`, 'IELTS gives more endings than sentences (add distractors)');
       g.questions.forEach((q, i) => {
         if (!keys.includes(q.answer)) issues.error(`${path}.questions.${i}.answer`, `ending ${q.answer} is not in the list`);
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       if (new Set(g.questions.map((q) => q.answer)).size !== g.questions.length)
         issues.error(`${path}.questions`, 'each ending can be the answer only once');
@@ -380,11 +447,17 @@ function processGroup(
 
     case 'map_labelling':
       useAsset(g.image, 'image', `${path}.image`);
-      checkSequentialKeys(g.letters, LETTERS, `${path}.letters`, 'map letters', issues);
+      bank(g.letters, `${path}.letters`, `${g.visualKind} letters`);
       if (g.letters.length <= g.questions.length) issues.warn(`${path}.letters`, 'IELTS maps show more letters than questions');
+      if (g.letterPositions) {
+        const placed = g.letterPositions.map((l) => l.key);
+        if ([...placed].sort().join() !== [...g.letters].sort().join() || new Set(placed).size !== placed.length)
+          issues.error(`${path}.letterPositions`, `give one position for each letter ${g.letters.join(', ')}`);
+      }
       g.questions.forEach((q, i) => {
-        if (!g.letters.includes(q.answer)) issues.error(`${path}.questions.${i}.answer`, `letter ${q.answer} is not on the map`);
+        if (!g.letters.includes(q.answer)) issues.error(`${path}.questions.${i}.answer`, `letter ${q.answer} is not on the ${g.visualKind}`);
         choice(q.number, q.answer);
+        explain([q.number], q.explanation);
       });
       if (new Set(g.questions.map((q) => q.answer)).size !== g.questions.length)
         issues.error(`${path}.questions`, 'two places can not have the same letter');
@@ -395,7 +468,7 @@ function processGroup(
         g.variant === 'table'
           ? [...(g.table?.columns ?? []), ...(g.table?.rows.flat() ?? [])]
           : g.variant === 'flow_chart'
-            ? (g.steps ?? [])
+            ? (g.steps ?? g.flow?.nodes.map((n) => n.text) ?? [])
             : (g.lines ?? []).map((l) => l.text);
       const found = gapsIn(texts);
       const gapNumbers = g.gaps.map((x) => x.number);
@@ -408,9 +481,22 @@ function processGroup(
           path,
           `gaps in the content (${foundNums.join(', ') || 'none'}) must match "gaps" (${gapNumbers.join(', ')}), once each, in order`,
         );
+      if (g.flow) {
+        const ids = g.flow.nodes.map((n) => n.id);
+        if (new Set(ids).size !== ids.length) issues.error(`${path}.flow.nodes`, 'node ids must be unique');
+        g.flow.edges.forEach((e, i) => {
+          if (!ids.includes(e.from) || !ids.includes(e.to))
+            issues.error(`${path}.flow.edges.${i}`, `arrow ${e.from} → ${e.to} points to an unknown box`);
+          if (e.from === e.to) issues.error(`${path}.flow.edges.${i}`, 'an arrow can not point to its own box');
+        });
+        const linked = new Set(g.flow.edges.flatMap((e) => [e.from, e.to]));
+        ids.forEach((id, i) => {
+          if (!linked.has(id)) issues.error(`${path}.flow.nodes.${i}`, `box "${id}" has no arrow`);
+        });
+      }
       if (g.answerMode === 'select') {
         const keys = g.options!.map((o) => o.key);
-        checkSequentialKeys(keys, LETTERS, `${path}.options`, 'word bank', issues);
+        bank(keys, `${path}.options`, 'word bank');
         if (keys.length <= g.gaps.length) issues.warn(`${path}.options`, 'IELTS word banks have more words than gaps');
       }
       g.gaps.forEach((gap, i) => {
@@ -422,6 +508,7 @@ function processGroup(
             issues.error(`${path}.gaps.${i}.answer`, `${gap.answer} is not in the word bank`);
           choice(gap.number, gap.answer);
         }
+        explain([gap.number], gap.explanation);
       });
       if (g.variant === 'table' && g.table && g.table.rows.some((r) => r.length !== g.table!.columns.length))
         issues.error(`${path}.table.rows`, 'every row needs one cell per column');
@@ -436,21 +523,58 @@ function processGroup(
           issues.error(`${path}.questions.${i}.sentence`, `the sentence needs exactly one gap {{${q.number}}}`);
         checkAccepted(q.answers, g.wordLimit, `${path}.questions.${i}.answers`, issues);
         textKey(q.number, q.answers, g.wordLimit);
+        explain([q.number], q.explanation);
       });
       break;
 
-    case 'diagram_label_completion':
+    case 'diagram_label_completion': {
       useAsset(g.image, 'image', `${path}.image`);
+      if (ctx.module === 'reading' && g.visualKind !== 'diagram')
+        issues.error(`${path}.visualKind`, 'reading labelling is always a diagram (maps and plans are listening tasks)');
+      if (ctx.module === 'reading' && g.answerMode === 'select')
+        issues.warn(`${path}.answerMode`, 'reading diagram labels are normally words from the passage (answerMode "write")');
+      const keys = (g.options ?? []).map((o) => o.key);
+      if (g.answerMode === 'select') {
+        bank(keys, `${path}.options`, 'options');
+        if (keys.length <= g.labels.length) issues.warn(`${path}.options`, 'IELTS gives more options than gaps');
+        if (new Set(g.labels.map((l) => l.answer)).size !== g.labels.length)
+          issues.error(`${path}.labels`, 'each option can be the answer only once');
+      }
       g.labels.forEach((l, i) => {
-        checkAccepted(l.answers, g.wordLimit, `${path}.labels.${i}.answers`, issues);
-        textKey(l.number, l.answers, g.wordLimit);
+        if (g.answerMode === 'write' && l.answers) {
+          checkAccepted(l.answers, g.wordLimit!, `${path}.labels.${i}.answers`, issues);
+          textKey(l.number, l.answers, g.wordLimit!);
+        } else if (l.answer) {
+          if (!keys.includes(l.answer)) issues.error(`${path}.labels.${i}.answer`, `${l.answer} is not in the box`);
+          choice(l.number, l.answer);
+        }
+        explain([l.number], l.explanation);
       });
       break;
+    }
 
     case 'short_answer':
       g.questions.forEach((q, i) => {
-        checkAccepted(q.answers, g.wordLimit, `${path}.questions.${i}.answers`, issues);
-        textKey(q.number, q.answers, g.wordLimit);
+        const p = `${path}.questions.${i}`;
+        if ('numbers' in q) {
+          if (q.answerUnits.length !== q.numbers.length)
+            issues.error(`${p}.answerUnits`, `${q.numbers.length} question numbers need exactly ${q.numbers.length} answer units`);
+          q.answerUnits.forEach((u, j) => checkAccepted(u, g.wordLimit, `${p}.answerUnits.${j}`, issues));
+          const all = q.answerUnits.flatMap((u) => u.flatMap((a) => safeExpand(a)));
+          if (new Set(all).size !== all.length)
+            issues.error(`${p}.answerUnits`, 'two answer units accept the same answer, so the candidate could score twice');
+          if (!/\b(TWO|THREE|two|three)\b/.test(q.question))
+            issues.warn(`${p}.question`, `the question should say how many answers it wants (e.g. "Which TWO …")`);
+          for (const n of q.numbers) {
+            key[n] = { kind: 'textset', numbers: q.numbers, units: q.answerUnits, wordLimit: g.wordLimit };
+            staff[n] = `${q.answerUnits.map((u) => u.join(' / ')).join('; ')} (in any order)`;
+          }
+          explain(q.numbers, q.explanation);
+        } else {
+          checkAccepted(q.answers, g.wordLimit, `${p}.answers`, issues);
+          textKey(q.number, q.answers, g.wordLimit);
+          explain([q.number], q.explanation);
+        }
       });
       break;
   }
@@ -470,6 +594,14 @@ function processGroup(
     instructions: g.instructions ?? defaultInstructions(g, ctx),
   } as CandidateGroup;
   return { candidate, numbers };
+}
+
+function safeExpand(answer: string): string[] {
+  try {
+    return expandAccepted(answer);
+  } catch {
+    return [];
+  }
 }
 
 /** Checks that a module's numbers are exactly 1..40 in order. */
@@ -541,6 +673,9 @@ export function buildIeltsExam(input: unknown): BuildResult {
 
   const answerKey = { listening: {} as AnswerKey, reading: {} as AnswerKey };
   const staffAnswers = { listening: {} as Record<number, string>, reading: {} as Record<number, string> };
+  const explanations = { listening: {} as Record<number, string>, reading: {} as Record<number, string> };
+  const listeningOut: ModuleOut = { key: answerKey.listening, staff: staffAnswers.listening, explain: explanations.listening };
+  const readingOut: ModuleOut = { key: answerKey.reading, staff: staffAnswers.reading, explain: explanations.reading };
 
   // ---- listening: 4 parts × 10 questions
   let listeningSeconds = 0;
@@ -557,8 +692,7 @@ export function buildIeltsExam(input: unknown): BuildResult {
         g,
         `${path}.questionGroups.${gi}`,
         { module: 'listening', passageName: 'the recording' },
-        answerKey.listening,
-        staffAnswers.listening,
+        listeningOut,
         issues,
         useAsset,
       );
@@ -592,9 +726,18 @@ export function buildIeltsExam(input: unknown): BuildResult {
     if (pkg.testType === 'academic' && section.texts.length !== 1)
       issues.error(`${path}.texts`, 'Academic Reading has exactly one passage per section');
     if (pkg.testType === 'general_training') {
-      const [min, max] = GT_TEXTS_PER_SECTION[si + 1];
-      if (section.texts.length < min || section.texts.length > max)
-        issues.error(`${path}.texts`, `General Training section ${si + 1} has ${min === max ? min : `${min}-${max}`} text(s)`);
+      const { usual, allowed } = GT_TEXTS_PER_SECTION[si + 1];
+      const n = section.texts.length;
+      const span = ([a, b]: [number, number]) => (a === b ? `${a}` : `${a}-${b}`);
+      if (n < allowed[0] || n > allowed[1])
+        issues.error(`${path}.texts`, `General Training section ${si + 1} has ${span(allowed)} text(s)`);
+      else if (n < usual[0] || n > usual[1])
+        issues.warn(`${path}.texts`, `General Training section ${si + 1} usually has ${span(usual)} text(s) (got ${n})`);
+    }
+    const textLabels = section.texts.flatMap((t) => (t.label ? [t.label] : []));
+    if (textLabels.length > 0) {
+      if (textLabels.length !== section.texts.length) issues.error(`${path}.texts`, 'label every text of the section or none');
+      else checkSequentialKeys(textLabels, LETTERS, `${path}.texts`, 'text labels', issues);
     }
     section.texts.forEach((t, ti) => {
       readingTexts++;
@@ -615,9 +758,8 @@ export function buildIeltsExam(input: unknown): BuildResult {
       const r = processGroup(
         g,
         `${path}.questionGroups.${gi}`,
-        { module: 'reading', passageName, text: section.texts[textIndex] },
-        answerKey.reading,
-        staffAnswers.reading,
+        { module: 'reading', passageName, text: section.texts[textIndex], sectionTexts: section.texts },
+        readingOut,
         issues,
         useAsset,
       );
@@ -649,12 +791,16 @@ export function buildIeltsExam(input: unknown): BuildResult {
     issues.error('writing.task1.kind', 'General Training Writing Task 1 is "general_letter"');
   let task1: CandidateWritingTask;
   if (t1.kind === 'academic_report') {
-    useAsset(t1.image, 'image', 'writing.task1.image');
+    const images = t1.images ?? (t1.image ? [t1.image] : []);
+    images.forEach((id, i) => useAsset(id, 'image', t1.images ? `writing.task1.images.${i}` : 'writing.task1.image'));
+    if (t1.visualType === 'mixed_charts' && images.length < 2)
+      issues.warn('writing.task1.images', 'mixed charts are usually two or more visuals ("images")');
     task1 = {
       taskNumber: 1,
       minutes: TIMING.writingTask1Minutes,
       minWords: 150,
-      image: t1.image,
+      image: images[0],
+      images,
       body: [
         'You should spend about 20 minutes on this task.',
         `**${t1.prompt}**`,
@@ -772,12 +918,18 @@ export function buildIeltsExam(input: unknown): BuildResult {
   return {
     ok: true,
     exam: {
-      schemaVersion: PACKAGE_SCHEMA_VERSION,
+      schemaVersion: pkg.schemaVersion,
       candidate,
       answerKey,
       staff: {
         listening: pkg.listening.parts.map((p) => ({ partNumber: p.partNumber, context: p.context, transcript: p.transcript })),
         answers: staffAnswers,
+        explanations,
+        notes: {
+          writingTask1: pkg.writing.task1.examinerNotes,
+          writingTask2: pkg.writing.task2.examinerNotes,
+          speaking: pkg.speaking.examinerNotes,
+        },
         meta: pkg.meta,
       },
       assets,

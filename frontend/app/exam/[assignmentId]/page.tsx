@@ -90,6 +90,47 @@ function ModuleIntro({ module, onStart, starting }: { module: Exclude<Module, 's
   );
 }
 
+/**
+ * Headphone check before Listening, like the real test: a test tone that does
+ * not use the recording, so the candidate can set the volume first.
+ */
+function SoundCheck() {
+  const [volume, setVolume] = useState(0.8);
+  const [playing, setPlaying] = useState(false);
+  const play = () => {
+    const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = 440;
+    gain.gain.value = volume * 0.3;
+    osc.connect(gain).connect(ctx.destination);
+    setPlaying(true);
+    osc.start();
+    osc.stop(ctx.currentTime + 1.5);
+    osc.onended = () => {
+      setPlaying(false);
+      void ctx.close();
+    };
+  };
+  return (
+    <div className="ex-part-banner space-y-2">
+      <p className="font-bold">Sound check</p>
+      <p>Put on your headphones and play the test sound. If you can not hear it, tell your teacher before you start.</p>
+      <div className="flex flex-wrap items-center gap-3">
+        <button className="ex-border rounded border px-4 py-1 font-bold disabled:opacity-50" onClick={play} disabled={playing}>
+          {playing ? 'Playing…' : '▶ Play sound'}
+        </button>
+        <label className="flex items-center gap-2">
+          Volume
+          <input type="range" min={0} max={1} step={0.05} value={volume} onChange={(e) => setVolume(Number(e.target.value))} aria-label="Test sound volume" />
+        </label>
+      </div>
+    </div>
+  );
+}
+
 export default function ExamPage() {
   const { me } = useRequireAuth();
   const { assignmentId } = useParams<{ assignmentId: string }>();
@@ -138,23 +179,37 @@ export default function ExamPage() {
   const attemptId = state?.attempt.id;
   const flushRef = useRef<() => Promise<void>>(async () => undefined);
 
-  const flush = useCallback(async () => {
+  // One save at a time: a slow request can never land after a newer answer sheet.
+  const inFlight = useRef<Promise<void> | null>(null);
+  const flush = useCallback(async (): Promise<void> => {
     if (saveTimer.current) clearTimeout(saveTimer.current);
+    if (inFlight.current) {
+      await inFlight.current;
+      return flushRef.current();
+    }
     const job = pending.current;
     if (!job) return;
     pending.current = null;
     setSaveStatus('saving');
-    try {
-      await api(job.url, { method: 'PUT', body: job.body });
-      setSaveStatus('saved');
-    } catch (e) {
-      if (e instanceof ApiError && e.code === 'MODULE_CLOSED') {
-        if (attemptId) await loadState(attemptId);
-        return;
+    const run = (async () => {
+      try {
+        await api(job.url, { method: 'PUT', body: job.body });
+        setSaveStatus('saved');
+      } catch (e) {
+        if (e instanceof ApiError && e.code === 'MODULE_CLOSED') {
+          if (attemptId) await loadState(attemptId);
+          return;
+        }
+        pending.current ??= job;
+        setSaveStatus('error');
+        saveTimer.current = setTimeout(() => void flushRef.current(), 5000);
       }
-      pending.current ??= job;
-      setSaveStatus('error');
-      saveTimer.current = setTimeout(() => void flushRef.current(), 5000);
+    })();
+    inFlight.current = run;
+    try {
+      await run;
+    } finally {
+      inFlight.current = null;
     }
   }, [attemptId, loadState]);
   useEffect(() => {
@@ -349,7 +404,8 @@ export default function ExamPage() {
             </p>
           </div>
           <p>If your details are not correct, tell your teacher.</p>
-          <p>Put on your headphones. When you start, the Listening recording begins and the timer starts.</p>
+          <SoundCheck />
+          <p>When you start, the Listening recording begins and the timer starts. You will hear each recording ONCE only.</p>
           <ModuleIntro module="listening" onStart={() => void beginTest()} starting={busy} />
         </div>
       </div>
@@ -361,7 +417,14 @@ export default function ExamPage() {
         {header}
         <div className="m-auto max-w-lg space-y-3 p-6 text-center">
           <h1 className="text-[1.5em] font-bold">You have finished the test</h1>
-          <p>Your answers have been submitted. Your teacher will mark Writing and Speaking and release your results.</p>
+          {state.assignment.speakingMode === 'FACE_TO_FACE' ? (
+            <p>
+              Your Listening, Reading and Writing answers have been submitted. Your Speaking test is face to face with your teacher. Your
+              teacher will release your results after marking.
+            </p>
+          ) : (
+            <p>Your answers have been submitted. Your teacher will mark Writing and Speaking and release your results.</p>
+          )}
           <Link className="inline-block rounded bg-[var(--ex-accent)] px-5 py-2 font-bold text-[var(--ex-bg)]" href="/dashboard">
             Back to dashboard
           </Link>

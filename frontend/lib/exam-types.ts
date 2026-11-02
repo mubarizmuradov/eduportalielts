@@ -26,7 +26,9 @@ export interface Option {
 export interface WordLimit {
   maxWords: number;
   allowNumber: boolean;
+  numberRule?: 'and_or' | 'or';
 }
+export type VisualKind = 'diagram' | 'map' | 'plan' | 'pictures';
 
 interface GroupBase {
   range: [number, number];
@@ -38,7 +40,7 @@ interface GroupBase {
 
 export type Group = GroupBase &
   (
-    | { type: 'multiple_choice'; questions: { number: number; stem: string; options: Option[] }[] }
+    | { type: 'multiple_choice'; questions: { number: number; stem: string; image?: string; options: Option[] }[] }
     | { type: 'multiple_choice_multi'; items: { numbers: number[]; stem: string; options: Option[]; choose: number }[] }
     | {
         type: 'true_false_not_given' | 'yes_no_not_given';
@@ -46,10 +48,26 @@ export type Group = GroupBase &
         questions: { number: number; statement: string }[];
       }
     | { type: 'matching_headings'; textIndex: number; headings: Option[]; questions: { number: number; paragraph: string }[] }
-    | { type: 'matching_information'; textIndex: number; paragraphs: string[]; allowReuse: boolean; questions: { number: number; statement: string }[] }
+    | {
+        type: 'matching_information';
+        scope?: 'paragraphs' | 'texts';
+        textIndex: number;
+        /** Letters to choose from: paragraph labels, or text labels when scope is "texts". */
+        paragraphs: string[];
+        allowReuse: boolean;
+        questions: { number: number; statement: string }[];
+      }
     | { type: 'matching_features'; optionsTitle?: string; options: Option[]; allowReuse: boolean; questions: { number: number; statement: string }[] }
     | { type: 'matching_sentence_endings'; endings: Option[]; questions: { number: number; sentenceStart: string }[] }
-    | { type: 'map_labelling'; image: string; letters: string[]; questions: { number: number; label: string }[] }
+    | {
+        type: 'map_labelling';
+        visualKind?: 'map' | 'plan' | 'diagram';
+        image: string;
+        letters: string[];
+        /** Letters drawn over the image (percent); absent when the image shows them. */
+        letterPositions?: { key: string; x: number; y: number }[];
+        questions: { number: number; label: string }[];
+      }
     | {
         type: 'completion';
         variant: 'form' | 'note' | 'table' | 'flow_chart' | 'summary';
@@ -59,11 +77,25 @@ export type Group = GroupBase &
         lines?: { text: string; style: 'heading' | 'text' | 'bullet' | 'indent' }[];
         table?: { columns: string[]; rows: string[][] };
         steps?: string[];
+        flow?: { nodes: { id: string; text: string }[]; edges: { from: string; to: string }[] };
         gaps: { number: number }[];
       }
     | { type: 'sentence_completion'; wordLimit: WordLimit; questions: { number: number; sentence: string }[] }
-    | { type: 'diagram_label_completion'; image: string; wordLimit: WordLimit; labels: { number: number; x: number; y: number }[] }
-    | { type: 'short_answer'; wordLimit: WordLimit; questions: { number: number; question: string }[] }
+    | {
+        type: 'diagram_label_completion';
+        visualKind?: VisualKind;
+        image: string;
+        answerMode?: 'write' | 'select';
+        wordLimit?: WordLimit;
+        options?: Option[];
+        labels: { number: number; x: number; y: number }[];
+      }
+    | {
+        type: 'short_answer';
+        wordLimit: WordLimit;
+        /** `numbers`: one question asking for several answers in any order ("Which TWO …?"). */
+        questions: ({ number: number; question: string } | { numbers: number[]; question: string })[];
+      }
   );
 
 export interface ListeningPart {
@@ -79,11 +111,13 @@ export interface ListeningContent {
 }
 
 export interface ReadingText {
+  label?: string;
   title: string;
   subtitle?: string;
   paragraphs: { label?: string; text: string }[];
   image?: string;
   imageCaption?: string;
+  glossary?: { term: string; definition: string }[];
 }
 export interface ReadingSection {
   sectionNumber: number;
@@ -102,6 +136,7 @@ export interface WritingTask {
   minWords: number;
   body: string;
   image?: string;
+  images?: string[];
 }
 export interface WritingContent {
   tasks: WritingTask[];
@@ -147,7 +182,7 @@ export interface AttemptState {
   };
   candidate: { name: string; number: string };
   test: { id: string; title: string; testType: 'academic' | 'general_training' };
-  assignment: { id: string; title: string; resultsReleased: boolean };
+  assignment: { id: string; title: string; resultsReleased: boolean; speakingMode?: SpeakingMode };
   content: ListeningContent | ReadingContent | WritingContent | SpeakingContent | null;
   saved:
     | { answers: Record<string, string> }
@@ -157,5 +192,6 @@ export interface AttemptState {
 }
 
 export type Answers = Record<string, string>;
+export type SpeakingMode = 'RECORDED' | 'FACE_TO_FACE';
 
 export const assetUrl = (testId: string, key: string) => `/api/tests/${testId}/assets/${encodeURIComponent(key)}`;

@@ -62,6 +62,63 @@ function Criteria<K extends string>({
   );
 }
 
+/** Face-to-face Speaking: the examiner's questions for the interview. */
+function FaceToFaceCard({ content, notes }: { content: SpeakingContent; notes?: string }) {
+  const { t } = useI18n();
+  return (
+    <div className="space-y-3 text-sm">
+      <p className="font-semibold">{t('grade.faceToFace')}</p>
+      <div>
+        <p className="font-semibold">{t('grade.part1')}</p>
+        {content.part1.topics.map((tp) => (
+          <div key={tp.topic} className="mt-1">
+            <p className="italic">{tp.topic}</p>
+            <ol className="list-decimal pl-5">
+              {tp.questions.map((q) => (
+                <li key={q.text}>{q.text}</li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+      <div className="rounded-lg border border-[var(--card-border)] p-3">
+        <p className="font-semibold">{t('grade.part2')}</p>
+        <p className="font-bold">{content.part2.topic}</p>
+        <p>You should say:</p>
+        <ul className="list-disc pl-5">
+          {content.part2.bulletPoints.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+        <p>{content.part2.finalPrompt}</p>
+        {content.part2.roundingOff.length > 0 && (
+          <p className="text-muted mt-1">
+            {t('grade.roundingOff')}: {content.part2.roundingOff.map((q) => q.text).join(' / ')}
+          </p>
+        )}
+      </div>
+      <div>
+        <p className="font-semibold">{t('grade.part3')}</p>
+        {content.part3.themes.map((th) => (
+          <div key={th.theme} className="mt-1">
+            <p className="italic">{th.theme}</p>
+            <ol className="list-decimal pl-5">
+              {th.questions.map((q) => (
+                <li key={q.text}>{q.text}</li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+      {notes && (
+        <p className="text-muted whitespace-pre-wrap">
+          <strong>{t('grade.examinerNotes')}:</strong> {notes}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Sheet({ title, rows, raw, band }: { title: string; rows: SheetRow[]; raw: number | null; band: number | null }) {
   const { t } = useI18n();
   return (
@@ -88,7 +145,10 @@ function Sheet({ title, rows, raw, band }: { title: string; rows: SheetRow[]; ra
                     {r.correct === true ? '✓ ' : r.correct === false ? '✗ ' : ''}
                     {r.answer.replace('_', ' ') || '—'}
                   </td>
-                  <td className="text-muted py-1">{r.key}</td>
+                  <td className="text-muted py-1">
+                    {r.key}
+                    {r.explanation && <span className="block text-xs italic">{r.explanation}</span>}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -210,6 +270,7 @@ export default function AttemptPage() {
           {bandBox(t('common.speaking'), r.bands.speaking)}
           {bandBox(t('result.overall'), r.bands.overall, true)}
         </div>
+        <p className="text-muted text-xs">{t('result.estimateNote')}</p>
       </section>
 
       <ErrorBanner message={error} />
@@ -280,7 +341,9 @@ export default function AttemptPage() {
         <h2 className="flex items-center gap-2 text-lg font-bold">
           {t('common.speaking')} <Band value={staff ? speakingPreview : r.bands.speaking} />
         </h2>
-        {!speakingDone ? (
+        {r.assignment.speakingMode === 'FACE_TO_FACE' ? (
+          staff ? <FaceToFaceCard content={r.speaking.content} notes={r.notes?.speaking} /> : null
+        ) : !speakingDone ? (
           <p className="text-muted">{t('grade.notFinished')}</p>
         ) : r.speaking.recordings.length === 0 ? (
           <p className="text-muted">{t('grade.noRecordings')}</p>

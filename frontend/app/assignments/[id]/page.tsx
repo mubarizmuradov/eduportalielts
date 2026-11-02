@@ -76,6 +76,8 @@ export default function AssignmentPage() {
             <Link className="underline" href={`/tests/${a.testId}`}>
               {a.testTitle}
             </Link>
+            {' · '}
+            {t('testPage.speakingMode')}: {a.speakingMode === 'FACE_TO_FACE' ? t('testPage.speakingFaceToFace') : t('testPage.speakingRecorded')}
           </p>
         </div>
         <Button variant="ghost" onClick={() => void remove()}>

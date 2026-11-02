@@ -126,6 +126,7 @@ export function QuestionGroup({ g }: { g: Group }) {
               <strong className="mr-2">{q.number}</strong>
               {inline(q.stem)}
             </p>
+            {q.image && <QuestionImage image={q.image} alt={`Question ${q.number}`} />}
             <div className="space-y-0.5 pl-6">
               {q.options.map((o) => (
                 <Radio key={o.key} n={q.number} value={o.key} label={`${o.key} ${o.text}`}>
@@ -255,28 +256,71 @@ export function QuestionGroup({ g }: { g: Group }) {
       {g.type === 'diagram_label_completion' && <DiagramLabels g={g} />}
 
       {g.type === 'short_answer' &&
-        g.questions.map((q) => (
-          <Q key={q.number} n={q.number}>
-            <p className="mb-1">
-              <strong className="mr-2">{q.number}</strong>
-              {inline(q.question)}
-            </p>
-            <div className="pl-6">
-              <GapInput n={q.number} wide />
-            </div>
-          </Q>
-        ))}
+        g.questions.map((q) =>
+          'numbers' in q ? (
+            // "Which TWO …?": one box per number, answers in any order.
+            <Q key={q.numbers[0]} n={q.numbers[0]}>
+              {q.numbers.slice(1).map((n) => (
+                <span key={n} id={`q-${n}`} data-q={n} className="block" />
+              ))}
+              <p className="mb-1">
+                <strong className="mr-2">
+                  {q.numbers[0]}–{q.numbers[q.numbers.length - 1]}
+                </strong>
+                {inline(q.question)}
+              </p>
+              <div className="flex flex-col gap-1.5 pl-6">
+                {q.numbers.map((n) => (
+                  <GapInput key={n} n={n} wide />
+                ))}
+              </div>
+            </Q>
+          ) : (
+            <Q key={q.number} n={q.number}>
+              <p className="mb-1">
+                <strong className="mr-2">{q.number}</strong>
+                {inline(q.question)}
+              </p>
+              <div className="pl-6">
+                <GapInput n={q.number} wide />
+              </div>
+            </Q>
+          ),
+        )}
     </section>
   );
 }
 
+/** Image of a question (pictures A–C …), shown at its natural size, never wider than the column. */
+function QuestionImage({ image, alt }: { image: string; alt: string }) {
+  const { testId } = useExam();
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={assetUrl(testId, image)} alt={alt} className="ex-border my-2 block max-h-[360px] max-w-full border" />;
+}
+
+const VISUAL_NAME = { map: 'Map', plan: 'Plan', diagram: 'Diagram', pictures: 'Pictures' } as const;
+
 function MapLabelling({ g }: { g: Extract<Group, { type: 'map_labelling' }> }) {
   const { testId, answers, setAnswer, setCurrent } = useExam();
+  const name = VISUAL_NAME[g.visualKind ?? 'map'];
   return (
     <div className="space-y-3">
       {g.title && <p className="font-bold">{g.title}</p>}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={assetUrl(testId, g.image)} alt={g.title ?? 'Map'} className="ex-border max-h-[420px] max-w-full border" />
+      {/* Letters are drawn on the image itself (percent of the image box, not of the column). */}
+      <div className="relative inline-block max-w-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={assetUrl(testId, g.image)} alt={g.title ?? name} className="ex-border block max-h-[420px] max-w-full border" />
+        {g.letterPositions?.map((l) => (
+          <span
+            key={l.key}
+            aria-hidden
+            className="ex-map-letter absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${l.x}%`, top: `${l.y}%` }}
+          >
+            {l.key}
+          </span>
+        ))}
+      </div>
       <div className="overflow-x-auto">
         <table className="ex-table border-collapse">
           <thead>
@@ -376,6 +420,7 @@ function Completion({ g }: { g: Extract<Group, { type: 'completion' }> }) {
             </table>
           </div>
         )}
+        {g.flow && <FlowChart flow={g.flow} gap={gap} />}
         {g.steps && (
           <div className="mx-auto flex max-w-xl flex-col items-stretch">
             {g.steps.map((s, i) => (
@@ -392,13 +437,17 @@ function Completion({ g }: { g: Extract<Group, { type: 'completion' }> }) {
 }
 
 function DiagramLabels({ g }: { g: Extract<Group, { type: 'diagram_label_completion' }> }) {
-  const { testId } = useExam();
+  const { testId, answers } = useExam();
+  const select = g.answerMode === 'select';
+  const options = g.options ?? [];
+  const used = g.numbers.map((n) => answers[n]).filter(Boolean);
   return (
     <div className="space-y-2">
       {g.title && <p className="font-bold">{g.title}</p>}
+      {select && <ChipBank group={g.range[0]} options={options} answersUsed={used} />}
       <div className="relative inline-block max-w-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={assetUrl(testId, g.image)} alt={g.title ?? 'Diagram'} className="ex-border block max-w-full border" />
+        <img src={assetUrl(testId, g.image)} alt={g.title ?? VISUAL_NAME[g.visualKind ?? 'diagram']} className="ex-border block max-w-full border" />
         {g.labels.map((l) => (
           <span
             key={l.number}
@@ -407,10 +456,58 @@ function DiagramLabels({ g }: { g: Extract<Group, { type: 'diagram_label_complet
             className="absolute -translate-x-1/2 -translate-y-1/2"
             style={{ left: `${l.x}%`, top: `${l.y}%` }}
           >
-            <GapInput n={l.number} />
+            {select ? <DropGap n={l.number} group={g.range[0]} options={options} showText={false} className="ex-drop-compact" /> : <GapInput n={l.number} />}
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Flow-chart given as boxes and arrows: boxes are put in rows by their
+ * distance from the start (branches side by side); an arrow that jumps back
+ * or skips a row is written under its box.
+ */
+function FlowChart({ flow, gap }: { flow: NonNullable<Extract<Group, { type: 'completion' }>['flow']>; gap: (n: number) => React.ReactNode }) {
+  const index = new Map(flow.nodes.map((n, i) => [n.id, i]));
+  const level = new Map<string, number>();
+  flow.nodes.forEach((n) => {
+    const into = flow.edges.filter((e) => e.to === n.id && index.get(e.from)! < index.get(n.id)!);
+    level.set(n.id, into.length ? Math.max(...into.map((e) => (level.get(e.from) ?? 0) + 1)) : 0);
+  });
+  const rows: (typeof flow.nodes)[] = [];
+  flow.nodes.forEach((n) => (rows[level.get(n.id)!] ??= []).push(n));
+  const short = (id: string) => {
+    const t = flow.nodes[index.get(id)!].text.replace(/\{\{\s*(\d+)\s*\}\}/g, '($1)');
+    return t.length > 40 ? `${t.slice(0, 40)}…` : t;
+  };
+  return (
+    <div className="mx-auto flex max-w-2xl flex-col items-stretch">
+      {rows.filter(Boolean).map((row, ri) => (
+        <div key={ri} className="flex flex-col items-center">
+          {ri > 0 && (
+            <span aria-hidden className="py-0.5 text-lg leading-none">
+              {row.length > 1 ? '↙ ↘' : '↓'}
+            </span>
+          )}
+          <div className="flex w-full justify-center gap-3">
+            {row.map((n) => {
+              const jumps = flow.edges.filter((e) => e.from === n.id && level.get(e.to)! !== level.get(n.id)! + 1);
+              return (
+                <div key={n.id} className="ex-flow-step flex-1 leading-[2.2]">
+                  {withGaps(n.text, gap, n.id)}
+                  {jumps.map((e) => (
+                    <p key={e.to} className="ex-muted text-[0.85em] leading-snug">
+                      → {short(e.to)}
+                    </p>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

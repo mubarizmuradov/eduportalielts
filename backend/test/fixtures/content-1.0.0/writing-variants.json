@@ -1,0 +1,339 @@
+{
+  "fixtureOnly": true,
+  "note": "Metadata and shape examples only; prompt text is not tailored to every tag. Not a bank of publishable questions.",
+  "tasks": [
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "line_chart",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "bar_chart",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "pie_chart",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "table",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "process",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "map",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "object_diagram",
+      "visualAssetIds": [
+        "image.fixture"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "academic_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Describe the supplied transport data. This is a software fixture.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "visualType": "mixed",
+      "visualAssetIds": [
+        "image.fixture",
+        "image.fixture2"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "general_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Write a letter to a community centre about a missing booking.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "register": "personal",
+      "recipient": "Community centre manager",
+      "scenario": "Your room booking is missing from the schedule.",
+      "bulletPoints": [
+        "Describe the booking.",
+        "Explain the effect of the error.",
+        "Request a practical solution."
+      ],
+      "opening": "Dear Manager,",
+      "purposeTags": [
+        "request",
+        "complaint"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "general_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Write a letter to a community centre about a missing booking.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "register": "semi_formal",
+      "recipient": "Community centre manager",
+      "scenario": "Your room booking is missing from the schedule.",
+      "bulletPoints": [
+        "Describe the booking.",
+        "Explain the effect of the error.",
+        "Request a practical solution."
+      ],
+      "opening": "Dear Manager,",
+      "purposeTags": [
+        "request",
+        "complaint"
+      ]
+    },
+    {
+      "id": "writing.t1",
+      "kind": "general_task1",
+      "number": 1,
+      "minWords": 150,
+      "recommendedSeconds": 1200,
+      "prompt": "Write a letter to a community centre about a missing booking.",
+      "directives": [
+        "Report the main features and relevant comparisons."
+      ],
+      "register": "formal",
+      "recipient": "Community centre manager",
+      "scenario": "Your room booking is missing from the schedule.",
+      "bulletPoints": [
+        "Describe the booking.",
+        "Explain the effect of the error.",
+        "Request a practical solution."
+      ],
+      "opening": "Dear Manager,",
+      "purposeTags": [
+        "request",
+        "complaint"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "opinion"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "discussion"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "advantages_disadvantages"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "outweigh"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "positive_negative"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "cause_solution"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "cause_effect"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "problem_solution"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "multi_part"
+      ]
+    },
+    {
+      "id": "writing.t2",
+      "kind": "task2",
+      "number": 2,
+      "minWords": 250,
+      "recommendedSeconds": 2400,
+      "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+      "directives": [
+        "Address the stated question and support your answer."
+      ],
+      "essayTags": [
+        "mixed"
+      ]
+    }
+  ]
+}

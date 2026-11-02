@@ -1,0 +1,3162 @@
+{
+  "schemaVersion": "1.0.0",
+  "contentId": "fixture.academic",
+  "title": "STRUCTURAL FIXTURE ONLY academic",
+  "testType": "academic",
+  "language": "en",
+  "deliveryProfile": "computer",
+  "fixtureOnly": true,
+  "assets": [
+    {
+      "id": "image.fixture",
+      "kind": "image",
+      "storageKey": "fixtures/no-publish/diagram.png",
+      "mimeType": "image/png",
+      "byteLength": 1,
+      "status": "fixture",
+      "width": 1200,
+      "height": 800
+    },
+    {
+      "id": "audio.p1",
+      "kind": "audio",
+      "storageKey": "fixtures/no-publish/listening-1.mp3",
+      "mimeType": "audio/mpeg",
+      "byteLength": 1,
+      "status": "fixture",
+      "durationMs": 450000
+    },
+    {
+      "id": "audio.p2",
+      "kind": "audio",
+      "storageKey": "fixtures/no-publish/listening-2.mp3",
+      "mimeType": "audio/mpeg",
+      "byteLength": 1,
+      "status": "fixture",
+      "durationMs": 450000
+    },
+    {
+      "id": "audio.p3",
+      "kind": "audio",
+      "storageKey": "fixtures/no-publish/listening-3.mp3",
+      "mimeType": "audio/mpeg",
+      "byteLength": 1,
+      "status": "fixture",
+      "durationMs": 450000
+    },
+    {
+      "id": "audio.p4",
+      "kind": "audio",
+      "storageKey": "fixtures/no-publish/listening-4.mp3",
+      "mimeType": "audio/mpeg",
+      "byteLength": 1,
+      "status": "fixture",
+      "durationMs": 450000
+    }
+  ],
+  "listening": {
+    "timingMode": "embedded_audio",
+    "finalReviewSeconds": 120,
+    "parts": [
+      {
+        "id": "listening.p1",
+        "part": 1,
+        "context": "social_dialogue",
+        "audioAssetId": "audio.p1",
+        "groups": [
+          {
+            "id": "L1g1",
+            "variantId": "listening.completion.form.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L1g1.i1",
+                "numbers": [
+                  1
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L1g1.i2",
+                "numbers": [
+                  2
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L1g1.i3",
+                "numbers": [
+                  3
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "form",
+              "blocks": [
+                "Sample fixture {{L1g1.i1}}",
+                "Sample fixture {{L1g1.i2}}",
+                "Sample fixture {{L1g1.i3}}"
+              ]
+            }
+          },
+          {
+            "id": "L1g2",
+            "variantId": "listening.completion.note.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L1g2.i1",
+                "numbers": [
+                  4
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L1g2.i2",
+                "numbers": [
+                  5
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "note",
+              "blocks": [
+                "Sample fixture {{L1g2.i1}}",
+                "Sample fixture {{L1g2.i2}}"
+              ]
+            }
+          },
+          {
+            "id": "L1g3",
+            "variantId": "listening.multiple_choice.single",
+            "taskType": "multiple_choice",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L1g3.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L1g3.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L1g3.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L1g3.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L1g3.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L1g3.i1",
+                "numbers": [
+                  6
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L1g3.o1",
+                    "L1g3.o2",
+                    "L1g3.o3",
+                    "L1g3.o4",
+                    "L1g3.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "L1g4",
+            "variantId": "listening.multiple_choice.multi",
+            "taskType": "multiple_choice",
+            "instructions": "Choose TWO answers.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L1g4.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L1g4.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L1g4.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L1g4.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L1g4.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L1g4.i1",
+                "numbers": [
+                  7,
+                  8
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_many",
+                  "optionIds": [
+                    "L1g4.o1",
+                    "L1g4.o2",
+                    "L1g4.o3",
+                    "L1g4.o4",
+                    "L1g4.o5"
+                  ],
+                  "selectionCount": 2
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "L1g5",
+            "variantId": "listening.short_answer",
+            "taskType": "short_answer",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L1g5.i1",
+                "numbers": [
+                  9
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L1g5.i2",
+                "numbers": [
+                  10
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          }
+        ]
+      },
+      {
+        "id": "listening.p2",
+        "part": 2,
+        "context": "social_monologue",
+        "audioAssetId": "audio.p2",
+        "groups": [
+          {
+            "id": "L2g1",
+            "variantId": "listening.label.map.location",
+            "taskType": "visual_labelling",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L2g1.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L2g1.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L2g1.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L2g1.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L2g1.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L2g1.i1",
+                "numbers": [
+                  11
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g1.o1",
+                    "L2g1.o2",
+                    "L2g1.o3",
+                    "L2g1.o4",
+                    "L2g1.o5"
+                  ]
+                }
+              },
+              {
+                "id": "L2g1.i2",
+                "numbers": [
+                  12
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g1.o1",
+                    "L2g1.o2",
+                    "L2g1.o3",
+                    "L2g1.o4",
+                    "L2g1.o5"
+                  ]
+                }
+              },
+              {
+                "id": "L2g1.i3",
+                "numbers": [
+                  13
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g1.o1",
+                    "L2g1.o2",
+                    "L2g1.o3",
+                    "L2g1.o4",
+                    "L2g1.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "visual",
+              "assetId": "image.fixture",
+              "visualKind": "map",
+              "arrangement": "location_options",
+              "locations": [
+                {
+                  "optionId": "L2g1.o1",
+                  "x": 0.1,
+                  "y": 0.5
+                },
+                {
+                  "optionId": "L2g1.o2",
+                  "x": 0.25,
+                  "y": 0.5
+                },
+                {
+                  "optionId": "L2g1.o3",
+                  "x": 0.4,
+                  "y": 0.5
+                },
+                {
+                  "optionId": "L2g1.o4",
+                  "x": 0.5499999999999999,
+                  "y": 0.5
+                },
+                {
+                  "optionId": "L2g1.o5",
+                  "x": 0.7,
+                  "y": 0.5
+                }
+              ]
+            }
+          },
+          {
+            "id": "L2g2",
+            "variantId": "listening.label.plan.text.blank",
+            "taskType": "visual_labelling",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L2g2.i1",
+                "numbers": [
+                  14
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L2g2.i2",
+                "numbers": [
+                  15
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "visual",
+              "assetId": "image.fixture",
+              "visualKind": "plan",
+              "arrangement": "blank_targets",
+              "targets": [
+                {
+                  "itemId": "L2g2.i1",
+                  "x": 0.05,
+                  "y": 0.05,
+                  "width": 0.25,
+                  "height": 0.06
+                },
+                {
+                  "itemId": "L2g2.i2",
+                  "x": 0.05,
+                  "y": 0.13,
+                  "width": 0.25,
+                  "height": 0.06
+                }
+              ]
+            }
+          },
+          {
+            "id": "L2g3",
+            "variantId": "listening.label.diagram.choice_one.blank",
+            "taskType": "visual_labelling",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L2g3.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L2g3.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L2g3.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L2g3.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L2g3.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L2g3.i1",
+                "numbers": [
+                  16
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g3.o1",
+                    "L2g3.o2",
+                    "L2g3.o3",
+                    "L2g3.o4",
+                    "L2g3.o5"
+                  ]
+                }
+              },
+              {
+                "id": "L2g3.i2",
+                "numbers": [
+                  17
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g3.o1",
+                    "L2g3.o2",
+                    "L2g3.o3",
+                    "L2g3.o4",
+                    "L2g3.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "visual",
+              "assetId": "image.fixture",
+              "visualKind": "diagram",
+              "arrangement": "blank_targets",
+              "targets": [
+                {
+                  "itemId": "L2g3.i1",
+                  "x": 0.05,
+                  "y": 0.05,
+                  "width": 0.25,
+                  "height": 0.06
+                },
+                {
+                  "itemId": "L2g3.i2",
+                  "x": 0.05,
+                  "y": 0.13,
+                  "width": 0.25,
+                  "height": 0.06
+                }
+              ]
+            }
+          },
+          {
+            "id": "L2g4",
+            "variantId": "listening.label.pictures.choice",
+            "taskType": "visual_labelling",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L2g4.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L2g4.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L2g4.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L2g4.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L2g4.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L2g4.i1",
+                "numbers": [
+                  18
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g4.o1",
+                    "L2g4.o2",
+                    "L2g4.o3",
+                    "L2g4.o4",
+                    "L2g4.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "visual",
+              "assetId": "image.fixture",
+              "visualKind": "pictures",
+              "arrangement": "blank_targets",
+              "targets": [
+                {
+                  "itemId": "L2g4.i1",
+                  "x": 0.05,
+                  "y": 0.05,
+                  "width": 0.25,
+                  "height": 0.06
+                }
+              ]
+            }
+          },
+          {
+            "id": "L2g5",
+            "variantId": "listening.matching",
+            "taskType": "matching",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "allowed",
+            "options": [
+              {
+                "id": "L2g5.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L2g5.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L2g5.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L2g5.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L2g5.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L2g5.i1",
+                "numbers": [
+                  19
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g5.o1",
+                    "L2g5.o2",
+                    "L2g5.o3",
+                    "L2g5.o4",
+                    "L2g5.o5"
+                  ]
+                }
+              },
+              {
+                "id": "L2g5.i2",
+                "numbers": [
+                  20
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L2g5.o1",
+                    "L2g5.o2",
+                    "L2g5.o3",
+                    "L2g5.o4",
+                    "L2g5.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "matching"
+            }
+          }
+        ]
+      },
+      {
+        "id": "listening.p3",
+        "part": 3,
+        "context": "educational_discussion",
+        "audioAssetId": "audio.p3",
+        "groups": [
+          {
+            "id": "L3g1",
+            "variantId": "listening.completion.table.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L3g1.i1",
+                "numbers": [
+                  21
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L3g1.i2",
+                "numbers": [
+                  22
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L3g1.i3",
+                "numbers": [
+                  23
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "table",
+              "columns": [
+                "Sample label",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "Fixture 1",
+                  "{{L3g1.i1}}"
+                ],
+                [
+                  "Fixture 2",
+                  "{{L3g1.i2}}"
+                ],
+                [
+                  "Fixture 3",
+                  "{{L3g1.i3}}"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "L3g2",
+            "variantId": "listening.completion.flow_chart.choice_one",
+            "taskType": "completion",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "L3g2.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "L3g2.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "L3g2.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "L3g2.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "L3g2.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "L3g2.i1",
+                "numbers": [
+                  24
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L3g2.o1",
+                    "L3g2.o2",
+                    "L3g2.o3",
+                    "L3g2.o4",
+                    "L3g2.o5"
+                  ]
+                }
+              },
+              {
+                "id": "L3g2.i2",
+                "numbers": [
+                  25
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "L3g2.o1",
+                    "L3g2.o2",
+                    "L3g2.o3",
+                    "L3g2.o4",
+                    "L3g2.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "flow_chart",
+              "nodes": [
+                {
+                  "id": "L3g2.n0",
+                  "body": "Start"
+                },
+                {
+                  "id": "L3g2.n1",
+                  "body": "Step {{L3g2.i1}}"
+                },
+                {
+                  "id": "L3g2.n2",
+                  "body": "Step {{L3g2.i2}}"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "L3g2.n0",
+                  "to": "L3g2.n1"
+                },
+                {
+                  "from": "L3g2.n1",
+                  "to": "L3g2.n2"
+                }
+              ]
+            }
+          },
+          {
+            "id": "L3g3",
+            "variantId": "listening.completion.summary.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L3g3.i1",
+                "numbers": [
+                  26
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L3g3.i2",
+                "numbers": [
+                  27
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "summary",
+              "blocks": [
+                "Sample fixture {{L3g3.i1}}",
+                "Sample fixture {{L3g3.i2}}"
+              ]
+            }
+          },
+          {
+            "id": "L3g4",
+            "variantId": "listening.sentence_completion",
+            "taskType": "sentence_completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L3g4.i1",
+                "numbers": [
+                  28
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L3g4.i2",
+                "numbers": [
+                  29
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L3g4.i3",
+                "numbers": [
+                  30
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "sentence",
+              "blocks": [
+                "Sample fixture {{L3g4.i1}}",
+                "Sample fixture {{L3g4.i2}}",
+                "Sample fixture {{L3g4.i3}}"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "listening.p4",
+        "part": 4,
+        "context": "academic_monologue",
+        "audioAssetId": "audio.p4",
+        "groups": [
+          {
+            "id": "L4g1",
+            "variantId": "listening.completion.note.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "L4g1.i1",
+                "numbers": [
+                  31
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i2",
+                "numbers": [
+                  32
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i3",
+                "numbers": [
+                  33
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i4",
+                "numbers": [
+                  34
+                ],
+                "prompt": "Sample response 4",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i5",
+                "numbers": [
+                  35
+                ],
+                "prompt": "Sample response 5",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i6",
+                "numbers": [
+                  36
+                ],
+                "prompt": "Sample response 6",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i7",
+                "numbers": [
+                  37
+                ],
+                "prompt": "Sample response 7",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i8",
+                "numbers": [
+                  38
+                ],
+                "prompt": "Sample response 8",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i9",
+                "numbers": [
+                  39
+                ],
+                "prompt": "Sample response 9",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "L4g1.i10",
+                "numbers": [
+                  40
+                ],
+                "prompt": "Sample response 10",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "note",
+              "blocks": [
+                "Sample fixture {{L4g1.i1}}",
+                "Sample fixture {{L4g1.i2}}",
+                "Sample fixture {{L4g1.i3}}",
+                "Sample fixture {{L4g1.i4}}",
+                "Sample fixture {{L4g1.i5}}",
+                "Sample fixture {{L4g1.i6}}",
+                "Sample fixture {{L4g1.i7}}",
+                "Sample fixture {{L4g1.i8}}",
+                "Sample fixture {{L4g1.i9}}",
+                "Sample fixture {{L4g1.i10}}"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "reading": {
+    "durationSeconds": 3600,
+    "sections": [
+      {
+        "id": "reading.s1",
+        "section": 1,
+        "context": "academic",
+        "passages": [
+          {
+            "id": "reading.s1.text1",
+            "title": "Original short software fixture",
+            "paragraphs": [
+              {
+                "id": "reading.s1.text1.A",
+                "label": "A",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s1.text1.B",
+                "label": "B",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s1.text1.C",
+                "label": "C",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s1.text1.D",
+                "label": "D",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s1.text1.E",
+                "label": "E",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              }
+            ],
+            "glossary": [],
+            "imageAssetIds": []
+          }
+        ],
+        "groups": [
+          {
+            "id": "R1g1",
+            "variantId": "reading.multiple_choice.single",
+            "taskType": "multiple_choice",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s1.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "R1g1.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R1g1.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R1g1.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R1g1.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R1g1.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R1g1.i1",
+                "numbers": [
+                  1
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R1g1.o1",
+                    "R1g1.o2",
+                    "R1g1.o3",
+                    "R1g1.o4",
+                    "R1g1.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "R1g2",
+            "variantId": "reading.multiple_choice.multi",
+            "taskType": "multiple_choice",
+            "instructions": "Choose TWO answers.",
+            "sourceRefs": [
+              "reading.s1.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "R1g2.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R1g2.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R1g2.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R1g2.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R1g2.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R1g2.i1",
+                "numbers": [
+                  2,
+                  3
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_many",
+                  "optionIds": [
+                    "R1g2.o1",
+                    "R1g2.o2",
+                    "R1g2.o3",
+                    "R1g2.o4",
+                    "R1g2.o5"
+                  ],
+                  "selectionCount": 2
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "R1g3",
+            "variantId": "reading.information_tfng",
+            "taskType": "information_tfng",
+            "instructions": "Choose TRUE, FALSE, NOT_GIVEN.",
+            "sourceRefs": [
+              "reading.s1.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R1g3.i1",
+                "numbers": [
+                  4
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "judgement",
+                  "values": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT_GIVEN"
+                  ]
+                }
+              },
+              {
+                "id": "R1g3.i2",
+                "numbers": [
+                  5
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "judgement",
+                  "values": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT_GIVEN"
+                  ]
+                }
+              },
+              {
+                "id": "R1g3.i3",
+                "numbers": [
+                  6
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "judgement",
+                  "values": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT_GIVEN"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "R1g4",
+            "variantId": "reading.writer_ynng",
+            "taskType": "writer_ynng",
+            "instructions": "Choose YES, NO, NOT_GIVEN.",
+            "sourceRefs": [
+              "reading.s1.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R1g4.i1",
+                "numbers": [
+                  7
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "judgement",
+                  "values": [
+                    "YES",
+                    "NO",
+                    "NOT_GIVEN"
+                  ]
+                }
+              },
+              {
+                "id": "R1g4.i2",
+                "numbers": [
+                  8
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "judgement",
+                  "values": [
+                    "YES",
+                    "NO",
+                    "NOT_GIVEN"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          },
+          {
+            "id": "R1g5",
+            "variantId": "reading.matching_headings",
+            "taskType": "matching_headings",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s1.text1"
+            ],
+            "optionReuse": "forbidden",
+            "options": [
+              {
+                "id": "R1g5.o1",
+                "label": "1",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R1g5.o2",
+                "label": "2",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R1g5.o3",
+                "label": "3",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R1g5.o4",
+                "label": "4",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R1g5.o5",
+                "label": "5",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R1g5.i1",
+                "numbers": [
+                  9
+                ],
+                "prompt": "Paragraph A",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R1g5.o1",
+                    "R1g5.o2",
+                    "R1g5.o3",
+                    "R1g5.o4",
+                    "R1g5.o5"
+                  ]
+                },
+                "targetRef": "reading.s1.text1.A"
+              },
+              {
+                "id": "R1g5.i2",
+                "numbers": [
+                  10
+                ],
+                "prompt": "Paragraph B",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R1g5.o1",
+                    "R1g5.o2",
+                    "R1g5.o3",
+                    "R1g5.o4",
+                    "R1g5.o5"
+                  ]
+                },
+                "targetRef": "reading.s1.text1.B"
+              },
+              {
+                "id": "R1g5.i3",
+                "numbers": [
+                  11
+                ],
+                "prompt": "Paragraph C",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R1g5.o1",
+                    "R1g5.o2",
+                    "R1g5.o3",
+                    "R1g5.o4",
+                    "R1g5.o5"
+                  ]
+                },
+                "targetRef": "reading.s1.text1.C"
+              },
+              {
+                "id": "R1g5.i4",
+                "numbers": [
+                  12
+                ],
+                "prompt": "Paragraph D",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R1g5.o1",
+                    "R1g5.o2",
+                    "R1g5.o3",
+                    "R1g5.o4",
+                    "R1g5.o5"
+                  ]
+                },
+                "targetRef": "reading.s1.text1.D"
+              }
+            ],
+            "layout": {
+              "kind": "matching"
+            }
+          }
+        ]
+      },
+      {
+        "id": "reading.s2",
+        "section": 2,
+        "context": "academic",
+        "passages": [
+          {
+            "id": "reading.s2.text1",
+            "title": "Original short software fixture",
+            "paragraphs": [
+              {
+                "id": "reading.s2.text1.A",
+                "label": "A",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s2.text1.B",
+                "label": "B",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s2.text1.C",
+                "label": "C",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s2.text1.D",
+                "label": "D",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s2.text1.E",
+                "label": "E",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              }
+            ],
+            "glossary": [],
+            "imageAssetIds": []
+          }
+        ],
+        "groups": [
+          {
+            "id": "R2g1",
+            "variantId": "reading.matching_information",
+            "taskType": "matching_information",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s2.text1"
+            ],
+            "optionReuse": "allowed",
+            "options": [
+              {
+                "id": "R2g1.o1",
+                "label": "A",
+                "text": "Paragraph A",
+                "sourceRef": "reading.s2.text1.A"
+              },
+              {
+                "id": "R2g1.o2",
+                "label": "B",
+                "text": "Paragraph B",
+                "sourceRef": "reading.s2.text1.B"
+              },
+              {
+                "id": "R2g1.o3",
+                "label": "C",
+                "text": "Paragraph C",
+                "sourceRef": "reading.s2.text1.C"
+              },
+              {
+                "id": "R2g1.o4",
+                "label": "D",
+                "text": "Paragraph D",
+                "sourceRef": "reading.s2.text1.D"
+              },
+              {
+                "id": "R2g1.o5",
+                "label": "E",
+                "text": "Paragraph E",
+                "sourceRef": "reading.s2.text1.E"
+              }
+            ],
+            "items": [
+              {
+                "id": "R2g1.i1",
+                "numbers": [
+                  13
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g1.o1",
+                    "R2g1.o2",
+                    "R2g1.o3",
+                    "R2g1.o4",
+                    "R2g1.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g1.i2",
+                "numbers": [
+                  14
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g1.o1",
+                    "R2g1.o2",
+                    "R2g1.o3",
+                    "R2g1.o4",
+                    "R2g1.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g1.i3",
+                "numbers": [
+                  15
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g1.o1",
+                    "R2g1.o2",
+                    "R2g1.o3",
+                    "R2g1.o4",
+                    "R2g1.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "matching"
+            }
+          },
+          {
+            "id": "R2g2",
+            "variantId": "reading.matching_features",
+            "taskType": "matching_features",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s2.text1"
+            ],
+            "optionReuse": "allowed",
+            "options": [
+              {
+                "id": "R2g2.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R2g2.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R2g2.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R2g2.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R2g2.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R2g2.i1",
+                "numbers": [
+                  16
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g2.o1",
+                    "R2g2.o2",
+                    "R2g2.o3",
+                    "R2g2.o4",
+                    "R2g2.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g2.i2",
+                "numbers": [
+                  17
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g2.o1",
+                    "R2g2.o2",
+                    "R2g2.o3",
+                    "R2g2.o4",
+                    "R2g2.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g2.i3",
+                "numbers": [
+                  18
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g2.o1",
+                    "R2g2.o2",
+                    "R2g2.o3",
+                    "R2g2.o4",
+                    "R2g2.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "matching"
+            }
+          },
+          {
+            "id": "R2g3",
+            "variantId": "reading.matching_endings",
+            "taskType": "matching_endings",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s2.text1"
+            ],
+            "optionReuse": "forbidden",
+            "options": [
+              {
+                "id": "R2g3.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R2g3.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R2g3.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R2g3.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R2g3.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R2g3.i1",
+                "numbers": [
+                  19
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g3.o1",
+                    "R2g3.o2",
+                    "R2g3.o3",
+                    "R2g3.o4",
+                    "R2g3.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g3.i2",
+                "numbers": [
+                  20
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g3.o1",
+                    "R2g3.o2",
+                    "R2g3.o3",
+                    "R2g3.o4",
+                    "R2g3.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R2g3.i3",
+                "numbers": [
+                  21
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R2g3.o1",
+                    "R2g3.o2",
+                    "R2g3.o3",
+                    "R2g3.o4",
+                    "R2g3.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "matching"
+            }
+          },
+          {
+            "id": "R2g4",
+            "variantId": "reading.sentence_completion",
+            "taskType": "sentence_completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s2.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R2g4.i1",
+                "numbers": [
+                  22
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R2g4.i2",
+                "numbers": [
+                  23
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R2g4.i3",
+                "numbers": [
+                  24
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R2g4.i4",
+                "numbers": [
+                  25
+                ],
+                "prompt": "Sample response 4",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "sentence",
+              "blocks": [
+                "Sample fixture {{R2g4.i1}}",
+                "Sample fixture {{R2g4.i2}}",
+                "Sample fixture {{R2g4.i3}}",
+                "Sample fixture {{R2g4.i4}}"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "reading.s3",
+        "section": 3,
+        "context": "academic",
+        "passages": [
+          {
+            "id": "reading.s3.text1",
+            "title": "Original short software fixture",
+            "paragraphs": [
+              {
+                "id": "reading.s3.text1.A",
+                "label": "A",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s3.text1.B",
+                "label": "B",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s3.text1.C",
+                "label": "C",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s3.text1.D",
+                "label": "D",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              },
+              {
+                "id": "reading.s3.text1.E",
+                "label": "E",
+                "text": "The community centre has a blue room for meetings. This deliberately short text is a structural test fixture, not a real IELTS reading passage."
+              }
+            ],
+            "glossary": [],
+            "imageAssetIds": []
+          }
+        ],
+        "groups": [
+          {
+            "id": "R3g1",
+            "variantId": "reading.completion.summary.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g1.i1",
+                "numbers": [
+                  26
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g1.i2",
+                "numbers": [
+                  27
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "summary",
+              "blocks": [
+                "Sample fixture {{R3g1.i1}}",
+                "Sample fixture {{R3g1.i2}}"
+              ]
+            }
+          },
+          {
+            "id": "R3g2",
+            "variantId": "reading.completion.summary.choice_one",
+            "taskType": "completion",
+            "instructions": "Choose one answer for each question.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [
+              {
+                "id": "R3g2.o1",
+                "label": "A",
+                "text": "Sample option 1"
+              },
+              {
+                "id": "R3g2.o2",
+                "label": "B",
+                "text": "Sample option 2"
+              },
+              {
+                "id": "R3g2.o3",
+                "label": "C",
+                "text": "Sample option 3"
+              },
+              {
+                "id": "R3g2.o4",
+                "label": "D",
+                "text": "Sample option 4"
+              },
+              {
+                "id": "R3g2.o5",
+                "label": "E",
+                "text": "Sample option 5"
+              }
+            ],
+            "items": [
+              {
+                "id": "R3g2.i1",
+                "numbers": [
+                  28
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R3g2.o1",
+                    "R3g2.o2",
+                    "R3g2.o3",
+                    "R3g2.o4",
+                    "R3g2.o5"
+                  ]
+                }
+              },
+              {
+                "id": "R3g2.i2",
+                "numbers": [
+                  29
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "choice_one",
+                  "optionIds": [
+                    "R3g2.o1",
+                    "R3g2.o2",
+                    "R3g2.o3",
+                    "R3g2.o4",
+                    "R3g2.o5"
+                  ]
+                }
+              }
+            ],
+            "layout": {
+              "kind": "summary",
+              "blocks": [
+                "Sample fixture {{R3g2.i1}}",
+                "Sample fixture {{R3g2.i2}}"
+              ]
+            }
+          },
+          {
+            "id": "R3g3",
+            "variantId": "reading.completion.note.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g3.i1",
+                "numbers": [
+                  30
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g3.i2",
+                "numbers": [
+                  31
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "note",
+              "blocks": [
+                "Sample fixture {{R3g3.i1}}",
+                "Sample fixture {{R3g3.i2}}"
+              ]
+            }
+          },
+          {
+            "id": "R3g4",
+            "variantId": "reading.completion.table.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g4.i1",
+                "numbers": [
+                  32
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g4.i2",
+                "numbers": [
+                  33
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "table",
+              "columns": [
+                "Sample label",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "Fixture 1",
+                  "{{R3g4.i1}}"
+                ],
+                [
+                  "Fixture 2",
+                  "{{R3g4.i2}}"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "R3g5",
+            "variantId": "reading.completion.flow_chart.text",
+            "taskType": "completion",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g5.i1",
+                "numbers": [
+                  34
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g5.i2",
+                "numbers": [
+                  35
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "flow_chart",
+              "nodes": [
+                {
+                  "id": "R3g5.n0",
+                  "body": "Start"
+                },
+                {
+                  "id": "R3g5.n1",
+                  "body": "Step {{R3g5.i1}}"
+                },
+                {
+                  "id": "R3g5.n2",
+                  "body": "Step {{R3g5.i2}}"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "R3g5.n0",
+                  "to": "R3g5.n1"
+                },
+                {
+                  "from": "R3g5.n1",
+                  "to": "R3g5.n2"
+                }
+              ]
+            }
+          },
+          {
+            "id": "R3g6",
+            "variantId": "reading.label.diagram",
+            "taskType": "visual_labelling",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g6.i1",
+                "numbers": [
+                  36
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g6.i2",
+                "numbers": [
+                  37
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "visual",
+              "assetId": "image.fixture",
+              "visualKind": "diagram",
+              "arrangement": "blank_targets",
+              "targets": [
+                {
+                  "itemId": "R3g6.i1",
+                  "x": 0.05,
+                  "y": 0.05,
+                  "width": 0.25,
+                  "height": 0.06
+                },
+                {
+                  "itemId": "R3g6.i2",
+                  "x": 0.05,
+                  "y": 0.13,
+                  "width": 0.25,
+                  "height": 0.06
+                }
+              ]
+            }
+          },
+          {
+            "id": "R3g7",
+            "variantId": "reading.short_answer",
+            "taskType": "short_answer",
+            "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+            "sourceRefs": [
+              "reading.s3.text1"
+            ],
+            "optionReuse": "not_applicable",
+            "options": [],
+            "items": [
+              {
+                "id": "R3g7.i1",
+                "numbers": [
+                  38
+                ],
+                "prompt": "Sample response 1",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g7.i2",
+                "numbers": [
+                  39
+                ],
+                "prompt": "Sample response 2",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              },
+              {
+                "id": "R3g7.i3",
+                "numbers": [
+                  40
+                ],
+                "prompt": "Sample response 3",
+                "response": {
+                  "kind": "text",
+                  "wordRule": {
+                    "mode": "words_only",
+                    "maxWords": 2
+                  }
+                }
+              }
+            ],
+            "layout": {
+              "kind": "list"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "writing": {
+    "durationSeconds": 3600,
+    "tasks": [
+      {
+        "id": "writing.t1",
+        "kind": "academic_task1",
+        "number": 1,
+        "minWords": 150,
+        "recommendedSeconds": 1200,
+        "prompt": "Describe the supplied transport data. This is a software fixture.",
+        "directives": [
+          "Report the main features and relevant comparisons."
+        ],
+        "visualType": "bar_chart",
+        "visualAssetIds": [
+          "image.fixture"
+        ]
+      },
+      {
+        "id": "writing.t2",
+        "kind": "task2",
+        "number": 2,
+        "minWords": 250,
+        "recommendedSeconds": 2400,
+        "prompt": "Some towns plan to make public transport free. Discuss the proposed policy. Software fixture only.",
+        "directives": [
+          "Address the stated question and support your answer."
+        ],
+        "essayTags": [
+          "opinion"
+        ]
+      }
+    ]
+  },
+  "speaking": {
+    "executionMode": "recorded_simulation",
+    "part1": {
+      "topics": [
+        {
+          "id": "speaking.topic1",
+          "topic": "Daily routines",
+          "prompts": [
+            {
+              "id": "speaking.p1q1",
+              "text": "What do you usually do before work or study?"
+            },
+            {
+              "id": "speaking.p1q2",
+              "text": "Have your daily routines changed recently?"
+            }
+          ]
+        }
+      ],
+      "minSeconds": 240,
+      "maxSeconds": 300
+    },
+    "part2": {
+      "id": "speaking.card",
+      "topic": "Describe a useful local place.",
+      "bulletPoints": [
+        "Where it is.",
+        "Who uses it.",
+        "What people do there."
+      ],
+      "finalPrompt": "Explain why this place is useful.",
+      "preparationSeconds": 60,
+      "maxTalkSeconds": 120,
+      "roundingQuestions": [
+        {
+          "id": "speaking.p2q1",
+          "text": "Would you visit it again?"
+        }
+      ]
+    },
+    "part3": {
+      "linkedPart2Topic": "Useful local places",
+      "prompts": [
+        {
+          "id": "speaking.p3q1",
+          "text": "How should towns decide which public spaces to improve?"
+        },
+        {
+          "id": "speaking.p3q2",
+          "text": "How might the use of shared spaces change in the future?"
+        }
+      ],
+      "minSeconds": 240,
+      "maxSeconds": 300
+    }
+  },
+  "answerKey": [
+    {
+      "itemId": "L1g1.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g1.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g1.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g2.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g2.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g3.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L1g3.o1"
+    },
+    {
+      "itemId": "L1g4.i1",
+      "kind": "choice_many",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionIds": [
+        "L1g4.o1",
+        "L1g4.o2"
+      ]
+    },
+    {
+      "itemId": "L1g5.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L1g5.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L2g1.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g1.o1"
+    },
+    {
+      "itemId": "L2g1.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g1.o2"
+    },
+    {
+      "itemId": "L2g1.i3",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g1.o3"
+    },
+    {
+      "itemId": "L2g2.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L2g2.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L2g3.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g3.o1"
+    },
+    {
+      "itemId": "L2g3.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g3.o2"
+    },
+    {
+      "itemId": "L2g4.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g4.o1"
+    },
+    {
+      "itemId": "L2g5.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g5.o1"
+    },
+    {
+      "itemId": "L2g5.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L2g5.o2"
+    },
+    {
+      "itemId": "L3g1.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g1.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g1.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g2.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L3g2.o1"
+    },
+    {
+      "itemId": "L3g2.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "L3g2.o2"
+    },
+    {
+      "itemId": "L3g3.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g3.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g4.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g4.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L3g4.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i4",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i5",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i6",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i7",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i8",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i9",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "L4g1.i10",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R1g1.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R1g1.o1"
+    },
+    {
+      "itemId": "R1g2.i1",
+      "kind": "choice_many",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionIds": [
+        "R1g2.o1",
+        "R1g2.o2"
+      ]
+    },
+    {
+      "itemId": "R1g3.i1",
+      "kind": "judgement",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "value": "TRUE"
+    },
+    {
+      "itemId": "R1g3.i2",
+      "kind": "judgement",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "value": "FALSE"
+    },
+    {
+      "itemId": "R1g3.i3",
+      "kind": "judgement",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "value": "NOT_GIVEN"
+    },
+    {
+      "itemId": "R1g4.i1",
+      "kind": "judgement",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "value": "YES"
+    },
+    {
+      "itemId": "R1g4.i2",
+      "kind": "judgement",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "value": "NO"
+    },
+    {
+      "itemId": "R1g5.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R1g5.o1"
+    },
+    {
+      "itemId": "R1g5.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R1g5.o2"
+    },
+    {
+      "itemId": "R1g5.i3",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R1g5.o3"
+    },
+    {
+      "itemId": "R1g5.i4",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R1g5.o4"
+    },
+    {
+      "itemId": "R2g1.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g1.o1"
+    },
+    {
+      "itemId": "R2g1.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g1.o2"
+    },
+    {
+      "itemId": "R2g1.i3",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g1.o3"
+    },
+    {
+      "itemId": "R2g2.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g2.o1"
+    },
+    {
+      "itemId": "R2g2.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g2.o2"
+    },
+    {
+      "itemId": "R2g2.i3",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g2.o3"
+    },
+    {
+      "itemId": "R2g3.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g3.o1"
+    },
+    {
+      "itemId": "R2g3.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g3.o2"
+    },
+    {
+      "itemId": "R2g3.i3",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R2g3.o3"
+    },
+    {
+      "itemId": "R2g4.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R2g4.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R2g4.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R2g4.i4",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g1.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g1.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g2.i1",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R3g2.o1"
+    },
+    {
+      "itemId": "R3g2.i2",
+      "kind": "choice_one",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "acceptedOptionId": "R3g2.o2"
+    },
+    {
+      "itemId": "R3g3.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g3.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g4.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g4.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g5.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g5.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g6.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g6.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g7.i1",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g7.i2",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    },
+    {
+      "itemId": "R3g7.i3",
+      "kind": "text",
+      "explanation": "Fixture explanation only; not an official IELTS answer.",
+      "accepted": [
+        "blue room"
+      ]
+    }
+  ],
+  "examinerMaterials": {
+    "listeningTranscripts": [
+      {
+        "partId": "listening.p1",
+        "text": "Fixture transcript. No actual audio is supplied."
+      },
+      {
+        "partId": "listening.p2",
+        "text": "Fixture transcript. No actual audio is supplied."
+      },
+      {
+        "partId": "listening.p3",
+        "text": "Fixture transcript. No actual audio is supplied."
+      },
+      {
+        "partId": "listening.p4",
+        "text": "Fixture transcript. No actual audio is supplied."
+      }
+    ],
+    "writingNotes": [],
+    "speakingNotes": "Fixture examiner guidance only."
+  },
+  "scoring": {
+    "listeningBandTableId": null,
+    "readingBandTableId": null,
+    "writingPolicyId": null,
+    "speakingPolicyId": null
+  }
+}

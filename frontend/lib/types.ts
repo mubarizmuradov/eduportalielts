@@ -57,6 +57,8 @@ export interface TestDetail {
   staff: {
     listening: { partNumber: number; context?: string; transcript: string }[];
     answers: { listening: Record<string, string>; reading: Record<string, string> };
+    explanations?: { listening: Record<string, string>; reading: Record<string, string> };
+    notes?: { writingTask1?: string; writingTask2?: string; speaking?: string };
     meta?: Record<string, unknown>;
   };
   summary: ExamSummary;
@@ -134,6 +136,7 @@ export interface AssignmentReport {
     classTitle: string;
     opensAt: string;
     closesAt: string;
+    speakingMode?: 'RECORDED' | 'FACE_TO_FACE';
     resultsReleasedAt: string | null;
     testId: string;
     testTitle: string;
@@ -148,6 +151,7 @@ export interface SheetRow {
   answer: string;
   correct: boolean | null;
   key: string;
+  explanation?: string;
 }
 
 export interface WritingCriteria {
@@ -167,7 +171,13 @@ export interface AttemptResult {
   staff: boolean;
   candidate: { id: string; name: string; number: string };
   test: { id: string; title: string; testType: 'academic' | 'general_training' };
-  assignment: { id: string; title: string; classTitle: string; resultsReleasedAt: string | null };
+  assignment: {
+    id: string;
+    title: string;
+    classTitle: string;
+    resultsReleasedAt: string | null;
+    speakingMode?: 'RECORDED' | 'FACE_TO_FACE';
+  };
   attempt: {
     id: string;
     status: 'IN_PROGRESS' | 'SUBMITTED' | 'GRADED';
@@ -191,4 +201,6 @@ export interface AttemptResult {
     scores: null | (SpeakingCriteria & { comment?: string });
   };
   transcripts?: { partNumber: number; context?: string; transcript: string }[];
+  /** Staff only: marking notes from the package. */
+  notes?: { writingTask1?: string; writingTask2?: string; speaking?: string };
 }

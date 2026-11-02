@@ -1,0 +1,4023 @@
+{
+  "fixtureOnly": true,
+  "note": "Small original renderer fixtures. Not publishable IELTS questions. visual assets intentionally unresolved here.",
+  "examples": [
+    {
+      "variantId": "listening.multiple_choice.single",
+      "group": {
+        "id": "variant1",
+        "variantId": "listening.multiple_choice.single",
+        "taskType": "multiple_choice",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant1.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant1.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant1.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant1.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant1.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant1.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant1.o1",
+                "variant1.o2",
+                "variant1.o3",
+                "variant1.o4",
+                "variant1.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant1.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant1.o1",
+                "variant1.o2",
+                "variant1.o3",
+                "variant1.o4",
+                "variant1.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant1.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant1.o1"
+        },
+        {
+          "itemId": "variant1.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant1.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.multiple_choice.multi",
+      "group": {
+        "id": "variant2",
+        "variantId": "listening.multiple_choice.multi",
+        "taskType": "multiple_choice",
+        "instructions": "Choose TWO answers.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant2.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant2.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant2.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant2.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant2.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant2.i1",
+            "numbers": [
+              1,
+              2
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_many",
+              "optionIds": [
+                "variant2.o1",
+                "variant2.o2",
+                "variant2.o3",
+                "variant2.o4",
+                "variant2.o5"
+              ],
+              "selectionCount": 2
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant2.i1",
+          "kind": "choice_many",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionIds": [
+            "variant2.o1",
+            "variant2.o2"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.multiple_choice.single",
+      "group": {
+        "id": "variant3",
+        "variantId": "reading.multiple_choice.single",
+        "taskType": "multiple_choice",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant3.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant3.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant3.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant3.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant3.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant3.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant3.o1",
+                "variant3.o2",
+                "variant3.o3",
+                "variant3.o4",
+                "variant3.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant3.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant3.o1",
+                "variant3.o2",
+                "variant3.o3",
+                "variant3.o4",
+                "variant3.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant3.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant3.o1"
+        },
+        {
+          "itemId": "variant3.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant3.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.multiple_choice.multi",
+      "group": {
+        "id": "variant4",
+        "variantId": "reading.multiple_choice.multi",
+        "taskType": "multiple_choice",
+        "instructions": "Choose TWO answers.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant4.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant4.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant4.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant4.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant4.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant4.i1",
+            "numbers": [
+              1,
+              2
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_many",
+              "optionIds": [
+                "variant4.o1",
+                "variant4.o2",
+                "variant4.o3",
+                "variant4.o4",
+                "variant4.o5"
+              ],
+              "selectionCount": 2
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant4.i1",
+          "kind": "choice_many",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionIds": [
+            "variant4.o1",
+            "variant4.o2"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.matching",
+      "group": {
+        "id": "variant5",
+        "variantId": "listening.matching",
+        "taskType": "matching",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "allowed",
+        "options": [
+          {
+            "id": "variant5.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant5.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant5.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant5.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant5.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant5.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant5.o1",
+                "variant5.o2",
+                "variant5.o3",
+                "variant5.o4",
+                "variant5.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant5.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant5.o1",
+                "variant5.o2",
+                "variant5.o3",
+                "variant5.o4",
+                "variant5.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "matching"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant5.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant5.o1"
+        },
+        {
+          "itemId": "variant5.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant5.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.map.text.blank",
+      "group": {
+        "id": "variant6",
+        "variantId": "listening.label.map.text.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant6.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant6.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "map",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant6.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant6.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant6.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant6.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.map.choice_one.blank",
+      "group": {
+        "id": "variant7",
+        "variantId": "listening.label.map.choice_one.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant7.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant7.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant7.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant7.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant7.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant7.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant7.o1",
+                "variant7.o2",
+                "variant7.o3",
+                "variant7.o4",
+                "variant7.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant7.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant7.o1",
+                "variant7.o2",
+                "variant7.o3",
+                "variant7.o4",
+                "variant7.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "map",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant7.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant7.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant7.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant7.o1"
+        },
+        {
+          "itemId": "variant7.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant7.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.map.location",
+      "group": {
+        "id": "variant8",
+        "variantId": "listening.label.map.location",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant8.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant8.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant8.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant8.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant8.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant8.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant8.o1",
+                "variant8.o2",
+                "variant8.o3",
+                "variant8.o4",
+                "variant8.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant8.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant8.o1",
+                "variant8.o2",
+                "variant8.o3",
+                "variant8.o4",
+                "variant8.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "map",
+          "arrangement": "location_options",
+          "locations": [
+            {
+              "optionId": "variant8.o1",
+              "x": 0.1,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant8.o2",
+              "x": 0.25,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant8.o3",
+              "x": 0.4,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant8.o4",
+              "x": 0.5499999999999999,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant8.o5",
+              "x": 0.7,
+              "y": 0.5
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant8.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant8.o1"
+        },
+        {
+          "itemId": "variant8.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant8.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.plan.text.blank",
+      "group": {
+        "id": "variant9",
+        "variantId": "listening.label.plan.text.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant9.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant9.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "plan",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant9.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant9.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant9.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant9.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.plan.choice_one.blank",
+      "group": {
+        "id": "variant10",
+        "variantId": "listening.label.plan.choice_one.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant10.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant10.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant10.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant10.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant10.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant10.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant10.o1",
+                "variant10.o2",
+                "variant10.o3",
+                "variant10.o4",
+                "variant10.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant10.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant10.o1",
+                "variant10.o2",
+                "variant10.o3",
+                "variant10.o4",
+                "variant10.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "plan",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant10.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant10.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant10.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant10.o1"
+        },
+        {
+          "itemId": "variant10.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant10.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.plan.location",
+      "group": {
+        "id": "variant11",
+        "variantId": "listening.label.plan.location",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant11.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant11.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant11.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant11.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant11.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant11.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant11.o1",
+                "variant11.o2",
+                "variant11.o3",
+                "variant11.o4",
+                "variant11.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant11.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant11.o1",
+                "variant11.o2",
+                "variant11.o3",
+                "variant11.o4",
+                "variant11.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "plan",
+          "arrangement": "location_options",
+          "locations": [
+            {
+              "optionId": "variant11.o1",
+              "x": 0.1,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant11.o2",
+              "x": 0.25,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant11.o3",
+              "x": 0.4,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant11.o4",
+              "x": 0.5499999999999999,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant11.o5",
+              "x": 0.7,
+              "y": 0.5
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant11.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant11.o1"
+        },
+        {
+          "itemId": "variant11.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant11.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.diagram.text.blank",
+      "group": {
+        "id": "variant12",
+        "variantId": "listening.label.diagram.text.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant12.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant12.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "diagram",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant12.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant12.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant12.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant12.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.diagram.choice_one.blank",
+      "group": {
+        "id": "variant13",
+        "variantId": "listening.label.diagram.choice_one.blank",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant13.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant13.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant13.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant13.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant13.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant13.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant13.o1",
+                "variant13.o2",
+                "variant13.o3",
+                "variant13.o4",
+                "variant13.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant13.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant13.o1",
+                "variant13.o2",
+                "variant13.o3",
+                "variant13.o4",
+                "variant13.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "diagram",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant13.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant13.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant13.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant13.o1"
+        },
+        {
+          "itemId": "variant13.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant13.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.diagram.location",
+      "group": {
+        "id": "variant14",
+        "variantId": "listening.label.diagram.location",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant14.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant14.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant14.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant14.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant14.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant14.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant14.o1",
+                "variant14.o2",
+                "variant14.o3",
+                "variant14.o4",
+                "variant14.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant14.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant14.o1",
+                "variant14.o2",
+                "variant14.o3",
+                "variant14.o4",
+                "variant14.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "diagram",
+          "arrangement": "location_options",
+          "locations": [
+            {
+              "optionId": "variant14.o1",
+              "x": 0.1,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant14.o2",
+              "x": 0.25,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant14.o3",
+              "x": 0.4,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant14.o4",
+              "x": 0.5499999999999999,
+              "y": 0.5
+            },
+            {
+              "optionId": "variant14.o5",
+              "x": 0.7,
+              "y": 0.5
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant14.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant14.o1"
+        },
+        {
+          "itemId": "variant14.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant14.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.label.pictures.choice",
+      "group": {
+        "id": "variant15",
+        "variantId": "listening.label.pictures.choice",
+        "taskType": "visual_labelling",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant15.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant15.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant15.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant15.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant15.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant15.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant15.o1",
+                "variant15.o2",
+                "variant15.o3",
+                "variant15.o4",
+                "variant15.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant15.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant15.o1",
+                "variant15.o2",
+                "variant15.o3",
+                "variant15.o4",
+                "variant15.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "pictures",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant15.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant15.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant15.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant15.o1"
+        },
+        {
+          "itemId": "variant15.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant15.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.form.text",
+      "group": {
+        "id": "variant16",
+        "variantId": "listening.completion.form.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant16.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant16.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "form",
+          "blocks": [
+            "Sample fixture {{variant16.i1}}",
+            "Sample fixture {{variant16.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant16.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant16.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.form.choice_one",
+      "group": {
+        "id": "variant17",
+        "variantId": "listening.completion.form.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant17.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant17.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant17.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant17.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant17.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant17.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant17.o1",
+                "variant17.o2",
+                "variant17.o3",
+                "variant17.o4",
+                "variant17.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant17.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant17.o1",
+                "variant17.o2",
+                "variant17.o3",
+                "variant17.o4",
+                "variant17.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "form",
+          "blocks": [
+            "Sample fixture {{variant17.i1}}",
+            "Sample fixture {{variant17.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant17.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant17.o1"
+        },
+        {
+          "itemId": "variant17.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant17.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.note.text",
+      "group": {
+        "id": "variant18",
+        "variantId": "listening.completion.note.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant18.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant18.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "note",
+          "blocks": [
+            "Sample fixture {{variant18.i1}}",
+            "Sample fixture {{variant18.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant18.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant18.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.note.choice_one",
+      "group": {
+        "id": "variant19",
+        "variantId": "listening.completion.note.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant19.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant19.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant19.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant19.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant19.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant19.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant19.o1",
+                "variant19.o2",
+                "variant19.o3",
+                "variant19.o4",
+                "variant19.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant19.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant19.o1",
+                "variant19.o2",
+                "variant19.o3",
+                "variant19.o4",
+                "variant19.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "note",
+          "blocks": [
+            "Sample fixture {{variant19.i1}}",
+            "Sample fixture {{variant19.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant19.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant19.o1"
+        },
+        {
+          "itemId": "variant19.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant19.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.table.text",
+      "group": {
+        "id": "variant20",
+        "variantId": "listening.completion.table.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant20.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant20.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "table",
+          "columns": [
+            "Sample label",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "Fixture 1",
+              "{{variant20.i1}}"
+            ],
+            [
+              "Fixture 2",
+              "{{variant20.i2}}"
+            ]
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant20.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant20.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.table.choice_one",
+      "group": {
+        "id": "variant21",
+        "variantId": "listening.completion.table.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant21.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant21.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant21.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant21.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant21.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant21.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant21.o1",
+                "variant21.o2",
+                "variant21.o3",
+                "variant21.o4",
+                "variant21.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant21.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant21.o1",
+                "variant21.o2",
+                "variant21.o3",
+                "variant21.o4",
+                "variant21.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "table",
+          "columns": [
+            "Sample label",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "Fixture 1",
+              "{{variant21.i1}}"
+            ],
+            [
+              "Fixture 2",
+              "{{variant21.i2}}"
+            ]
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant21.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant21.o1"
+        },
+        {
+          "itemId": "variant21.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant21.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.flow_chart.text",
+      "group": {
+        "id": "variant22",
+        "variantId": "listening.completion.flow_chart.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant22.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant22.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "flow_chart",
+          "nodes": [
+            {
+              "id": "variant22.n0",
+              "body": "Start"
+            },
+            {
+              "id": "variant22.n1",
+              "body": "Step {{variant22.i1}}"
+            },
+            {
+              "id": "variant22.n2",
+              "body": "Step {{variant22.i2}}"
+            }
+          ],
+          "edges": [
+            {
+              "from": "variant22.n0",
+              "to": "variant22.n1"
+            },
+            {
+              "from": "variant22.n1",
+              "to": "variant22.n2"
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant22.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant22.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.flow_chart.choice_one",
+      "group": {
+        "id": "variant23",
+        "variantId": "listening.completion.flow_chart.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant23.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant23.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant23.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant23.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant23.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant23.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant23.o1",
+                "variant23.o2",
+                "variant23.o3",
+                "variant23.o4",
+                "variant23.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant23.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant23.o1",
+                "variant23.o2",
+                "variant23.o3",
+                "variant23.o4",
+                "variant23.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "flow_chart",
+          "nodes": [
+            {
+              "id": "variant23.n0",
+              "body": "Start"
+            },
+            {
+              "id": "variant23.n1",
+              "body": "Step {{variant23.i1}}"
+            },
+            {
+              "id": "variant23.n2",
+              "body": "Step {{variant23.i2}}"
+            }
+          ],
+          "edges": [
+            {
+              "from": "variant23.n0",
+              "to": "variant23.n1"
+            },
+            {
+              "from": "variant23.n1",
+              "to": "variant23.n2"
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant23.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant23.o1"
+        },
+        {
+          "itemId": "variant23.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant23.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.summary.text",
+      "group": {
+        "id": "variant24",
+        "variantId": "listening.completion.summary.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant24.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant24.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "summary",
+          "blocks": [
+            "Sample fixture {{variant24.i1}}",
+            "Sample fixture {{variant24.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant24.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant24.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.completion.summary.choice_one",
+      "group": {
+        "id": "variant25",
+        "variantId": "listening.completion.summary.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant25.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant25.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant25.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant25.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant25.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant25.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant25.o1",
+                "variant25.o2",
+                "variant25.o3",
+                "variant25.o4",
+                "variant25.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant25.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant25.o1",
+                "variant25.o2",
+                "variant25.o3",
+                "variant25.o4",
+                "variant25.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "summary",
+          "blocks": [
+            "Sample fixture {{variant25.i1}}",
+            "Sample fixture {{variant25.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant25.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant25.o1"
+        },
+        {
+          "itemId": "variant25.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant25.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "listening.sentence_completion",
+      "group": {
+        "id": "variant26",
+        "variantId": "listening.sentence_completion",
+        "taskType": "sentence_completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant26.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant26.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "sentence",
+          "blocks": [
+            "Sample fixture {{variant26.i1}}",
+            "Sample fixture {{variant26.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant26.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant26.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.short_answer",
+      "group": {
+        "id": "variant27",
+        "variantId": "listening.short_answer",
+        "taskType": "short_answer",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant27.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant27.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant27.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant27.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "listening.short_answer.set",
+      "group": {
+        "id": "variant28",
+        "variantId": "listening.short_answer.set",
+        "taskType": "short_answer",
+        "instructions": "Write two answers, using NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant28.i1",
+            "numbers": [
+              1,
+              2
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text_set",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              },
+              "orderMatters": false
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant28.i1",
+          "kind": "text_set",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "answerUnits": [
+            {
+              "accepted": [
+                "blue"
+              ]
+            },
+            {
+              "accepted": [
+                "green"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.multiple_choice.title",
+      "group": {
+        "id": "variant29",
+        "variantId": "reading.multiple_choice.title",
+        "taskType": "multiple_choice",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant29.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant29.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant29.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant29.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant29.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant29.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant29.o1",
+                "variant29.o2",
+                "variant29.o3",
+                "variant29.o4",
+                "variant29.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant29.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant29.o1",
+                "variant29.o2",
+                "variant29.o3",
+                "variant29.o4",
+                "variant29.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant29.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant29.o1"
+        },
+        {
+          "itemId": "variant29.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant29.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.information_tfng",
+      "group": {
+        "id": "variant30",
+        "variantId": "reading.information_tfng",
+        "taskType": "information_tfng",
+        "instructions": "Choose TRUE, FALSE, NOT_GIVEN.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant30.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "judgement",
+              "values": [
+                "TRUE",
+                "FALSE",
+                "NOT_GIVEN"
+              ]
+            }
+          },
+          {
+            "id": "variant30.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "judgement",
+              "values": [
+                "TRUE",
+                "FALSE",
+                "NOT_GIVEN"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant30.i1",
+          "kind": "judgement",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "value": "TRUE"
+        },
+        {
+          "itemId": "variant30.i2",
+          "kind": "judgement",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "value": "FALSE"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.writer_ynng",
+      "group": {
+        "id": "variant31",
+        "variantId": "reading.writer_ynng",
+        "taskType": "writer_ynng",
+        "instructions": "Choose YES, NO, NOT_GIVEN.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant31.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "judgement",
+              "values": [
+                "YES",
+                "NO",
+                "NOT_GIVEN"
+              ]
+            }
+          },
+          {
+            "id": "variant31.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "judgement",
+              "values": [
+                "YES",
+                "NO",
+                "NOT_GIVEN"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant31.i1",
+          "kind": "judgement",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "value": "YES"
+        },
+        {
+          "itemId": "variant31.i2",
+          "kind": "judgement",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "value": "NO"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.matching_information",
+      "group": {
+        "id": "variant32",
+        "variantId": "reading.matching_information",
+        "taskType": "matching_information",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "allowed",
+        "options": [
+          {
+            "id": "variant32.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant32.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant32.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant32.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant32.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant32.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant32.o1",
+                "variant32.o2",
+                "variant32.o3",
+                "variant32.o4",
+                "variant32.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant32.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant32.o1",
+                "variant32.o2",
+                "variant32.o3",
+                "variant32.o4",
+                "variant32.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "matching"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant32.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant32.o1"
+        },
+        {
+          "itemId": "variant32.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant32.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.matching_headings",
+      "group": {
+        "id": "variant33",
+        "variantId": "reading.matching_headings",
+        "taskType": "matching_headings",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "forbidden",
+        "options": [
+          {
+            "id": "variant33.o1",
+            "label": "1",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant33.o2",
+            "label": "2",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant33.o3",
+            "label": "3",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant33.o4",
+            "label": "4",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant33.o5",
+            "label": "5",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant33.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant33.o1",
+                "variant33.o2",
+                "variant33.o3",
+                "variant33.o4",
+                "variant33.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant33.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant33.o1",
+                "variant33.o2",
+                "variant33.o3",
+                "variant33.o4",
+                "variant33.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "matching"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant33.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant33.o1"
+        },
+        {
+          "itemId": "variant33.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant33.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.matching_features",
+      "group": {
+        "id": "variant34",
+        "variantId": "reading.matching_features",
+        "taskType": "matching_features",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "allowed",
+        "options": [
+          {
+            "id": "variant34.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant34.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant34.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant34.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant34.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant34.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant34.o1",
+                "variant34.o2",
+                "variant34.o3",
+                "variant34.o4",
+                "variant34.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant34.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant34.o1",
+                "variant34.o2",
+                "variant34.o3",
+                "variant34.o4",
+                "variant34.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "matching"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant34.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant34.o1"
+        },
+        {
+          "itemId": "variant34.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant34.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.matching_endings",
+      "group": {
+        "id": "variant35",
+        "variantId": "reading.matching_endings",
+        "taskType": "matching_endings",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "forbidden",
+        "options": [
+          {
+            "id": "variant35.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant35.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant35.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant35.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant35.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant35.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant35.o1",
+                "variant35.o2",
+                "variant35.o3",
+                "variant35.o4",
+                "variant35.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant35.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant35.o1",
+                "variant35.o2",
+                "variant35.o3",
+                "variant35.o4",
+                "variant35.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "matching"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant35.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant35.o1"
+        },
+        {
+          "itemId": "variant35.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant35.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.sentence_completion",
+      "group": {
+        "id": "variant36",
+        "variantId": "reading.sentence_completion",
+        "taskType": "sentence_completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant36.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant36.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "sentence",
+          "blocks": [
+            "Sample fixture {{variant36.i1}}",
+            "Sample fixture {{variant36.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant36.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant36.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.summary.text",
+      "group": {
+        "id": "variant37",
+        "variantId": "reading.completion.summary.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant37.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant37.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "summary",
+          "blocks": [
+            "Sample fixture {{variant37.i1}}",
+            "Sample fixture {{variant37.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant37.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant37.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.summary.choice_one",
+      "group": {
+        "id": "variant38",
+        "variantId": "reading.completion.summary.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant38.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant38.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant38.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant38.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant38.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant38.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant38.o1",
+                "variant38.o2",
+                "variant38.o3",
+                "variant38.o4",
+                "variant38.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant38.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant38.o1",
+                "variant38.o2",
+                "variant38.o3",
+                "variant38.o4",
+                "variant38.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "summary",
+          "blocks": [
+            "Sample fixture {{variant38.i1}}",
+            "Sample fixture {{variant38.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant38.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant38.o1"
+        },
+        {
+          "itemId": "variant38.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant38.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.note.text",
+      "group": {
+        "id": "variant39",
+        "variantId": "reading.completion.note.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant39.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant39.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "note",
+          "blocks": [
+            "Sample fixture {{variant39.i1}}",
+            "Sample fixture {{variant39.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant39.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant39.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.note.choice_one",
+      "group": {
+        "id": "variant40",
+        "variantId": "reading.completion.note.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant40.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant40.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant40.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant40.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant40.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant40.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant40.o1",
+                "variant40.o2",
+                "variant40.o3",
+                "variant40.o4",
+                "variant40.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant40.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant40.o1",
+                "variant40.o2",
+                "variant40.o3",
+                "variant40.o4",
+                "variant40.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "note",
+          "blocks": [
+            "Sample fixture {{variant40.i1}}",
+            "Sample fixture {{variant40.i2}}"
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant40.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant40.o1"
+        },
+        {
+          "itemId": "variant40.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant40.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.table.text",
+      "group": {
+        "id": "variant41",
+        "variantId": "reading.completion.table.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant41.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant41.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "table",
+          "columns": [
+            "Sample label",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "Fixture 1",
+              "{{variant41.i1}}"
+            ],
+            [
+              "Fixture 2",
+              "{{variant41.i2}}"
+            ]
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant41.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant41.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.table.choice_one",
+      "group": {
+        "id": "variant42",
+        "variantId": "reading.completion.table.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant42.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant42.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant42.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant42.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant42.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant42.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant42.o1",
+                "variant42.o2",
+                "variant42.o3",
+                "variant42.o4",
+                "variant42.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant42.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant42.o1",
+                "variant42.o2",
+                "variant42.o3",
+                "variant42.o4",
+                "variant42.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "table",
+          "columns": [
+            "Sample label",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "Fixture 1",
+              "{{variant42.i1}}"
+            ],
+            [
+              "Fixture 2",
+              "{{variant42.i2}}"
+            ]
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant42.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant42.o1"
+        },
+        {
+          "itemId": "variant42.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant42.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.flow_chart.text",
+      "group": {
+        "id": "variant43",
+        "variantId": "reading.completion.flow_chart.text",
+        "taskType": "completion",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant43.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant43.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "flow_chart",
+          "nodes": [
+            {
+              "id": "variant43.n0",
+              "body": "Start"
+            },
+            {
+              "id": "variant43.n1",
+              "body": "Step {{variant43.i1}}"
+            },
+            {
+              "id": "variant43.n2",
+              "body": "Step {{variant43.i2}}"
+            }
+          ],
+          "edges": [
+            {
+              "from": "variant43.n0",
+              "to": "variant43.n1"
+            },
+            {
+              "from": "variant43.n1",
+              "to": "variant43.n2"
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant43.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant43.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.completion.flow_chart.choice_one",
+      "group": {
+        "id": "variant44",
+        "variantId": "reading.completion.flow_chart.choice_one",
+        "taskType": "completion",
+        "instructions": "Choose one answer for each question.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [
+          {
+            "id": "variant44.o1",
+            "label": "A",
+            "text": "Sample option 1"
+          },
+          {
+            "id": "variant44.o2",
+            "label": "B",
+            "text": "Sample option 2"
+          },
+          {
+            "id": "variant44.o3",
+            "label": "C",
+            "text": "Sample option 3"
+          },
+          {
+            "id": "variant44.o4",
+            "label": "D",
+            "text": "Sample option 4"
+          },
+          {
+            "id": "variant44.o5",
+            "label": "E",
+            "text": "Sample option 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "variant44.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant44.o1",
+                "variant44.o2",
+                "variant44.o3",
+                "variant44.o4",
+                "variant44.o5"
+              ]
+            }
+          },
+          {
+            "id": "variant44.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "choice_one",
+              "optionIds": [
+                "variant44.o1",
+                "variant44.o2",
+                "variant44.o3",
+                "variant44.o4",
+                "variant44.o5"
+              ]
+            }
+          }
+        ],
+        "layout": {
+          "kind": "flow_chart",
+          "nodes": [
+            {
+              "id": "variant44.n0",
+              "body": "Start"
+            },
+            {
+              "id": "variant44.n1",
+              "body": "Step {{variant44.i1}}"
+            },
+            {
+              "id": "variant44.n2",
+              "body": "Step {{variant44.i2}}"
+            }
+          ],
+          "edges": [
+            {
+              "from": "variant44.n0",
+              "to": "variant44.n1"
+            },
+            {
+              "from": "variant44.n1",
+              "to": "variant44.n2"
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant44.i1",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant44.o1"
+        },
+        {
+          "itemId": "variant44.i2",
+          "kind": "choice_one",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "acceptedOptionId": "variant44.o2"
+        }
+      ]
+    },
+    {
+      "variantId": "reading.label.diagram",
+      "group": {
+        "id": "variant45",
+        "variantId": "reading.label.diagram",
+        "taskType": "visual_labelling",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant45.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant45.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "visual",
+          "assetId": "image.fixture",
+          "visualKind": "diagram",
+          "arrangement": "blank_targets",
+          "targets": [
+            {
+              "itemId": "variant45.i1",
+              "x": 0.05,
+              "y": 0.05,
+              "width": 0.25,
+              "height": 0.06
+            },
+            {
+              "itemId": "variant45.i2",
+              "x": 0.05,
+              "y": 0.13,
+              "width": 0.25,
+              "height": 0.06
+            }
+          ]
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant45.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant45.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "reading.short_answer",
+      "group": {
+        "id": "variant46",
+        "variantId": "reading.short_answer",
+        "taskType": "short_answer",
+        "instructions": "Write NO MORE THAN TWO WORDS for each answer.",
+        "sourceRefs": [],
+        "optionReuse": "not_applicable",
+        "options": [],
+        "items": [
+          {
+            "id": "variant46.i1",
+            "numbers": [
+              1
+            ],
+            "prompt": "Sample response 1",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          },
+          {
+            "id": "variant46.i2",
+            "numbers": [
+              2
+            ],
+            "prompt": "Sample response 2",
+            "response": {
+              "kind": "text",
+              "wordRule": {
+                "mode": "words_only",
+                "maxWords": 2
+              }
+            }
+          }
+        ],
+        "layout": {
+          "kind": "list"
+        }
+      },
+      "answerKey": [
+        {
+          "itemId": "variant46.i1",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        },
+        {
+          "itemId": "variant46.i2",
+          "kind": "text",
+          "explanation": "Fixture explanation only; not an official IELTS answer.",
+          "accepted": [
+            "blue room"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -25,10 +25,15 @@ Tarayıcı ─▶ nginx ─┬─ /        → web (Next.js 16, React 19)
 1. **AI paketi → sınav.** Yapay zekâ bir tam IELTS sınavını tek JSON olarak
    üretir (metinler, sorular, cevap anahtarı, transkript, base64 veya URL
    olarak ses ve görseller). `buildIeltsExam()` paketi IELTS kurallarına göre
-   doğrular ve sınavı hazırlar. Standart: **[docs/IELTS_PACKAGE_FORMAT.md](docs/IELTS_PACKAGE_FORMAT.md)**.
+   doğrular ve sınavı hazırlar. Standart (v1.1): **[docs/IELTS_PACKAGE_FORMAT.md](docs/IELTS_PACKAGE_FORMAT.md)**.
+   Araştırma paketinin önerdiği **ielts-content 1.0.0** biçimi de kabul edilir
+   ve aynı kurallardan geçer: **[docs/HANDOFF_UYUMU.md](docs/HANDOFF_UYUMU.md)**
+   (fark analizi, kararlar, açık varsayımlar).
 2. **Kütüphane ve atama.** Öğretmen, mentor, menecer veya akademi sahibi
    paketi yükler. Önce kontrol eder, sonra kaydeder. Testi önizler, cevap
-   anahtarını ve transkripti görür, açılış/kapanış zamanıyla bir sınıfa atar.
+   anahtarını, açıklamaları ve transkripti görür, açılış / son başlama
+   zamanıyla bir sınıfa atar. Speaking için seçim yapar: onlayn simülasyon
+   (kayıtlı) veya öğretmenle yüz yüze (gerçek sınav gibi).
 3. **Sınav.** Sınıftaki öğrenciler bilgisayarlı IELTS düzeninde çözer.
 4. **Puanlama.** Listening ve Reading otomatik puanlanır (40 soru → bant).
    Öğretmen Writing ve Speaking'i resmî dört kritere göre 0–9 puanlar. Overall
@@ -60,6 +65,7 @@ Tarayıcı ─▶ nginx ─┬─ /        → web (Next.js 16, React 19)
 
 **Listening**
 
+- Başlamadan önce ses testi (kaydı tüketmeyen test tonu ve ses seviyesi).
 - Kayıt **bir kez** çalar; durdurma veya geri sarma yoktur.
 - Sayfa yenilenirse kayıt sınav saatinin bulunduğu yerden devam eder.
 - Çalan part otomatik açılır.
@@ -79,6 +85,9 @@ Tarayıcı ─▶ nginx ─┬─ /        → web (Next.js 16, React 19)
 
 **Speaking**
 
+- Atamada "öğretmenle yüz yüze" seçildiyse onlayn oturum Writing'den sonra
+  biter; öğretmen puanlama sayfasındaki soru kartlarıyla görüşmeyi yapar.
+- Onlayn simülasyonda ekranda bunun bir simülasyon olduğu yazar.
 - Mikrofon testi yapılır.
 - Part 1: soru başına 30 sn kayıt.
 - Part 2: konu kartı, 1 dk hazırlık (not alınabilir), 2 dk konuşma ve
@@ -92,15 +101,18 @@ Tarayıcı ─▶ nginx ─┬─ /        → web (Next.js 16, React 19)
 - Başlık, kelime bankası ve cümle sonu seçenekleri sürüklenerek yerleştirilir.
 - Klavye ve dokunmatik için önce seçeneğe, sonra boşluğa tıklamak da yeter.
 
-**13 soru tipinin hepsi**
+**13 soru tipi, araştırma paketindeki 46 varyantın hepsi**
 
-- Multiple choice (tek cevap ve TWO/THREE).
+- Multiple choice (tek cevap, TWO/THREE, resimli soru).
 - True/False/Not Given, Yes/No/Not Given.
-- Matching headings, information, features, sentence endings.
-- Plan/map labelling.
-- Form/note/table/flow-chart/summary completion (yazarak veya kelime
-  bankasıyla).
-- Sentence completion, diagram label completion, short answer.
+- Matching headings, information (paragraf veya GT metinleri), features,
+  sentence endings.
+- Plan/map/diagram labelling: harf tablosu (harfleri sınav da çizebilir),
+  yazarak veya kutudan seçerek etiketleme.
+- Form/note/table/flow-chart (dallanan da)/summary completion (yazarak veya
+  kelime bankasıyla).
+- Sentence completion, diagram label completion, short answer (tek cevap ve
+  "Which TWO …?").
 
 ## Roller (EduPortal'dan)
 
@@ -139,9 +151,10 @@ npm run prisma:migrate:deploy && npm run start:dev       # :4002
 cd ../frontend && npm install && npm run dev             # :3200
 ```
 
-Örnek bir sınav: `cd backend && npm run sample > academic-sample.json`. Bu
-dosyayı "Test əlavə et (JSON)" ekranından yükleyin. Paket her soru tipini
-içerir; sesler yer tutucu tonlardır, görseller SVG'dir.
+Örnek sınavlar: `cd backend && npm run sample > academic-sample.json` ve
+`npm run sample:gt > general-sample.json` (1.1'in yeni alanları). Dosyayı
+"Test əlavə et (JSON)" ekranından yükleyin. Sesler yer tutucu tonlardır,
+görseller SVG'dir.
 
 Demo kullanıcılar (şifre yok, sahte SSO ekranında seçilir):
 
@@ -158,7 +171,7 @@ Demo kullanıcılar (şifre yok, sahte SSO ekranında seçilir):
 cd backend
 npm test                 # format, puanlama, bant tabloları, sınav akışı, roller (unit)
 npm run test:e2e         # gerçek veritabanlarıyla: SSO, içe aktarma, atama, L→R→W→S, puanlama, sonuç
-npm run package:validate -- paket.json
+npm run package:validate -- paket.json   # 1.1 veya ielts-content 1.0.0
 cd ../frontend && npm run typecheck && npm run lint && npm run build
 ```
 
@@ -174,6 +187,8 @@ docker compose up -d --build
 - EduPortal tarafında yapılacaklar: **[docs/EDUPORTAL_SSO.md](docs/EDUPORTAL_SSO.md)**
   (`eduielts` istemcisinin kaydı).
 - Salt-okuma rolü: `docs/sql/eduportal-readonly-role.sql`.
+- ielts-content 1.0.0 paketleri için `ASSET_STORAGE_BASE_URL` (medyanın https
+  adresi) ve bu adresin ana makinesi `ASSET_FETCH_ALLOWED_HOSTS` içinde.
 
 ## API özeti
 
@@ -182,10 +197,10 @@ docker compose up -d --build
 | `GET /auth/sso/start`, `POST /auth/sso/callback` | herkes | EduPortal SSO |
 | `GET /auth/me`, `POST /auth/logout` | girişli | |
 | `POST /tests/validate` | personel | paketi kontrol eder, hiçbir şey kaydetmez |
-| `POST /tests/import` | personel | `{academyId, package}` → test |
+| `POST /tests/import` | personel | `{academyId, package}` → test (aynı paket ikinci kez: 409) |
 | `GET /tests`, `GET /tests/:id`, `DELETE /tests/:id` | personel | kütüphane, önizleme (transkript ve cevaplar), arşiv |
 | `GET /tests/:id/assets/:key` | personel / aday | ses ve görseller; aday Listening sesini sadece Listening sırasında alabilir |
-| `GET /assignments/classes`, `POST /assignments` | personel | sınıf listesi, atama |
+| `GET /assignments/classes`, `POST /assignments` | personel | sınıf listesi, atama (`speakingMode`: `RECORDED` / `FACE_TO_FACE`) |
 | `GET /assignments`, `GET /assignments/:id`, `PATCH`, `DELETE` | personel | liste, sınıf raporu, sonuç açıklama |
 | `GET /assignments/mine` | öğrenci | bana atanan sınavlar |
 | `POST /assignments/:id/start` | öğrenci | sınavı başlatır veya devam ettirir |

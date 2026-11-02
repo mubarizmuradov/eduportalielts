@@ -16,8 +16,17 @@ export const GRACE_SECONDS = 30;
 const SPEAKING_OVERHEAD_PER_ANSWER = 25;
 const SPEAKING_BUFFER_SECONDS = 10 * 60;
 
-export function nextModule(m: DbModule): DbModule | null {
-  return DB_ORDER[DB_ORDER.indexOf(m) + 1] ?? null;
+export type SpeakingMode = 'RECORDED' | 'FACE_TO_FACE';
+
+/** Face-to-face Speaking is taken with the teacher: the online sitting ends after Writing. */
+export function nextModule(m: DbModule, speaking: SpeakingMode = 'RECORDED'): DbModule | null {
+  const next = DB_ORDER[DB_ORDER.indexOf(m) + 1] ?? null;
+  return next === 'SPEAKING' && speaking === 'FACE_TO_FACE' ? null : next;
+}
+
+/** Whole online sitting in seconds (Speaking only when it is recorded online). */
+export function sittingSeconds(exam: CandidateExam, speaking: SpeakingMode = 'RECORDED'): number {
+  return DB_ORDER.filter((m) => m !== 'SPEAKING' || speaking === 'RECORDED').reduce((s, m) => s + moduleSeconds(exam, m), 0);
 }
 
 /** Recording slots of the Speaking test: part → number of answers. */

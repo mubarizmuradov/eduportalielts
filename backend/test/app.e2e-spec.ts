@@ -18,6 +18,8 @@ import request from 'supertest';
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { IDS } = require('../scripts/seed-dev-eduportal.js');
 const { makeSamplePackage } = require('../samples/sample-package.js');
+const { makeGeneralSamplePackage } = require('../samples/general-sample-package.js');
+const handoffAcademic = require('./fixtures/content-1.0.0/academic-structure.json');
 const { toneWav } = require('../samples/media.js');
 /* eslint-enable @typescript-eslint/no-require-imports */
 
@@ -259,6 +261,57 @@ describe('EduPortal IELTS e2e (real EduPortal schema)', () => {
     expect(new Date(s.body.attempt.moduleDeadline).getTime()).toBe(past.getTime() + 60 * 60_000);
     const row = await db.attempt.findUniqueOrThrow({ where: { id } });
     expect(row.listeningRaw).toBe(1);
+  });
+
+  it('refuses the same package twice; reads ielts-content 1.0.0 but never imports test data', async () => {
+    const dup = await as('teacher').post('/tests/import', { academyId: IDS.academy, package: makeSamplePackage() }).expect(409);
+    expect(dup.body).toMatchObject({ code: 'DUPLICATE_PACKAGE', testId });
+    const v = await as('teacher').post('/tests/validate', { package: handoffAcademic }).expect(200);
+    expect(v.body).toMatchObject({ ok: true, format: 'ielts-content 1.0.0', importable: false });
+    expect(v.body.summary.listening.questions).toBe(40);
+    const imp = await as('teacher').post('/tests/import', { academyId: IDS.academy, package: handoffAcademic }).expect(422);
+    expect(imp.body.code).toBe('FIXTURE_ONLY');
+    const broken = JSON.parse(JSON.stringify(handoffAcademic));
+    broken.answerKey.pop();
+    const bad = await as('teacher').post('/tests/validate', { package: broken }).expect(200);
+    expect(bad.body.ok).toBe(false);
+    expect(bad.body.errors[0].message).toMatch(/has no answerKey entry/);
+  });
+
+  it('General Training with face-to-face Speaking: the online sitting ends after Writing', async () => {
+    const t = await as('owner').post('/tests/import', { academyId: IDS.academy, package: makeGeneralSamplePackage() }).expect(201);
+    const window = { opensAt: new Date(Date.now() - 60_000), closesAt: new Date(Date.now() + 86_400_000) };
+    const a = await as('teacher')
+      .post('/assignments', { testId: t.body.id, classId: IDS.class, title: 'GT mock', speakingMode: 'FACE_TO_FACE', ...window })
+      .expect(201);
+    expect(a.body.speakingMode).toBe('FACE_TO_FACE');
+    const { id } = (await as('student1').post(`/assignments/${a.body.id}/start`).expect(200)).body;
+    const s0 = await as('student1').get(`/attempts/${id}/state`).expect(200);
+    expect(s0.body.assignment.speakingMode).toBe('FACE_TO_FACE');
+    expect(JSON.stringify(s0.body.content)).not.toMatch(/answerUnits|explanation|K-O-W-A-L/);
+    // "Which TWO activities?" in the other order, plus a map letter and a plan label from the box.
+    await as('student1')
+      .put(`/attempts/${id}/answers`, { module: 'listening', answers: { 7: 'tennis', 8: 'swimming', 11: 'G', 16: 'A', 2: '4512' } })
+      .expect(200);
+    await as('student1').post(`/attempts/${id}/finish-module`, { module: 'listening' }).expect(200);
+    await as('student1').put(`/attempts/${id}/answers`, { module: 'reading', answers: { 1: 'C', 2: 'B' } }).expect(200);
+    await as('student1').post(`/attempts/${id}/finish-module`, { module: 'reading' }).expect(200);
+    await as('student1').put(`/attempts/${id}/writing`, { task1: 'Dear neighbour, …', task2: 'Working from home …' }).expect(200);
+    const done = await as('student1').post(`/attempts/${id}/finish-module`, { module: 'writing' }).expect(200);
+    expect(done.body.attempt).toMatchObject({ currentModule: null, status: 'SUBMITTED' });
+
+    const graded = await as('teacher')
+      .put(`/attempts/${id}/grade`, {
+        writing: { task1: { ta: 6, cc: 6, lr: 6, gra: 6 }, task2: { ta: 6, cc: 6, lr: 6, gra: 6 } },
+        speaking: { fc: 7, lr: 6, gra: 6, p: 7 },
+      })
+      .expect(200);
+    expect(graded.body.raw).toEqual({ listening: 5, reading: 2 });
+    expect(graded.body.bands).toMatchObject({ speaking: 6.5, writing: 6 });
+    expect(graded.body.attempt.status).toBe('GRADED');
+    expect(graded.body.assignment.speakingMode).toBe('FACE_TO_FACE');
+    expect(graded.body.listening[0].explanation).toMatch(/K-O-W-A-L-S-K-I/);
+    expect(graded.body.notes.writingTask2).toMatch(/outweighs/);
   });
 
   it('keeps assignments with attempts', async () => {

@@ -1,4 +1,4 @@
-# IELTS Test Package: AI çıktısının JSON standardı (v1.0)
+# IELTS Test Package: AI çıktısının JSON standardı (v1.1)
 
 Bu belge, yapay zekânın ürettiği **bir tam IELTS deneme sınavının** hangi JSON
 biçiminde teslim edileceğini tanımlar. Üretim tarafı (metin, görsel ve ses
@@ -12,9 +12,24 @@ doğrular ve sınava dönüştürür.
 | Şema (JSON Schema, üretici için) | `docs/ielts-package.schema.json` (`npm run schema:export`) |
 | Sınavı hazırlayan fonksiyon | `backend/src/ielts-format/build-exam.ts` → `buildIeltsExam(json)` |
 | Puanlama ve bant tabloları | `backend/src/ielts-format/marking.ts`, `band.ts`, `answer-text.ts` |
-| Tüm soru tiplerini içeren örnek | `backend/samples/sample-package.js` (`npm run sample > örnek.json`) |
+| Örnek: Academic (v1.0 biçiminde, 13 tipin hepsi) | `backend/samples/sample-package.js` (`npm run sample > örnek.json`) |
+| Örnek: General Training (v1.1'in yeni alanları) | `backend/samples/general-sample-package.js` (`npm run sample:gt > gt.json`) |
+| İkinci kabul edilen biçim: ielts-content 1.0.0 | `backend/src/ielts-format/content-v1.ts`, ayrıntı: [HANDOFF_UYUMU.md](HANDOFF_UYUMU.md) |
 | Dosyayı içe aktarmadan kontrol | `npm run package:validate -- örnek.json` |
 | API | `POST /tests/validate` (kuru deneme), `POST /tests/import` (kaydet) |
+
+> **1.1'de ne değişti?** Sadece isteğe bağlı alanlar ve yeni değerler eklendi;
+> `schemaVersion: "1.0"` paketler aynen kabul edilir. Yenilikler:
+> `numberRule: "or"` (ONE WORD OR A NUMBER), "Which TWO …?" kısa cevapları
+> (`numbers` + `answerUnits`), harita harflerini sınavın çizmesi
+> (`letterPositions`), plan/harita/diyagramda kutudan seçmeli etiketleme
+> (`diagram_label_completion` + `answerMode: "select"`), dallanan akış şeması
+> (`flow`), resimli soru (`multiple_choice` → `image`), General Training kısa
+> metin etiketleri ve metinler üzerinden matching information
+> (`label`, `scope: "texts"`), sözlükçe (`glossary`), Task 1'de birden çok
+> görsel (`images`), yeni Task 2 tipleri, her soruya `explanation`, öğretmen
+> için `examinerNotes`. Daha sıkı kurallar: başlık ve cümle sonu sayısı soru
+> sayısından **fazla** olmalı (eskiden uyarıydı, artık hata).
 
 > JSON Schema yapısal kuralların hepsini ifade edemez (soru numaraları, `{{n}}`
 > boşlukları, cevap anahtarı ve seçenek uyumu, dosya türü gibi). Bunları
@@ -126,11 +141,22 @@ Hangi modülde hangi tip olabilir:
 | `matching_information` | Matching information (which paragraph) | – | ✓ | açılır liste |
 | `matching_features` | Matching features / Listening matching | ✓ | ✓ | açılır liste + seçenek kutusu |
 | `matching_sentence_endings` | Matching sentence endings | – | ✓ | sonları cümleye sürükle |
-| `map_labelling` | Plan / map / diagram labelling (harfli) | ✓ | – | harf tablosu (radio) |
+| `map_labelling` | Plan / map / diagram labelling (harfli) | ✓ | – | harf tablosu (radio); harfler görselde |
 | `completion` | Form / note / table / flow-chart / summary completion | ✓ | ✓ (form hariç) | satır içi kutu veya kelime bankası |
 | `sentence_completion` | Sentence completion | ✓ | ✓ | satır içi kutu |
-| `diagram_label_completion` | Diagram label completion (yazarak) | ✓ | ✓ | görsel üzerinde kutular |
-| `short_answer` | Short-answer questions | ✓ | ✓ | kutu |
+| `diagram_label_completion` | Diagram label completion; Listening'de plan/harita/resim etiketleme (yazarak veya kutudan seçerek) | ✓ | ✓ (sadece diyagram) | görsel üzerinde kutular |
+| `short_answer` | Short-answer questions (tek cevap veya "Which TWO …?") | ✓ | ✓ | kutu(lar) |
+
+**IELTS Liz'in 14 Reading başlığının karşılığı:** Matching Headings →
+`matching_headings`; TFNG / YNNG → iki ayrı tip; Matching Paragraph
+Information → `matching_information`; Summary / Table / Flow Chart Completion →
+`completion` (summary/table/flow_chart); Sentence Completion →
+`sentence_completion`; Multiple Choice → `multiple_choice(_multi)`; List
+Selection → anlamına göre `matching_features` veya kelime bankalı
+`completion`; Choosing a Title → `multiple_choice` (soru: "Which is the most
+suitable title…?"); Classification → `matching_features`; Matching Sentence
+Endings → `matching_sentence_endings`; Diagram Completion →
+`diagram_label_completion`; Short Answer → `short_answer`.
 
 ### Kelime sınırı (`wordLimit`)
 
@@ -139,7 +165,11 @@ Hangi modülde hangi tip olabilir:
 { "maxWords": 1, "allowNumber": false }  // → "ONE WORD ONLY"
 { "maxWords": 1, "allowNumber": true }   // → "ONE WORD AND/OR A NUMBER"
 { "maxWords": 0, "allowNumber": true }   // → "A NUMBER"
+{ "maxWords": 1, "allowNumber": true, "numberRule": "or" }  // → "ONE WORD OR A NUMBER" (1.1)
 ```
+
+`numberRule: "and_or"` (varsayılan): en çok `maxWords` kelime **ve** en çok bir
+sayı. `"or"`: ya en çok `maxWords` kelime ya da tek başına bir sayı.
 
 ### Kabul edilen cevaplar (`answers`)
 
@@ -153,6 +183,11 @@ Hangi modülde hangi tip olabilir:
 - **Kelime sınırını aşan cevap yanlıştır**, doğru kelimeyi içerse bile. Builder,
   anahtardaki her cevabın sınıra uyduğunu kontrol eder. Uymayan paket reddedilir.
 - Tireli kelime bir kelime sayılır. Rakamla yazılan sayı "number" sayılır.
+
+**Açıklama (`explanation`, 1.1).** Her soruya, boşluğa veya etikete isteğe
+bağlı `"explanation": "…"` eklenebilir (cevabın metindeki/kayıttaki kanıtı).
+Öğretmen cevap anahtarında görür; öğrenci sadece sonuçlar açıklandıktan sonra
+cevap kâğıdında görür. Sınav sırasında asla gönderilmez.
 
 ### 3.1 `multiple_choice`
 
@@ -248,6 +283,14 @@ Başlıklar sınavda metnin içindeki boşluğa da sürüklenebilir.
 Seçenekler, metnin paragraf etiketleridir. `allowReuse: true` olunca
 "NB You may use any letter more than once." yazılır.
 
+General Training'de ("Which advertisement mentions …?") cevaplar bölümün kısa
+metinleridir: metinlere `label` (A, B, C…) verin ve `"scope": "texts"` yazın.
+
+```json
+{ "type": "matching_information", "scope": "texts", "allowReuse": true,
+  "questions": [{ "number": 1, "statement": "lessons at any time of the day", "answer": "C" }] }
+```
+
 ### 3.6 `matching_features` (Reading features / Listening matching)
 
 ```json
@@ -284,8 +327,18 @@ Her son en fazla bir kez cevaptır. Cümleden fazla son verilmelidir.
 }
 ```
 
-Harfler görselin üzerinde basılı olmalıdır. Ekranda bilgisayarlı IELTS'teki
-gibi bir harf tablosu çıkar.
+Ekranda bilgisayarlı IELTS'teki gibi bir harf tablosu çıkar. `visualKind`
+(`map` varsayılan, `plan`, `diagram`) talimat cümlesini belirler.
+
+**`letterPositions` (1.1, önerilir).** Görsel üreten modeller harfleri çoğu
+zaman okunaklı çizemez. Harfleri görsele basmak yerine konumlarını verin, sınav
+ekranı harfleri görselin üstüne çizer:
+
+```json
+"letterPositions": [{ "key": "A", "x": 18.3, "y": 28.75 }, { "key": "B", "x": 43.3, "y": 28.75 }]
+```
+
+`x`, `y` görselin solundan ve üstünden yüzde; her harf için tam bir konum.
 
 ### 3.9 `completion` (form, not, tablo, akış şeması, özet)
 
@@ -295,7 +348,20 @@ gibi bir harf tablosu çıkar.
 | --- | --- |
 | `form`, `note`, `summary` | `lines: [{ "text": "...{{n}}...", "style": "heading" \| "text" \| "bullet" \| "indent" }]` |
 | `table` | `table: { "columns": [...], "rows": [[...], ...] }` |
-| `flow_chart` | `steps: ["kutu 1", "kutu {{37}}", ...]` |
+| `flow_chart` | `steps: ["kutu 1", "kutu {{37}}", ...]` (düz akış) **veya** `flow` (dallanan / döngülü akış, 1.1) |
+
+Dallanan akış şeması:
+
+```json
+"flow": {
+  "nodes": [{ "id": "test", "text": "Test the samples" }, { "id": "ok", "text": "Clear: write the {{22}}" }, { "id": "again", "text": "Unclear: repeat with a larger {{23}}" }],
+  "edges": [{ "from": "test", "to": "ok" }, { "from": "test", "to": "again" }, { "from": "again", "to": "test" }]
+}
+```
+
+Kutular satırlara dizilir, dallar yan yana durur, geri dönen ok kutunun altına
+"→ …" olarak yazılır. Her kutunun en az bir oku olmalıdır; boşluk sırası
+`nodes` sırasıdır.
 
 Yazarak cevaplama (`answerMode: "write"`, varsayılan):
 
@@ -376,6 +442,22 @@ Her cümlede, sorunun kendi numarasıyla tam bir boşluk bulunur.
 `x` ve `y`, kutunun görsel üzerindeki merkezidir (soldan ve yukarıdan %).
 Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
 
+1.1 ile aynı tip Listening'deki plan/harita etiketlemesini de karşılar:
+
+- `visualKind`: `diagram` (varsayılan), `map`, `plan`, `pictures`. Reading'de
+  sadece `diagram`.
+- `answerMode: "select"`: aday cevabı kutudaki listeden sürükler (veya
+  tıklar). `options` (A–…) verilir, her etikette `answer` harftir:
+
+```json
+{
+  "type": "diagram_label_completion", "visualKind": "plan", "image": "floor-plan",
+  "answerMode": "select",
+  "options": [{ "key": "A", "text": "office" }, { "key": "B", "text": "storeroom" }, { "key": "C", "text": "quiet room" }, { "key": "D", "text": "kitchen" }],
+  "labels": [{ "number": 16, "x": 50, "y": 31, "answer": "A" }, { "number": 17, "x": 81, "y": 31, "answer": "B" }]
+}
+```
+
 ### 3.12 `short_answer`
 
 ```json
@@ -385,6 +467,20 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
   "questions": [{ "number": 39, "question": "Which country is the largest producer today?", "answers": ["Côte d'Ivoire", "Ivory Coast"] }]
 }
 ```
+
+"Which TWO …?" gibi birden fazla cevap isteyen soru (1.1): her cevap için bir
+numara ve bir `answerUnits` öğesi. Aday cevapları **her sırada** yazabilir;
+her birim bir kez puan alır, aynı kelimeyi iki kez yazmak iki puan getirmez.
+
+```json
+{ "numbers": [7, 8], "question": "Which TWO activities does Sarah want to try?", "answerUnits": [["swimming"], ["tennis"]] }
+```
+
+Soru metni kaç cevap istediğini söylemelidir (TWO/THREE). İki birim aynı
+cevabı kabul edemez.
+
+Resimli çoktan seçmeli (1.1): `multiple_choice` sorusuna `"image": "bags"`
+eklenir (A, B, C çizimlerini içeren tek görsel), seçenekler `bag A`, `bag B`…
 
 ---
 
@@ -398,7 +494,7 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
       "context": "A phone call between a man and a receptionist at a sports centre.", // sadece öğretmen görür
       "audio": "listening-part-1",
       "transcript": "RECEPTIONIST: Good morning …",   // zorunlu; sadece öğretmen görür
-      "questionGroups": [ … ]                           // 1–6 grup, toplam 10 soru
+      "questionGroups": [ … ]                           // 1–8 grup, toplam 10 soru
     }
   ]
 },
@@ -415,7 +511,9 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
             { "label": "B", "text": "The boom began …" }
           ],
           "image": "opsiyonel-görsel-id",
-          "imageCaption": "…"
+          "imageCaption": "…",
+          "glossary": [{ "term": "overhead wires", "definition": "cables above the track …" }],  // 1.1, isteğe bağlı
+          "label": "A"   // 1.1: GT kısa metinleri (ilanlar) için; ya bütün metinlere ya hiçbirine
         }
       ],
       "questionGroups": [ … ]       // matching_headings / information için "textIndex" metni seçer
@@ -432,6 +530,8 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
   olabilir. Bunlar kayda dahildir ve `durationSeconds` toplam süreyi verir.
 - Paragraf etiketleri A, B, C… sırasıyla ve benzersiz olmalı. Etiketsiz
   paragraf (giriş gibi) olabilir.
+- General Training metin sayısı: 1. bölüm genelde 2–3 kısa metin (1–5 kabul,
+  dışı uyarı), 2. bölüm 2 metin (1–3 kabul), 3. bölüm tam 1 uzun metin.
 
 ## 5. Writing
 
@@ -439,9 +539,10 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
 // Academic
 "task1": {
   "kind": "academic_report",
-  "visualType": "bar_chart",   // line_graph | bar_chart | pie_chart | table | mixed_charts | map | process_diagram
+  "visualType": "bar_chart",   // line_graph | bar_chart | pie_chart | table | mixed_charts | map | process_diagram | object_diagram
   "prompt": "The chart below shows the number of commuters …",
-  "image": "commuter-chart"
+  "image": "commuter-chart",   // tek görsel … veya 1.1: "images": ["pie", "table"] (en çok 3, birlikte gösterilir)
+  "examinerNotes": "…"         // 1.1, isteğe bağlı: puanlayan öğretmen için
 }
 // General Training
 "task1": {
@@ -452,7 +553,9 @@ Etiket çizgilerini ve boş alanı görsel üretilirken bırakın.
   "salutation": "Dear Sir or Madam,"   // isteğe bağlı; yoksa türüne göre üretilir
 }
 "task2": {
-  "essayType": "discussion",   // opinion | discussion | advantages_disadvantages | problem_solution | two_part_question
+  "essayType": "discussion",   // opinion | discussion | advantages_disadvantages | outweigh | positive_negative
+                               // problem_solution | cause_solution | cause_effect | two_part_question | mixed
+                               // sadece öğretmen için etiket: aday her zaman sorunun kendisini cevaplar
   "prompt": "Some people believe that university students should study whatever they like. Others …",
   "question": "Discuss both these views and give your own opinion."
 }
@@ -467,7 +570,7 @@ features…", "Write at least 150 words.", "Give reasons for your answer…".
 ```jsonc
 "speaking": {
   "part1": {
-    "topics": [   // 2–4 konu, her biri 2–6 soru (toplam 8–12 önerilir)
+    "topics": [   // 1–5 konu, her biri 1–8 soru (toplam 8–12 önerilir, sabit kural değil)
       { "topic": "Your home town", "questions": [{ "text": "Where is your home town?", "audio": "opsiyonel-ses-id" }] }
     ]
   },
@@ -479,14 +582,23 @@ features…", "Write at least 150 words.", "Give reasons for your answer…".
     "roundingOff": [{ "text": "Do you think you will learn any other skills in the near future?" }]   // 0–2
   },
   "part3": {
-    "themes": [   // 1–3 tema, toplam 4–8 soru önerilir
+    "themes": [   // 1–4 tema, toplam 4–8 soru önerilir
       { "theme": "Learning skills", "questions": [{ "text": "Which skills are most important for young people today?" }] }
     ]
-  }
+  },
+  "examinerNotes": "…"   // 1.1, isteğe bağlı: takip soruları vb., sadece öğretmen
 }
 ```
 
-Speaking sınavı mikrofonla kaydedilir:
+Gerçek IELTS'te Speaking bir sınav görevlisiyle **yüz yüze** yapılır. Öğretmen
+atama yaparken seçer:
+
+- **Onlayn simülasyon** (varsayılan): sorular kayıttan, cevaplar mikrofonla
+  kaydedilir. Ekranda bunun bir simülasyon olduğu yazar.
+- **Öğretmenle yüz yüze**: onlayn sınav Writing'den sonra biter; öğretmen
+  puanlama sayfasındaki soru kartlarıyla görüşmeyi yapar ve puanı girer.
+
+Onlayn simülasyonda süreler:
 
 - Part 1: soru başına 30 sn.
 - Part 2: 1 dk hazırlık (not alınabilir) ve 2 dk konuşma.
@@ -548,13 +660,16 @@ servisi hazır olduğunda doğrudan bu metodu (veya `POST /tests/import`)
 
 ## 9. Üretici için kontrol listesi
 
-- [ ] `schemaVersion: "1.0"`, dört modülün hepsi var.
+- [ ] `schemaVersion: "1.1"` (1.0 da kabul), dört modülün hepsi var.
 - [ ] Listening 4 × 10 soru, Reading 40 soru, numaralar 1–40 boşluksuz.
 - [ ] Her soru tipinin modülde izinli olduğu kontrol edildi (tablo bölüm 3).
 - [ ] `{{n}}` boşlukları `gaps` ile aynı.
 - [ ] Her cevap seçeneklerin, başlıkların veya paragraf etiketlerinin içinde.
 - [ ] Yazılı cevaplar kelime sınırına uyuyor. Alternatif yazımlar eklendi.
 - [ ] Her ses dosyasında `durationSeconds` var. Görsellerin harf ve etiketleri
-  JSON ile uyumlu.
+  JSON ile uyumlu (harfler için tercihen `letterPositions`).
+- [ ] Başlık listesi paragraflardan, cümle sonları cümlelerden fazla.
+- [ ] Talimatı kendiniz yazıyorsanız (`instructions`) kelime sınırı ifadesi
+  `wordLimit` ile aynı.
 - [ ] `transcript` cevapları gerçekten içeriyor (öğretmen kontrolü için).
 - [ ] `npm run package:validate -- dosya.json` → "Valid IELTS test package."

@@ -17,7 +17,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --runInBand",
     "sample": "node samples/sample-package.js",
     "package:validate": "ts-node --transpile-only scripts/validate-package.ts",
-    "schema:export": "ts-node --transpile-only scripts/export-json-schema.ts"
+    "schema:export": "ts-node --transpile-only scripts/export-json-schema.ts",
+    "sample:gt": "node samples/general-sample-package.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.2.8",
@@ -27,6 +28,7 @@
     "@nestjs/platform-express": "^11.2.8",
     "@nestjs/throttler": "^6.7.1",
     "@prisma/client": "^6.18.0",
+    "ajv": "^8.18.0",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "helmet": "^8.3.0",

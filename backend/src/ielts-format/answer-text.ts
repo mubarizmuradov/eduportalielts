@@ -10,14 +10,17 @@ import type { WordLimit } from './package.schema';
 
 const NUMBER_WORDS = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE'];
 
-/** "NO MORE THAN TWO WORDS AND/OR A NUMBER", "ONE WORD ONLY", "A NUMBER" … */
-export function wordLimitPhrase(w: WordLimit): string {
+/** "NO MORE THAN TWO WORDS AND/OR A NUMBER", "ONE WORD ONLY", "ONE WORD OR A NUMBER", "A NUMBER" … */
+export function wordLimitPhrase(w: WordLimitLike): string {
   if (w.maxWords === 0) return 'A NUMBER';
   const n = NUMBER_WORDS[w.maxWords - 1];
-  const words = w.maxWords === 1 ? 'WORD' : 'WORDS';
-  if (w.maxWords === 1) return w.allowNumber ? 'ONE WORD AND/OR A NUMBER' : 'ONE WORD ONLY';
-  return `NO MORE THAN ${n} ${words}${w.allowNumber ? ' AND/OR A NUMBER' : ''}`;
+  const number = w.allowNumber ? (w.numberRule === 'or' ? ' OR A NUMBER' : ' AND/OR A NUMBER') : '';
+  if (w.maxWords === 1) return w.allowNumber ? `ONE WORD${number}` : 'ONE WORD ONLY';
+  return `NO MORE THAN ${n} WORDS${number}`;
 }
+
+/** A stored word limit (tests built before 1.1 have no numberRule). */
+export type WordLimitLike = Omit<WordLimit, 'numberRule'> & { numberRule?: WordLimit['numberRule'] };
 
 /**
  * Canonical form used for comparison:
@@ -84,15 +87,17 @@ export function countWords(raw: string): { words: number; numbers: number } {
   return { words, numbers };
 }
 
-export function withinWordLimit(raw: string, limit: WordLimit): boolean {
+export function withinWordLimit(raw: string, limit: WordLimitLike): boolean {
   const { words, numbers } = countWords(raw);
   if (words + numbers === 0) return false;
   if (!limit.allowNumber) return words + numbers <= limit.maxWords;
+  // "ONE WORD OR A NUMBER": words alone, or one number alone.
+  if (limit.numberRule === 'or') return numbers === 0 ? words <= limit.maxWords : numbers === 1 && words === 0;
   return words <= limit.maxWords && numbers <= 1;
 }
 
 /** Marks one typed answer. */
-export function isTextAnswerCorrect(response: string, accepted: string[], limit: WordLimit): boolean {
+export function isTextAnswerCorrect(response: string, accepted: string[], limit: WordLimitLike): boolean {
   if (!response || !withinWordLimit(response, limit)) return false;
   const r = normalizeAnswer(response);
   return accepted.some((a) => expandAccepted(a).includes(r));
