@@ -1,0 +1,203 @@
+// EduPortal IELTS own database.
+// Only this schema is migrated by this repository. EduPortal ids (user, academy,
+// campus, class) are plain UUID columns without foreign keys because they live
+// in the EduPortal database (prisma/eduportal/schema.prisma, read-only).
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@eduielts/ielts-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------- auth
+
+model AuthSession {
+  id                 String    @id @default(uuid())
+  userId             String    @map("user_id") @db.Uuid
+  userAgent          String?   @map("user_agent")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  expiresAt          DateTime  @map("expires_at")
+  revokedAt          DateTime? @map("revoked_at")
+  /// EduPortal `sessions.id` the SSO login came from. When that EduPortal
+  /// session ends, this one ends too.
+  eduportalSessionId String    @map("eduportal_session_id")
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("auth_sessions")
+}
+
+/// Redeemed SSO assertion ids (single use).
+model SsoAssertion {
+  jti       String   @id @db.VarChar(128)
+  expiresAt DateTime @map("expires_at")
+
+  @@index([expiresAt])
+  @@map("sso_assertions")
+}
+
+// ---------------------------------------------------------------- tests
+
+enum TestType {
+  ACADEMIC
+  GENERAL_TRAINING
+}
+
+/// A mock test built from an IELTS Test Package (src/ielts-format).
+model IeltsTest {
+  id            String    @id @default(uuid())
+  academyId     String    @map("academy_id") @db.Uuid
+  createdById   String    @map("created_by_id") @db.Uuid
+  title         String    @db.VarChar(200)
+  testType      TestType  @map("test_type")
+  schemaVersion String    @map("schema_version") @db.VarChar(16)
+  /// CandidateExam: what candidates see (no answers, no transcripts)
+  candidate     Json
+  /// ExamAnswerKey: Listening + Reading marking data
+  answerKey     Json      @map("answer_key")
+  /// StaffReview: transcripts, readable answers, generator meta
+  staff         Json
+  summary       Json
+  warnings      Json
+  packageSha256 String    @map("package_sha256") @db.Char(64)
+  archivedAt    DateTime? @map("archived_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  assets      TestAsset[]
+  assignments Assignment[]
+
+  @@index([academyId, archivedAt])
+  @@map("ielts_tests")
+}
+
+model TestAsset {
+  id              String  @id @default(uuid())
+  testId          String  @map("test_id")
+  /// Asset id inside the package (referenced by the candidate view)
+  key             String  @db.VarChar(64)
+  kind            String  @db.VarChar(8)
+  mimeType        String  @map("mime_type") @db.VarChar(40)
+  fileName        String  @map("file_name")
+  sizeBytes       Int     @map("size_bytes")
+  sha256          String  @db.Char(64)
+  durationSeconds Float?  @map("duration_seconds")
+  alt             String?
+
+  test IeltsTest @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  @@unique([testId, key])
+  @@map("test_assets")
+}
+
+// ---------------------------------------------------------------- assignments
+
+/// A test given to one EduPortal class for a time window.
+model Assignment {
+  id                String    @id @default(uuid())
+  testId            String    @map("test_id")
+  academyId         String    @map("academy_id") @db.Uuid
+  campusId          String    @map("campus_id") @db.Uuid
+  classId           String    @map("class_id") @db.Uuid
+  /// Class title when assigned (EduPortal is the source of truth)
+  classTitle        String    @map("class_title") @db.VarChar(200)
+  createdById       String    @map("created_by_id") @db.Uuid
+  title             String    @db.VarChar(200)
+  opensAt           DateTime  @map("opens_at")
+  closesAt          DateTime  @map("closes_at")
+  /// Students see their bands only after this is set
+  resultsReleasedAt DateTime? @map("results_released_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+
+  test     IeltsTest @relation(fields: [testId], references: [id])
+  attempts Attempt[]
+
+  @@index([classId, closesAt])
+  @@index([testId])
+  @@map("assignments")
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  /// all four modules finished, waiting for Writing/Speaking marks
+  SUBMITTED
+  /// Writing and Speaking marked, overall band available
+  GRADED
+}
+
+enum ExamModule {
+  LISTENING
+  READING
+  WRITING
+  SPEAKING
+}
+
+/// One candidate sitting one assignment (L → R → W → S, like the real test).
+model Attempt {
+  id               String         @id @default(uuid())
+  assignmentId     String         @map("assignment_id")
+  userId           String         @map("user_id") @db.Uuid
+  status           AttemptStatus  @default(IN_PROGRESS)
+  /// null when every module is finished
+  currentModule    ExamModule?    @map("current_module")
+  moduleStartedAt  DateTime?      @map("module_started_at")
+  /// server-side deadline of the current module
+  moduleDeadline   DateTime?      @map("module_deadline")
+  /// { listening: {start, end}, … }
+  moduleTimes      Json           @default("{}") @map("module_times")
+  listeningAnswers Json           @default("{}") @map("listening_answers")
+  readingAnswers   Json           @default("{}") @map("reading_answers")
+  writingTask1     String         @default("") @map("writing_task1")
+  writingTask2     String         @default("") @map("writing_task2")
+
+  listeningRaw   Int?   @map("listening_raw")
+  listeningBand  Float? @map("listening_band")
+  /// question number → correct
+  listeningMarks Json?  @map("listening_marks")
+  readingRaw     Int?   @map("reading_raw")
+  readingBand    Float? @map("reading_band")
+  readingMarks   Json?  @map("reading_marks")
+  /// { task1: {ta,cc,lr,gra}, task2: {…}, comment }
+  writingScores  Json?  @map("writing_scores")
+  writingBand    Float? @map("writing_band")
+  /// { fc, lr, gra, p, comment }
+  speakingScores Json?  @map("speaking_scores")
+  speakingBand   Float? @map("speaking_band")
+  overallBand    Float? @map("overall_band")
+
+  gradedById  String?   @map("graded_by_id") @db.Uuid
+  gradedAt    DateTime? @map("graded_at")
+  startedAt   DateTime  @default(now()) @map("started_at")
+  submittedAt DateTime? @map("submitted_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  assignment Assignment          @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  recordings SpeakingRecording[]
+
+  @@unique([assignmentId, userId])
+  @@index([userId])
+  @@map("attempts")
+}
+
+/// One recorded Speaking answer. part 1/3: index = question in order;
+/// part 2: index 0 = long turn, 1.. = rounding-off questions.
+model SpeakingRecording {
+  id         String   @id @default(uuid())
+  attemptId  String   @map("attempt_id")
+  part       Int      @db.SmallInt
+  index      Int      @db.SmallInt
+  fileName   String   @map("file_name")
+  mimeType   String   @map("mime_type") @db.VarChar(40)
+  sizeBytes  Int      @map("size_bytes")
+  durationMs Int?     @map("duration_ms")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  attempt Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, part, index])
+  @@map("speaking_recordings")
+}

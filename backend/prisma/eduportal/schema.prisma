@@ -1,0 +1,174 @@
+// READ-ONLY view of the EduPortal database.
+//
+// * NEVER run `prisma migrate` or `prisma db push` with this schema.
+//   EduPortal owns these tables; its own repository manages their migrations.
+// * Only the columns EduPortal IELTS needs are declared. Prisma selects declared
+//   columns only, so new EduPortal columns never break EduPortal IELTS.
+// * Connect with a PostgreSQL role that has SELECT only
+//   (docs/sql/eduportal-readonly-role.sql).
+// * Column and enum names mirror eduportal/backend/prisma/schema.prisma.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@eduielts/eduportal-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("EDUPORTAL_DATABASE_URL")
+}
+
+enum SystemRole {
+  USER
+  ADMIN
+}
+
+enum AcademyRole {
+  OWNER
+  ADMINISTRATOR
+  MEMBER
+}
+
+enum CampusRole {
+  MANAGER
+  MODERATOR
+  INSTRUCTOR
+  MENTOR
+  STUDENT
+}
+
+enum ClassRole {
+  INSTRUCTOR
+  MENTOR
+  STUDENT
+}
+
+enum RoleStatus {
+  PENDING
+  ACTIVE
+  CANCELLED
+  INACTIVE
+}
+
+enum ClassStatus {
+  ACTIVE
+  COMPLETED
+}
+
+model EpUser {
+  id        String     @id
+  email     String     @unique
+  firstName String     @map("first_name")
+  lastName  String     @map("last_name")
+  avatarUrl String?    @map("avatar_url")
+  language  String
+  role      SystemRole
+  isTemp    Boolean    @map("is_temp")
+  deletedAt DateTime?  @map("deleted_at")
+
+  sessions     EpSession[]
+  academyUsers EpAcademyUser[]
+  campusUsers  EpCampusUser[]
+  classUsers   EpClassUser[]
+
+  @@map("users")
+}
+
+model EpSession {
+  id        String   @id
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+
+  user EpUser @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model EpAcademy {
+  id        String    @id
+  name      String
+  logoUrl   String?   @map("logo_url")
+  deletedAt DateTime? @map("deleted_at")
+
+  members  EpAcademyUser[]
+  campuses EpCampus[]
+  classes  EpClass[]
+
+  @@map("academies")
+}
+
+model EpCampus {
+  id        String    @id
+  academyId String    @map("academy_id")
+  name      String
+  deletedAt DateTime? @map("deleted_at")
+
+  academy EpAcademy      @relation(fields: [academyId], references: [id])
+  members EpCampusUser[]
+  classes EpClass[]
+
+  @@map("campuses")
+}
+
+model EpClass {
+  id        String      @id
+  academyId String      @map("academy_id")
+  campusId  String      @map("campus_id")
+  title     String
+  status    ClassStatus
+  deletedAt DateTime?   @map("deleted_at")
+
+  academy EpAcademy     @relation(fields: [academyId], references: [id])
+  campus  EpCampus      @relation(fields: [campusId], references: [id])
+  members EpClassUser[]
+
+  @@map("classes")
+}
+
+model EpAcademyUser {
+  id          String      @id
+  academyId   String      @map("academy_id")
+  userId      String      @map("user_id")
+  academyRole AcademyRole
+  status      RoleStatus
+  deletedAt   DateTime?   @map("deleted_at")
+
+  academy EpAcademy @relation(fields: [academyId], references: [id])
+  user    EpUser    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, academyId])
+  @@map("academy_users")
+}
+
+model EpCampusUser {
+  id         String     @id
+  userId     String     @map("user_id")
+  campusId   String     @map("campus_id")
+  academyId  String     @map("academy_id")
+  campusRole CampusRole
+  status     RoleStatus
+  deletedAt  DateTime?  @map("deleted_at")
+
+  user   EpUser   @relation(fields: [userId], references: [id])
+  campus EpCampus @relation(fields: [campusId], references: [id])
+
+  @@unique([userId, campusId])
+  @@map("user_campuses")
+}
+
+model EpClassUser {
+  id        String     @id
+  classId   String     @map("class_id")
+  userId    String     @map("user_id")
+  academyId String     @map("academy_id")
+  campusId  String     @map("campus_id")
+  classRole ClassRole
+  status    RoleStatus
+  deletedAt DateTime?  @map("deleted_at")
+
+  user  EpUser  @relation(fields: [userId], references: [id])
+  class EpClass @relation(fields: [classId], references: [id])
+
+  @@unique([userId, classId])
+  @@map("class_users")
+}

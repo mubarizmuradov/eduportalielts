@@ -1,0 +1,16 @@
+import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './auth.controller';
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { SsoController } from './sso/sso.controller';
+import { SsoService } from './sso/sso.service';
+
+@Module({
+  imports: [JwtModule.register({})],
+  controllers: [AuthController, SsoController],
+  providers: [AuthService, SsoService, { provide: APP_GUARD, useClass: AuthGuard }],
+  exports: [AuthService],
+})
+export class AuthModule {}
